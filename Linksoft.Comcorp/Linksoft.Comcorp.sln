@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Linksoft.Comcorp.BusinessEntities", "Linksoft.Comcorp.BusinessEntities\Linksoft.Comcorp.BusinessEntities.vbproj", "{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Linksoft.Comcorp.DataAccess", "Linksoft.Comcorp.DataAccess\Linksoft.Comcorp.DataAccess.vbproj", "{1D852376-4652-48BD-AE7A-9C6AAB92AA7E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Linksoft.Comcorp.BusinessLogic", "Linksoft.Comcorp.BusinessLogic\Linksoft.Comcorp.BusinessLogic.vbproj", "{CC3F6484-2844-4C80-9A38-B11100EEFF4B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Linksoft.Framework.Common", "Linksoft.Framework.Common\Linksoft.Framework.Common.vbproj", "{8DC55696-2D53-4DAB-80DF-C3A4397D8C3F}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Linksoft.Comcorp.WebUI", "Linksoft.Comcorp.WebUI\Linksoft.Comcorp.WebUI.vbproj", "{9379FFF1-6F4E-4D42-86DD-75E7D8152B59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D852376-4652-48BD-AE7A-9C6AAB92AA7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D852376-4652-48BD-AE7A-9C6AAB92AA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D852376-4652-48BD-AE7A-9C6AAB92AA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D852376-4652-48BD-AE7A-9C6AAB92AA7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC3F6484-2844-4C80-9A38-B11100EEFF4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC3F6484-2844-4C80-9A38-B11100EEFF4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC3F6484-2844-4C80-9A38-B11100EEFF4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC3F6484-2844-4C80-9A38-B11100EEFF4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DC55696-2D53-4DAB-80DF-C3A4397D8C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC55696-2D53-4DAB-80DF-C3A4397D8C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC55696-2D53-4DAB-80DF-C3A4397D8C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC55696-2D53-4DAB-80DF-C3A4397D8C3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9379FFF1-6F4E-4D42-86DD-75E7D8152B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9379FFF1-6F4E-4D42-86DD-75E7D8152B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9379FFF1-6F4E-4D42-86DD-75E7D8152B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9379FFF1-6F4E-4D42-86DD-75E7D8152B59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
