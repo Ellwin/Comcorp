@@ -154,7 +154,7 @@
                         </ContentTemplate>
                         <Triggers>
                             <asp:AsyncPostBackTrigger ControlID="txtCodCompania" EventName="TextChanged" />
-                                
+                            <asp:AsyncPostBackTrigger ControlID="btnIniciarSesion" EventName="Click" />    
                         </Triggers>
                     </asp:UpdatePanel>
                     </form>     

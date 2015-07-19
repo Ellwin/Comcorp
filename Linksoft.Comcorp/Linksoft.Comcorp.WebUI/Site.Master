@@ -15,15 +15,15 @@
     
 
     <!-- JQuery + JqGrid -->
-    <script src="/js/jquery-1.11.2.min.js" type="text/javascript"></script>
-    <script src="/js/bootstrap.js" type="text/javascript"></script>
-    <script src="/js/jquery.blockUI.js" type="text/javascript"></script>
+    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/bootstrap.js" type="text/javascript"></script>
+    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery.blockUI.js" type="text/javascript"></script>
 
-    <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
-    <script src="/js/grid.locale-es.js" type="text/javascript"></script>
+    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery.jqGrid.min.js" type="text/javascript"></script>
+    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/grid.locale-es.js" type="text/javascript"></script>
 
-    <script src="/js/jquery.lksMenu.js" type="text/javascript"></script>
-    <script src="/js/linksoft.js" type="text/javascript"></script>
+    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery.lksMenu.js" type="text/javascript"></script>
+    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/linksoft.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -45,14 +45,33 @@
                     <span class="icon-bar"></span>
                   </button>
                   <a class="navbar-brand" href="#">
-                    <img src="img/logo.png" alt="linksoft" width="100px" height="50px"/>
+                    <img src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>img/logo.png" alt="linksoft" width="100px" height="50px"/>
                   </a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   
                   <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <label class="navbar-text"><span class="glyphicon glyphicon-home text-info"></span> Compañía:</label>
+                    </li>
+                    <li>
+                        <label id="lblCompania" runat="server" class="navbar-text"></label>
+                    </li>
+                    <li>                        
+                        <label class="navbar-text"><span class="glyphicon glyphicon-map-marker text-warning"></span> Sucursal:</label>
+                    </li>
+                    <li>
+                        <label id="lblSucursal" runat="server" class="navbar-text"></label>
+                    </li>
+                    <li>
+                        <label class="navbar-text"><span class="glyphicon glyphicon-calendar text-danger"></span> Fecha:</label>
+                    </li>
+                    <li>
+                        <label id="lblFecha" runat="server" class="navbar-text"></label>
+                    </li>
+
                     <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user text-info"></span> Usuario <span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user text-info"></span> <label id="lblUsuario" runat="server"></label> <span class="caret"></span></a>
                       <ul class="dropdown-menu">
                         <li>
                             <asp:LinkButton ID="lbCerrarSesion" runat="server" onclick="lbCerrarSesion_Click"><span class="glyphicon glyphicon-log-out text-danger"></span> Cerrar Sesión</asp:LinkButton>
