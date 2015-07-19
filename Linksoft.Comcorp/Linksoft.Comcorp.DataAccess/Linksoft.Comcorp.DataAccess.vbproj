@@ -68,7 +68,7 @@
     <Compile Include="DA_BaseClass.vb" />
     <Compile Include="MOD.ADM\DA_Cia.vb" />
     <Compile Include="MOD.ADM\DA_MenuWeb.vb" />
-    <Compile Include="MOD.ADM\DA_Usuario.vb" />
+    <Compile Include="MOD.ADM\DA_SesionLogin.vb" />
     <Compile Include="MOD.VEN\DA_Zona.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

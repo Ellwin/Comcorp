@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="MOD.ADM\BE_Cia.vb" />
     <Compile Include="MOD.ADM\BE_MenuWeb.vb" />
+    <Compile Include="MOD.ADM\BE_SesionLogin.vb" />
     <Compile Include="MOD.ADM\BE_Usuario.vb" />
     <Compile Include="MOD.VEN\BE_Zona.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

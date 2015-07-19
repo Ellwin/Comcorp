@@ -19,18 +19,46 @@ Public Class Login
     End Sub
 
     Protected Sub btnIniciarSesion_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnIniciarSesion.Click
-        Dim objUsuario As New BE_Usuario
-        objUsuario = BL_Usuario.GetLogin(txtUsuario.Text.Trim, txtPassword.Text.Trim)
+        Dim mensaje As String = String.Empty
+        Dim script As String = String.Empty
+        Dim resultado As Boolean = True
 
-        If Not objUsuario Is Nothing Then
-            Session(Constantes.USUARIO_SESION) = objUsuario
-            Response.Redirect("Default.aspx")
-        Else
+        Dim objSesionLogin As New BE_SesionLogin
+        objSesionLogin = BL_SesionLogin.GetLogin(txtUsuario.Text.Trim, txtPassword.Text.Trim)
 
-            Dim mensaje As String = "Usuario o password incorrecto"
-            Dim script As String = "$(function(){mostrarMensaje('" & mensaje & "','" + Constantes.ALERT_DANGER + "')})"
+        script = "$('#myModal').modal({show:true, backdrop: 'static', keyboard: false});"
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "", script, True)
 
-            ScriptManager.RegisterStartupScript(Me, Page.GetType(), "", script, True)
+        If Not objSesionLogin Is Nothing Then
+            If String.IsNullOrEmpty(txtCodCompania.Text.Trim) Then
+                mensaje &= "Ingrese código de compañía . <br/>"
+                resultado = False
+            End If
+            If (ddlSucursal.Items.Count = 0) Then
+                mensaje &= "Seleccione sucursal. <br/>"
+                resultado = False
+            Else
+                If ddlSucursal.SelectedItem.Value = "0" Then
+                    mensaje &= "Seleccione sucursal. <br/>"
+                    resultado = False
+                End If
+            End If
+
+            If resultado = False Then
+                script = "$(function(){mostrarMensajeModal('" & mensaje & "','" + Constantes.ALERT_DANGER + "')})"
+                ScriptManager.RegisterStartupScript(Me, Page.GetType(), "msj", script, True)
+            Else
+                With objSesionLogin
+                    .codCia = txtCodCompania.Text.ToUpper
+                    .dsCia = txtCompania.Text.ToUpper
+                    .codZona = ddlSucursal.SelectedItem.Value
+                    .dsZona = ddlSucursal.SelectedItem.Text
+                    .fePeriodo = Convert.ToDateTime(txtFecha.Text)
+                End With
+
+                Session(Constantes.USUARIO_SESION) = objSesionLogin
+                Response.Redirect("Default.aspx")
+            End If
         End If
     End Sub
 
@@ -53,8 +81,8 @@ Public Class Login
 
         If (Not String.IsNullOrEmpty(txtUsuario.Text.Trim) And Not String.IsNullOrEmpty(txtPassword.Text.Trim)) Then
 
-            Dim objUsuario As New BE_Usuario
-            objUsuario = BL_Usuario.GetLogin(txtUsuario.Text.Trim, txtPassword.Text.Trim)
+            Dim objUsuario As New BE_SesionLogin
+            objUsuario = BL_SesionLogin.GetLogin(txtUsuario.Text.Trim, txtPassword.Text.Trim)
 
             If Not objUsuario Is Nothing Then
                 resultado = True
@@ -131,6 +159,30 @@ Public Class Login
         txtCompania.Text = String.Empty
         ddlSucursal.Items.Clear()
     End Sub
+
+    Private Function ValidarModal() As Boolean
+        Dim mensaje As String = String.Empty
+        Dim resultado As Boolean = True
+        Dim script As String = String.Empty
+
+        
+
+        If String.IsNullOrEmpty(txtCodCompania.Text.Trim) Then
+            mensaje &= "Ingrese código de compañía . <br/>"
+            resultado = False
+        End If
+        If (ddlSucursal.Items.Count = 0) Then
+            mensaje &= "Seleccione sucursal. <br/>"
+            resultado = False
+        Else
+            If ddlSucursal.SelectedItem.Value = "0" Then
+                mensaje &= "Seleccione sucursal. <br/>"
+                resultado = False
+            End If
+        End If
+
+        Return resultado
+    End Function
 
     Private Sub btnCerrar_ServerClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnCerrar.ServerClick
         LimpiarModal()

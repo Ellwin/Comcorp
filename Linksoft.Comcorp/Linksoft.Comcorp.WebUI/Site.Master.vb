@@ -1,5 +1,6 @@
 ﻿Imports Linksoft.Comcorp.BusinessEntities
 Imports Linksoft.Comcorp.BusinessLogic
+Imports Linksoft.Framework.Common
 Imports Linksoft.Comcorp.WebUI.WebUtil
 
 Public Class Site
@@ -7,7 +8,14 @@ Public Class Site
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            CargarMenu()
+            If Not Session(Constantes.USUARIO_SESION) Is Nothing Then
+                Dim objSesionLogin As BE_SesionLogin = CType(Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+                lblUsuario.InnerText = objSesionLogin.dsUsuario & " (" & objSesionLogin.dsRol & ")"
+                lblCompania.InnerText = objSesionLogin.dsCia
+                lblSucursal.InnerText = objSesionLogin.dsZona
+                lblFecha.InnerText = objSesionLogin.fePeriodo
+                CargarMenu(objSesionLogin.codRol)
+            End If
         End If
     End Sub
 
@@ -24,11 +32,11 @@ Public Class Site
     ''' Rutina para cargar menu del usuario
     ''' </summary>
     ''' <remarks></remarks>
-    Public Sub CargarMenu()
+    Public Sub CargarMenu(ByVal strRol As String)
 
-        Dim rol As String = "AD"
 
-        Dim lstMenu As List(Of BE_MenuWeb) = BL_MenuWeb.ListarMenuWeb(rol)
+
+        Dim lstMenu As List(Of BE_MenuWeb) = BL_MenuWeb.ListarMenuWeb(strRol)
         Dim item, itemHijo As BE_MenuWeb
 
         If Not lstMenu Is Nothing Then
