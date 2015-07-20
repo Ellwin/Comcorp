@@ -32,9 +32,8 @@ Public Class DA_SesionLogin
                 End Using
             End Using
         Catch ex As Exception
+            DA_BaseClass.LogSQLException(ex)
             Throw ex
         End Try
     End Function
-
-
 End Class

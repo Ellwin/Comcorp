@@ -7,9 +7,12 @@ Imports System.Collections.Generic
 Imports Linksoft.Comcorp.BusinessEntities
 Imports Linksoft.Comcorp.BusinessLogic
 Imports Linksoft.Framework.Common
+Imports System.Data.SqlClient
 
 Public Class Login
     Inherits System.Web.UI.Page
+
+    Private Shared m_oConnection As SqlConnection
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
@@ -82,6 +85,7 @@ Public Class Login
         If (Not String.IsNullOrEmpty(txtUsuario.Text.Trim) And Not String.IsNullOrEmpty(txtPassword.Text.Trim)) Then
 
             Dim objUsuario As New BE_SesionLogin
+
             objUsuario = BL_SesionLogin.GetLogin(txtUsuario.Text.Trim, txtPassword.Text.Trim)
 
             If Not objUsuario Is Nothing Then
@@ -90,6 +94,7 @@ Public Class Login
                 mensaje &= "Usuario o password incorrecto"
                 resultado = False
             End If
+
 
         End If
 
@@ -130,7 +135,7 @@ Public Class Login
 
             SetControlFocus(txtCodCompania.ID)
         Else
-            ListarSucursal(txtCompania.Text.Trim)
+            ListarSucursal(txtCodCompania.Text.Trim)
             script = "$(function(){" + SetControlFocus(ddlSucursal.ID) + "})"
             ScriptManager.RegisterStartupScript(Me, Page.GetType(), "msj", script, True)
         End If
@@ -187,4 +192,5 @@ Public Class Login
     Private Sub btnCerrar_ServerClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnCerrar.ServerClick
         LimpiarModal()
     End Sub
+
 End Class

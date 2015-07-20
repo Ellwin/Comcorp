@@ -1,4 +1,6 @@
-﻿Public Class WebUtil
+﻿Imports log4net
+
+Public Class WebUtil
 
     Private Shared rutaRelativa As String
 
@@ -72,4 +74,12 @@
         Return ser.Deserialize(Of T)(obj)
     End Function
 
+
+
+    Protected Shared ReadOnly log As ILog = LogManager.GetLogger("_logBD")
+
+    Public Shared Sub LogException(ByVal ex As Exception)
+        log.Error("Error capa de datos: ", ex)
+        Throw ex
+    End Sub
 End Class

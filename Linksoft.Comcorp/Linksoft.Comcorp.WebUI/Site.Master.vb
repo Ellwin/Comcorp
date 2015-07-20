@@ -15,6 +15,8 @@ Public Class Site
                 lblSucursal.InnerText = objSesionLogin.dsZona
                 lblFecha.InnerText = objSesionLogin.fePeriodo
                 CargarMenu(objSesionLogin.codRol)
+            Else
+                Response.Redirect(WebUtil.AbsoluteWebRoot.ToString & "Login.aspx")
             End If
         End If
     End Sub

@@ -7,6 +7,7 @@ Imports Linksoft.Comcorp.BusinessEntities
 Public Class DA_Zona
     Inherits DA_BaseClass
 
+
     Public Shared Function ListarZonas(ByVal strCia As String) As List(Of BE_Zona)
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)

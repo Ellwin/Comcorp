@@ -23,6 +23,8 @@
     <OutputPath>bin\</OutputPath>
     <DocumentationFile>Linksoft.Comcorp.WebUI.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
+    <ExcludeApp_Data>false</ExcludeApp_Data>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +34,8 @@
     <OutputPath>bin\</OutputPath>
     <DocumentationFile>Linksoft.Comcorp.WebUI.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -46,6 +50,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\Librerias\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -86,6 +93,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Busqueda\Busqueda.aspx" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\images\calendar.gif" />
     <Content Include="css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -143,6 +151,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Busqueda\Busqueda.aspx.designer.vb">
+      <DependentUpon>Busqueda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Busqueda\Busqueda.aspx.vb">
+      <DependentUpon>Busqueda.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
@@ -231,7 +246,9 @@
     </None>
     <Content Include="Site.Master" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MOD.VEN\Handlers\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Linksoft.Comcorp.BusinessEntities\Linksoft.Comcorp.BusinessEntities.vbproj">
       <Project>{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}</Project>
@@ -254,7 +271,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1146</DevelopmentServerPort>
+          <DevelopmentServerPort>1321</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

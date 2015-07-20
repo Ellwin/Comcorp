@@ -64,6 +64,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Busqueda\BE_Item.vb" />
     <Compile Include="MOD.ADM\BE_Cia.vb" />
     <Compile Include="MOD.ADM\BE_MenuWeb.vb" />
     <Compile Include="MOD.ADM\BE_SesionLogin.vb" />

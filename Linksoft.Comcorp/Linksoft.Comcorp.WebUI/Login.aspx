@@ -5,20 +5,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Login</title>
-    <link href="/css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-    <link href="/css/jquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-     <link href="/css/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/jquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+     <link href="~/css/Site.css" rel="stylesheet" type="text/css" />
 
-     <script src="/js/jquery-1.11.2.min.js" type="text/javascript"></script>
-    <script src="/js/jquery-ui.js" type="text/javascript"></script>
-     <script src="/js/bootstrap.js" type="text/javascript"></script>
+     <script type="text/javascript">
+         var baseURL = "<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>";
+    </script>
 
-    <script src="/js/jquery.blockUI.js" type="text/javascript"></script>
+     <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery-ui.js" type="text/javascript"></script>
+     <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/bootstrap.js" type="text/javascript"></script>
+    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery.blockUI.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-
+            
             Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function (evt, args) {
                 $.datepicker.regional['es'] = {
                     closeText: 'Cerrar',
@@ -97,6 +100,14 @@
                         
                         <form id="loginform" class="form-horizontal" role="form" runat="server"> 
                         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                        <script type="text/javascript" language="javascript">
+                            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequestHandler);
+                            function EndRequestHandler(sender, args) {
+                                if (args.get_error() != undefined) {
+                                    args.set_errorHandled(true);
+                                }
+                            }
+                        </script>
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server"> 
                             <ContentTemplate>                              
                                 <div style="margin-bottom: 25px" class="input-group">
@@ -158,7 +169,7 @@
                         </Triggers>
                     </asp:UpdatePanel>
                     </form>     
-                    <script src="/js/jsUpdateProgress.js" type="text/javascript"></script>
+                    <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jsUpdateProgress.js" type="text/javascript"></script>
                   </div>                  
                </div>                     
            </div>  

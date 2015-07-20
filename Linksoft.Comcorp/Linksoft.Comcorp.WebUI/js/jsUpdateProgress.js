@@ -1,8 +1,9 @@
 ﻿$(document).ready(function () { showProgress(); });
 function showProgress() {
+    
     Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(function() {
         $.blockUI({
-            message: 'Procesando...  <br /> <img src="../img/loading.gif" />',
+            message: 'Procesando...  <br /> <img src="' + baseURL + 'img/loading.gif" />',
             theme: false,
             baseZ: 1000,
             css: {

@@ -9,12 +9,14 @@
 
     <title></title>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="/css/ui.jqgrid.css" rel="stylesheet" type="text/css" />
-    <link href="/css/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/ui.jqgrid.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Site.css" rel="stylesheet" type="text/css" />
     
-
-    <!-- JQuery + JqGrid -->
+    <script type="text/javascript">
+        var baseURL = "<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>";
+    </script>
+      
     <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery-1.11.2.min.js" type="text/javascript"></script>
     <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/bootstrap.js" type="text/javascript"></script>
     <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery.blockUI.js" type="text/javascript"></script>
@@ -52,26 +54,26 @@
                   
                   <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <label class="navbar-text"><span class="glyphicon glyphicon-home text-info"></span> Compañía:</label>
+                        <label class="navbar-text"><span class="glyphicon glyphicon-home text-info"></span></label>
                     </li>
                     <li>
                         <label id="lblCompania" runat="server" class="navbar-text"></label>
                     </li>
                     <li>                        
-                        <label class="navbar-text"><span class="glyphicon glyphicon-map-marker text-warning"></span> Sucursal:</label>
+                        <label class="navbar-text"><span class="glyphicon glyphicon-map-marker text-warning"></span></label>
                     </li>
                     <li>
                         <label id="lblSucursal" runat="server" class="navbar-text"></label>
                     </li>
                     <li>
-                        <label class="navbar-text"><span class="glyphicon glyphicon-calendar text-danger"></span> Fecha:</label>
+                        <label class="navbar-text"><span class="glyphicon glyphicon-calendar text-danger"></span></label>
                     </li>
                     <li>
                         <label id="lblFecha" runat="server" class="navbar-text"></label>
                     </li>
 
                     <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user text-info"></span> <label id="lblUsuario" runat="server"></label> <span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user text-info"></span> <label id="lblUsuario" runat="server"></label><span class="caret"></span></a>
                       <ul class="dropdown-menu">
                         <li>
                             <asp:LinkButton ID="lbCerrarSesion" runat="server" onclick="lbCerrarSesion_Click"><span class="glyphicon glyphicon-log-out text-danger"></span> Cerrar Sesión</asp:LinkButton>
@@ -118,7 +120,26 @@
                             </div>
                         </div>
                         <div id="message"></div>
-                        <asp:ContentPlaceHolder ID="mainContent" runat="server"></asp:ContentPlaceHolder>
+                        <ul id="myTab" class="nav nav-tabs">
+                           <li><a href="#tabMain" data-toggle="tab">Datos de Documento</a></li>
+                           <li class="active"><a href="#tabList" data-toggle="tab">Listado</a></li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <asp:ContentPlaceHolder ID="mainContent" runat="server"></asp:ContentPlaceHolder>
+
+                             <div class="tab-pane active" id="tabList">
+                            
+                                <div class="panel panel-primary">
+                                    <div class="panel panel-heading">
+                                             <h4 class="panel-title">Listado</h4>
+                                        </div>
+                                    <div class="panel-body">
+                                        <table id="tblListado"></table>
+                                        <div id="pager"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                    </div>
                  </div>
            </div>
