@@ -251,6 +251,42 @@ linksoft.util = {
         setTimeout(function () {
             $("#alertdiv").remove();
         }, 5000);
+    },
+    configDatepickerEs: function () {
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: 'Anterior',
+            nextText: 'Siguiente',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sem',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            changeMonth: true,
+            changeYear: true,
+            showAnim: 'drop',
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+    },
+    openModal: function (selectorDiv, selectorFrame, urlFrame, titulo) {
+        $('#' + selectorFrame).attr("src", urlFrame);
+        $('#' + selectorDiv).dialog({
+            title: titulo,
+            modal: true,
+            height: '500',
+            width: '550',
+            close: function () {
+                $('#' + selectorFrame).attr("src", "");
+                $('#' + selectorDiv).dialog('destroy');
+            }
+        });
     }
 };
 

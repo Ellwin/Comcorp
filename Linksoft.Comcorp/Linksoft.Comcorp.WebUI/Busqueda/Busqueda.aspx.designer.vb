@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class Busqueda
 
     '''<summary>
-    '''Control form1.
+    '''Control form2.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
+    Protected WithEvents form2 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
     '''Control ScriptManager1.
@@ -32,13 +32,13 @@ Partial Public Class Busqueda
     Protected WithEvents ScriptManager1 As Global.System.Web.UI.ScriptManager
 
     '''<summary>
-    '''Control UpdatePanel1.
+    '''Control upMedico.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents UpdatePanel1 As Global.System.Web.UI.UpdatePanel
+    Protected WithEvents upMedico As Global.System.Web.UI.UpdatePanel
 
     '''<summary>
     '''Control gvBusqueda.

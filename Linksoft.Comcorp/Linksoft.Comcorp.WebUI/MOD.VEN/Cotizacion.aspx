@@ -1,5 +1,15 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="Cotizacion.aspx.vb" Inherits="Linksoft.Comcorp.WebUI.Cotizacion" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        $(function () {
+            $('#btnAlmacen').click(function () {
+                linksoft.util.openModal('openModal', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=ALMACEN', 'Busqueda');
+            });
+            $('#btnCliente').click(function () {
+                linksoft.util.openModal('openModal', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=CLIENTE', 'Busqueda');
+            });
+        });
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContent" runat="server">
 <div class="tab-pane fade" id="tabMain">
@@ -15,7 +25,7 @@
                     
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <a data-toggle="modal" class="btn btn-info" href="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx" data-target="#myModal"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</a>
+                          <button type="button" id="btnDoc" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
                        <input type="text" class="form-control" id="txtDoc" readonly="readonly"/>
                     </div>
@@ -39,7 +49,7 @@
                     <label>Almacen</label>
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <a data-toggle="modal" class="btn btn-info" href="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx" data-target="#myModal"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</a>
+                          <button type="button" id="btnAlmacen" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
                        <input type="text" class="form-control" placeholder="Doc." id="txtAlmacen" />
                     </div>
@@ -62,7 +72,7 @@
                     <label>Cliente</label>
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <a data-toggle="modal" class="btn btn-info" href="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx" data-target="#myModal"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</a>
+                          <button type="button" id="btnCliente" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
                        <input type="text" class="form-control" placeholder="Doc." id="Text1" />
                     </div>
@@ -82,7 +92,7 @@
                     <label>Oper. Fact.</label>
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <a data-toggle="modal" class="btn btn-info" href="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx" data-target="#myModal"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</a>
+                          <button type="button" id="btnOperFact" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
                        <input type="text" class="form-control" placeholder="Doc." id="Text2" />
                     </div>
@@ -94,7 +104,7 @@
                     <label>Vendedor</label>
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <a data-toggle="modal" class="btn btn-info" href="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx" data-target="#myModal"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</a>
+                          <button type="button" id="btnVendedor" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
                        <input type="text" class="form-control" placeholder="Doc." id="Text3" />
                     </div>
@@ -165,5 +175,8 @@
             <div class="modal-content">
             </div>
         </div>
+    </div>
+    <div id="openModal" style="display:none">
+        <iframe id="frameBusqueda" frameborder="0" width="100%" height="100%"></iframe> 
     </div>
 </asp:Content>

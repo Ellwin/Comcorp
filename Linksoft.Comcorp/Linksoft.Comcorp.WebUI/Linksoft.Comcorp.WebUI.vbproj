@@ -116,11 +116,13 @@
     <Content Include="css\images\ui-icons_0073ea_256x240.png" />
     <Content Include="css\images\ui-icons_0078ae_256x240.png" />
     <Content Include="css\images\ui-icons_056b93_256x240.png" />
+    <Content Include="css\images\ui-icons_666666_256x240.png" />
     <Content Include="css\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="css\images\ui-icons_e0fdff_256x240.png" />
     <Content Include="css\images\ui-icons_f5e175_256x240.png" />
     <Content Include="css\images\ui-icons_f7a50d_256x240.png" />
     <Content Include="css\images\ui-icons_fcd113_256x240.png" />
+    <Content Include="css\images\ui-icons_ff0084_256x240.png" />
     <Content Include="css\images\ui-icons_ffffff_256x240.png" />
     <Content Include="css\jquery-ui.min.css" />
     <Content Include="css\jquery-ui.theme.min.css" />
