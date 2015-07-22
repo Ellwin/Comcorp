@@ -2,13 +2,51 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(function () {
-            $('#btnAlmacen').click(function () {
-                linksoft.util.openModal('openModal', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=ALMACEN', 'Busqueda');
+            $('#btnBuscarDoc').click(function () {
+                linksoft.util.openModal('modalBusqueda', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Numerador.aspx?cat=C', 'Listado de Numeradores');
             });
-            $('#btnCliente').click(function () {
-                linksoft.util.openModal('openModal', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=CLIENTE', 'Busqueda');
+
+            $('#btnBuscarAlmacen').click(function () {
+                linksoft.util.openModal('modalBusqueda', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=ALMACEN', 'Busqueda de Almacenes');
+            });
+
+            $('#btnBuscarCliente').click(function () {
+                linksoft.util.openModal('modalBusqueda', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=CLIENTE', 'Busqueda de Cliente');
+            });
+
+            $('#btnBuscarOperFact').click(function () {
+                linksoft.util.openModal('modalBusqueda', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=OPERFACT', 'Busqueda de Operaciones de Venta');
+            });
+
+            $('#btnBuscarVendedor').click(function () {
+                linksoft.util.openModal('modalBusqueda', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=VENDEDOR', 'Busqueda de Vendedor');
+            });
+
+            $('#btnBuscarCondPago').click(function () {
+                linksoft.util.openModal('modalBusqueda', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=CONDPAGO', 'Busqueda de Condición de Pago');
             });
         });
+
+        function cargarItem(busqueda, codigo, descripcion) {
+            switch (busqueda) {
+                case "ALMACEN":
+                    $("#txtAlmacen").val(descripcion);
+                    break;
+                case "CLIENTE":
+                    $("#txtCliente").val(descripcion);
+                    break;
+                case "VENDEDOR":
+                    $("#txtVendedor").val(descripcion);
+                    break;
+                case "OPERFACT":
+                    $("#txtOperFact").val(descripcion);
+                    break;
+                case "CONDPAGO":
+                    $("#txtCondPago").val(descripcion);
+                    break;
+            }
+            $("#modalBusqueda").dialog("close");
+        };
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContent" runat="server">
@@ -25,7 +63,7 @@
                     
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <button type="button" id="btnDoc" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                          <button type="button" id="btnBuscarDoc" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
                        <input type="text" class="form-control" id="txtDoc" readonly="readonly"/>
                     </div>
@@ -49,14 +87,14 @@
                     <label>Almacen</label>
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <button type="button" id="btnAlmacen" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                          <button type="button" id="btnBuscarAlmacen" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
-                       <input type="text" class="form-control" placeholder="Doc." id="txtAlmacen" />
+                       <input type="text" class="form-control" id="txtAlmacen" readonly="readonly" />
                     </div>
                 </div>
                 <div class="col-xs-2">
                     <label>Fe. Vencimiento</label>
-                    <input type="text" class="form-control input-sm" id="Text4" required/>
+                    <input type="text" class="form-control input-sm" id="txtFechaVenc" required/>
                 </div>
             </div>
             <br />
@@ -72,9 +110,9 @@
                     <label>Cliente</label>
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <button type="button" id="btnCliente" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                          <button type="button" id="btnBuscarCliente" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
-                       <input type="text" class="form-control" placeholder="Doc." id="Text1" />
+                       <input type="text" class="form-control" id="txtCliente" readonly="readonly" />
                     </div>
                 </div>
             </div>
@@ -92,9 +130,9 @@
                     <label>Oper. Fact.</label>
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <button type="button" id="btnOperFact" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                          <button type="button" id="btnBuscarOperFact" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
-                       <input type="text" class="form-control" placeholder="Doc." id="Text2" />
+                       <input type="text" class="form-control" id="txtOperFact" readonly="readonly" />
                     </div>
                 </div>
             </div>
@@ -104,9 +142,9 @@
                     <label>Vendedor</label>
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <button type="button" id="btnVendedor" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                          <button type="button" id="btnBuscarVendedor" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
-                       <input type="text" class="form-control" placeholder="Doc." id="Text3" />
+                       <input type="text" class="form-control" id="txtVendedor" readonly="readonly" />
                     </div>
                 </div>
                 <div class="col-xs-2">
@@ -120,14 +158,14 @@
                     <label>Condición</label>
                     <div class="input-group"> 
                        <span class="input-group-btn">
-                          <button class="btn btn-info" type="button"><span class="glyphicon glyphicon-arrow-right"></span> Buscar</button>
+                          <button type="button" id="btnBuscarCondPago" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                        </span>
-                       <input type="text" class="form-control" placeholder="Doc." id="Text5" />
+                       <input type="text" class="form-control" id="txtCondPago" readonly="readonly" />
                     </div>
                 </div>
                 <div class="col-xs-2">
                     <label>Tipo Cond.</label>
-                    <input type="text" class="form-control input-sm" id="Text7" readonly="readonly" required/>
+                    <input type="text" class="form-control input-sm" id="txtTipoCondPago" readonly="readonly" required/>
                 </div>
             </div>
             <div class="row">
@@ -176,7 +214,7 @@
             </div>
         </div>
     </div>
-    <div id="openModal" style="display:none">
+    <div id="modalBusqueda" style="display:none">
         <iframe id="frameBusqueda" frameborder="0" width="100%" height="100%"></iframe> 
     </div>
 </asp:Content>

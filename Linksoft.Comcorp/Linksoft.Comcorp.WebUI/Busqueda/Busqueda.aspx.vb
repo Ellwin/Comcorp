@@ -40,4 +40,15 @@ Public Class Busqueda
 
         Buscar(strTipo, strValor, objSesionLogin.codCia)
     End Sub
+
+    Private Sub gvBusqueda_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles gvBusqueda.RowDataBound
+        If e.Row.RowType = DataControlRowType.DataRow Then
+            Dim btn As Button = CType(e.Row.FindControl("btnSeleccionar"), Button)
+            Dim strTipo As String = Convert.ToString(Request.QueryString("valor")).Trim
+            btn.OnClientClick = "javascript:retornarValor('" + strTipo + "','" + _
+                DataBinder.Eval(e.Row.DataItem, "codigo") + "','" + _
+                DataBinder.Eval(e.Row.DataItem, "descripcion") + "');"
+
+        End If
+    End Sub
 End Class

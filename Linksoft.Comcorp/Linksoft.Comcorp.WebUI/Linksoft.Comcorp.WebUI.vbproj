@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Busqueda\Busqueda.aspx" />
+    <Content Include="Busqueda\Numerador.aspx" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\images\calendar.gif" />
     <Content Include="css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -158,6 +159,13 @@
     </Compile>
     <Compile Include="Busqueda\Busqueda.aspx.vb">
       <DependentUpon>Busqueda.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Busqueda\Numerador.aspx.designer.vb">
+      <DependentUpon>Numerador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Busqueda\Numerador.aspx.vb">
+      <DependentUpon>Numerador.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.vb">

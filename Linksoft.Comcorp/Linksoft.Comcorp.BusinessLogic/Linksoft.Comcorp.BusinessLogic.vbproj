@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Busqueda\BL_Item.vb" />
+    <Compile Include="Busqueda\BL_Numerador.vb" />
     <Compile Include="MOD.ADM\BL_Cia.vb" />
     <Compile Include="MOD.ADM\BL_MenuWeb.vb" />
     <Compile Include="MOD.ADM\BL_SesionLogin.vb" />

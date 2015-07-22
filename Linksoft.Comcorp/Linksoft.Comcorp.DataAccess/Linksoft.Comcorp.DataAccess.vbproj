@@ -69,7 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Busqueda\DA_Item.vb" />
+    <Compile Include="Busqueda\DA_Numerador.vb" />
     <Compile Include="DA_BaseClass.vb" />
+    <Compile Include="DA_Util.vb" />
     <Compile Include="MOD.ADM\DA_Cia.vb" />
     <Compile Include="MOD.ADM\DA_MenuWeb.vb" />
     <Compile Include="MOD.ADM\DA_SesionLogin.vb" />
