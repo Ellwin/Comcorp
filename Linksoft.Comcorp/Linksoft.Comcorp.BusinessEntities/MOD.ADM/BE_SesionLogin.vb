@@ -8,5 +8,7 @@
     Public Property dsUsuario As String
     Public Property dsZona As String
     Public Property fePeriodo As Date
+    Public Property codEjercicio As String
+    Public Property codPeriodo As String
 
 End Class

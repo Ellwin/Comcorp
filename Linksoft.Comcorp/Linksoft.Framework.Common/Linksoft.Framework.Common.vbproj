@@ -102,6 +102,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Linksoft.Comcorp.BusinessEntities\Linksoft.Comcorp.BusinessEntities.vbproj">
+      <Project>{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}</Project>
+      <Name>Linksoft.Comcorp.BusinessEntities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Linksoft.Comcorp.DataAccess\Linksoft.Comcorp.DataAccess.vbproj">
       <Project>{1D852376-4652-48BD-AE7A-9C6AAB92AA7E}</Project>
       <Name>Linksoft.Comcorp.DataAccess</Name>

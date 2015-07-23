@@ -2,6 +2,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(function () {
+            linksoft.util.configDatepickerEs();
+
+            $('#txtFechaEmision').datepicker().datepicker("setDate", new Date());
+            $('#txtFechaVencimiento').datepicker().datepicker("setDate", new Date());
+
+            $('a[href="#tabMain"]').tab('show');
+
             $('#btnBuscarDoc').click(function () {
                 linksoft.util.openModal('modalBusqueda', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Numerador.aspx?cat=C', 'Listado de Numeradores');
             });
@@ -25,7 +32,15 @@
             $('#btnBuscarCondPago').click(function () {
                 linksoft.util.openModal('modalBusqueda', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=CONDPAGO', 'Busqueda de Condición de Pago');
             });
+
         });
+
+        function cargarItemNumerador(doc, serie) {
+            $("#txtDoc").val(doc);
+            $("#txtSerie").val(serie);
+
+            $("#modalBusqueda").dialog("close");
+        }
 
         function cargarItem(busqueda, codigo, descripcion) {
             switch (busqueda) {
@@ -47,10 +62,12 @@
             }
             $("#modalBusqueda").dialog("close");
         };
+
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContent" runat="server">
-<div class="tab-pane fade" id="tabMain">
+    <div class="tab-pane fade" id="tabMain">
         
     <div class="panel panel-primary">
         <div class="panel panel-heading">
@@ -76,6 +93,7 @@
                     <label>Número</label>
                     <input type="text" class="form-control input-sm" id="txtNumero" readonly="readonly" required/>
                 </div>
+                
                 <div class="col-xs-2">
                     <label>Fe. Emisión</label>
                     <input type="text" class="form-control input-sm" id="txtFechaEmision" required/>
@@ -94,14 +112,20 @@
                 </div>
                 <div class="col-xs-2">
                     <label>Fe. Vencimiento</label>
-                    <input type="text" class="form-control input-sm" id="txtFechaVenc" required/>
+                    <input type="text" class="form-control input-sm" id="txtFechaVencimiento" required/>
                 </div>
             </div>
             <br />
             <div class="row">
-                <div class="col-xs-10">
+                <div class="col-xs-8">
                     <label>Glosa</label>
                     <input type="text" class="form-control input-sm" id="txtGlosa" />
+                </div>
+                <div class="col-xs-2">
+                    <label >Estado:</label>
+                    <select class="form-control input-sm" id="ddlEstado" disabled="disabled">
+                        <option value="P" >Pendiente</option>
+                    </select>
                 </div>
             </div>
             <hr />
@@ -168,22 +192,9 @@
                     <input type="text" class="form-control input-sm" id="txtTipoCondPago" readonly="readonly" required/>
                 </div>
             </div>
+            <br />
             <div class="row">
-                    <div class="col-xs-5">
-                    <label >Estado:</label>
-                    <select class="form-control input-sm" id="ddlEstado" disabled="disabled">
-                        <option value="A" >Activo</option>
-                        <option value="I" >Inactivo</option>
-                    </select>
-                </div>
-                <div class="col-xs-5">
-                        <label class="invisible">s</label>
-                        <div class="checkbox">
-                            <input type="checkbox" id="chkAdmin" disabled="disabled" /> 
-                            <label>Administrador</label>
-                        </div>                    
-                </div>
-        
+                
             </div>
                         
                         

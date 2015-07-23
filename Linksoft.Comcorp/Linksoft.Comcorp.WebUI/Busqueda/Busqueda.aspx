@@ -20,9 +20,6 @@
     <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery.blockUI.js" type="text/javascript"></script>
     
     <script type="text/javascript">
-        $(function () {
-        })
-
         function retornarValor(busqueda, codigo, descripcion) {
             parent.cargarItem(busqueda, codigo, descripcion);
             return false;

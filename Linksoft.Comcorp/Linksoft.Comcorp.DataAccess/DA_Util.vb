@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports Linksoft.Comcorp.BusinessEntities
 
 Public Class DA_Util
     Inherits DA_BaseClass
@@ -152,5 +153,31 @@ ErrorHandler:
 
 
 
+    Public Shared Function GetPeriodoActual(ByVal strCia As String, ByVal strFecha As String) As BE_Periodo
+        Try
+            Using cn As New SqlConnection(ConnectionStringSQLServer)
+                cn.Open()
+                Using cmd As New SqlCommand("SP_PERIODOACTUAL", cn)
+                    cmd.CommandType = CommandType.StoredProcedure
+                    cmd.Parameters.Add("@ccod_cia", SqlDbType.VarChar).Value = strCia
+                    cmd.Parameters.Add("@cfecha", SqlDbType.VarChar).Value = strFecha
+
+                    cmd.Parameters.Add("@cresulperiodo", SqlDbType.VarChar, 6).Direction = ParameterDirection.Output
+                    cmd.Parameters.Add("@cresulejercicio", SqlDbType.VarChar, 6).Direction = ParameterDirection.Output
+
+                    cmd.ExecuteNonQuery()
+
+                    Dim objPeriodo As New BE_Periodo
+                    objPeriodo.codEjercicio = cmd.Parameters("@cresulejercicio").Value.ToString.Trim
+                    objPeriodo.codPeriodo = cmd.Parameters("@cresulperiodo").Value.ToString.Trim
+
+                    Return objPeriodo
+                End Using
+            End Using
+        Catch ex As Exception
+            DA_BaseClass.LogSQLException(ex)
+            Throw ex
+        End Try
+    End Function
 
 End Class

@@ -27,6 +27,11 @@ Public Class Login
         Dim resultado As Boolean = True
 
         Dim objSesionLogin As New BE_SesionLogin
+        Dim objPeriodo As New BE_Periodo
+
+
+        Dim strFecha As String = String.Empty
+
         objSesionLogin = BL_SesionLogin.GetLogin(txtUsuario.Text.Trim, txtPassword.Text.Trim)
 
         script = "$('#myModal').modal({show:true, backdrop: 'static', keyboard: false});"
@@ -46,21 +51,47 @@ Public Class Login
                     resultado = False
                 End If
             End If
+            If String.IsNullOrEmpty(txtFecha.Text.Trim) Then
+                mensaje &= "Ingrese fecha. <br/>"
+                resultado = False
+            Else
+                If Not IsDate(txtFecha.Text) Then
+                    mensaje &= "Ingrese una fecha válida. <br/>"
+                    resultado = False
+                Else
+                    strFecha = Format(CDate(txtFecha.Text), "yyyy-MM-dd")
+                    objPeriodo = Funciones.GetPeriodoActual(txtCodCompania.Text, strFecha)
+                End If
+            End If
+
 
             If resultado = False Then
                 script = "$(function(){mostrarMensajeModal('" & mensaje & "','" + Constantes.ALERT_DANGER + "')})"
                 ScriptManager.RegisterStartupScript(Me, Page.GetType(), "msj", script, True)
             Else
-                With objSesionLogin
-                    .codCia = txtCodCompania.Text.ToUpper
-                    .dsCia = txtCompania.Text.ToUpper
-                    .codZona = ddlSucursal.SelectedItem.Value
-                    .dsZona = ddlSucursal.SelectedItem.Text
-                    .fePeriodo = Convert.ToDateTime(txtFecha.Text)
-                End With
+                
+                If String.IsNullOrEmpty(objPeriodo.codEjercicio) And String.IsNullOrEmpty(objPeriodo.codPeriodo) Then
 
-                Session(Constantes.USUARIO_SESION) = objSesionLogin
-                Response.Redirect("Default.aspx")
+                    mensaje = "El periodo para la fecha ingresada aún no ha sido configurado."
+                    script = "$(function(){mostrarMensajeModal('" & mensaje & "','" + Constantes.ALERT_DANGER + "')})"
+                    ScriptManager.RegisterStartupScript(Me, Page.GetType(), "msjPeriodo", script, True)
+
+                Else
+
+                    With objSesionLogin
+                        .codCia = txtCodCompania.Text.ToUpper
+                        .dsCia = txtCompania.Text.ToUpper
+                        .codZona = ddlSucursal.SelectedItem.Value
+                        .dsZona = ddlSucursal.SelectedItem.Text
+                        .fePeriodo = Convert.ToDateTime(txtFecha.Text)
+                        .codEjercicio = objPeriodo.codEjercicio
+                        .codPeriodo = objPeriodo.codPeriodo
+                    End With
+
+                    Session(Constantes.USUARIO_SESION) = objSesionLogin
+                    Response.Redirect("Default.aspx")
+                End If
+                
             End If
         End If
     End Sub

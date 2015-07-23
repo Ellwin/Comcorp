@@ -93,3 +93,13 @@
     text-transform:uppercase;
     
 }
+
+.navbar li
+{
+    font-size:12px;
+}
+
+.dropdown-menu
+{
+    width:200px;
+}

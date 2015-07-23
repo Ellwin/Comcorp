@@ -13,6 +13,8 @@ Public Class Site
                 lblUsuario.InnerText = objSesionLogin.dsUsuario & " (" & objSesionLogin.dsRol & ")"
                 lblCompania.InnerText = objSesionLogin.dsCia
                 lblSucursal.InnerText = objSesionLogin.dsZona
+                lblEjercicio.InnerText = objSesionLogin.codEjercicio
+                lblPeriodo.InnerText = objSesionLogin.codPeriodo
                 lblFecha.InnerText = objSesionLogin.fePeriodo
                 CargarMenu(objSesionLogin.codRol)
             Else

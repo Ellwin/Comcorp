@@ -19,8 +19,10 @@
     <script src="<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>js/jquery.blockUI.js" type="text/javascript"></script>
     
     <script type="text/javascript">
-        $(function () {
-        })
+        function retornarValor(doc, serie) {
+            parent.cargarItemNumerador(doc, serie);
+            return false;
+        }
     </script>
 
     <style type="text/css">
@@ -47,7 +49,7 @@
                                                 <asp:BoundField DataField="dsNumerador" HeaderText="Descripcion" ItemStyle-HorizontalAlign="Left" />
                                                 <asp:TemplateField>
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="lbSeleccionar" runat="server" Text="Seleccionar"></asp:LinkButton>
+                                                        <asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" CssClass="btn btn-link btn-xs"></asp:Button>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

@@ -148,7 +148,7 @@
                                             </div>
                                             <div class="col-xs-5">
                                                 <label>Fecha:</label>
-                                                <asp:TextBox ID="txtFecha" CssClass="form-control" name="fecha" placeholder="fecha" runat="server" ReadOnly="true"></asp:TextBox>
+                                                <asp:TextBox ID="txtFecha" CssClass="form-control" name="fecha" placeholder="fecha" runat="server"></asp:TextBox>
                                             </div>
                                         </div>                                      
                                       </div>

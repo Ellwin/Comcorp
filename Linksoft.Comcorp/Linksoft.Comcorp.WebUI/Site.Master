@@ -54,29 +54,29 @@
                   </a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  
                   <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <label class="navbar-text"><span class="glyphicon glyphicon-home text-info"></span></label>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-info-sign text-primary"></span> <label id="lblCompania" runat="server"></label><span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li>
+                            <span class="glyphicon glyphicon-map-marker text-warning"></span> <label id="lblSucursal" runat="server"></label>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-calendar text-danger"></span> <label id="lblEjercicio" runat="server"></label>   
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-calendar text-danger"></span> <label id="lblPeriodo" runat="server"></label>   
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-calendar text-danger"></span> <label id="lblFecha" runat="server"></label>    
+                        </li>
+
+                      </ul>
                     </li>
-                    <li>
-                        <label id="lblCompania" runat="server" class="navbar-text"></label>
-                    </li>
-                    <li>                        
-                        <label class="navbar-text"><span class="glyphicon glyphicon-map-marker text-warning"></span></label>
-                    </li>
-                    <li>
-                        <label id="lblSucursal" runat="server" class="navbar-text"></label>
-                    </li>
-                    <li>
-                        <label class="navbar-text"><span class="glyphicon glyphicon-calendar text-danger"></span></label>
-                    </li>
-                    <li>
-                        <label id="lblFecha" runat="server" class="navbar-text"></label>
-                    </li>
+                    <li role="separator" class="divider"></li>
 
                     <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user text-info"></span> <label id="lblUsuario" runat="server"></label><span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user text-primary"></span> <label id="lblUsuario" runat="server"></label><span class="caret"></span></a>
                       <ul class="dropdown-menu">
                         <li>
                             <asp:LinkButton ID="lbCerrarSesion" runat="server" onclick="lbCerrarSesion_Click"><span class="glyphicon glyphicon-log-out text-danger"></span> Cerrar Sesión</asp:LinkButton>
@@ -90,14 +90,9 @@
              <div class="container-fluid">                 
                  <div class="row wrapper">
                     <div class="col-xs-2 secondary">                        
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">Menu</div>
-                                <div class="panel-body">
-                                    <div id="divmenu" class="menu" runat="server"></div>
-                                </div>
-                        </div>
+                        <div id="divmenu" class="menu" runat="server"></div>
                     </div>
-                    <div class="col-xs-9 primary">
+                    <div class="col-xs-10 primary" id="main">
                         <div class="btn-toolbar well well-sm" >
                             <div class="btn-group">
                                 <button type="button" id="btnRefrescar" class="btn btn-default" title="Refrescar"><span class="glyphicon glyphicon-refresh text-info"></span></button>
