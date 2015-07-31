@@ -6,10 +6,10 @@ Imports Linksoft.Comcorp.BusinessEntities
 Public Class DA_Numerador
     Inherits DA_BaseClass
 
-    Public Shared Function ListarNumerador(ByVal strCatDoc As String, ByVal strCia As String) As List(Of BE_Numerador)
+    Public Shared Function ListarNumerador(ByVal catDoc As String, ByVal codCia As String) As List(Of BE_Numerador)
         Try
             Dim strSQL = "Select cdoc_tipo as dsTipoDoc,cdoc_serie as dsSerie,cdsc_num as dsNumerador From Fa_ctnumer " & _
-                                  "Where ccat_doc = '" & strCatDoc & "' And ccod_cia = '" & strCia & "' And cstatus = 'A'"
+                                  "Where ccat_doc = '" & catDoc & "' And ccod_cia = '" & codCia & "' And cstatus = 'A'"
 
             Using cn As New SqlConnection(ConnectionStringSQLServer)
                 cn.Open()
@@ -32,6 +32,7 @@ Public Class DA_Numerador
                 End Using
             End Using
         Catch ex As Exception
+            DA_BaseClass.LogSQLException(ex)
             Throw ex
         End Try
     End Function

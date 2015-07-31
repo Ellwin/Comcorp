@@ -127,23 +127,29 @@
     <Content Include="css\images\ui-icons_ffffff_256x240.png" />
     <Content Include="css\jquery-ui.min.css" />
     <Content Include="css\jquery-ui.theme.min.css" />
+    <Content Include="css\jquery.dataTables.min.css" />
     <Content Include="css\Site.css" />
-    <Content Include="css\ui.jqgrid.css" />
     <Content Include="Default.aspx" />
+    <Content Include="img\favicon.ico" />
     <Content Include="img\loading.GIF" />
     <Content Include="img\logo.png" />
+    <Content Include="img\sort_asc.png" />
+    <Content Include="img\sort_asc_disabled.png" />
+    <Content Include="img\sort_both.png" />
+    <Content Include="img\sort_desc.png" />
+    <Content Include="img\sort_desc_disabled.png" />
     <Content Include="js\bootstrap.js" />
-    <Content Include="js\grid.locale-es.js" />
     <Content Include="js\jquery-1.11.2.min.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\jquery.blockUI.js" />
-    <Content Include="js\jquery.jqGrid.min.js" />
+    <Content Include="js\jquery.dataTables.min.js" />
     <Content Include="js\jquery.lksMenu.js" />
     <Content Include="js\jsUpdateProgress.js" />
     <Content Include="js\linksoft.js" />
     <Content Include="Login.aspx" />
     <Content Include="MOD.ADM\Usuario.aspx" />
     <Content Include="MOD.VEN\Cotizacion.aspx" />
+    <Content Include="MOD.VEN\ItemFactura.aspx" />
     <Content Include="MOD.VEN\Reportes\RptCotizacion.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -196,6 +202,16 @@
       <DependentUpon>Cotizacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="MOD.VEN\Handlers\HandlerCotizacion.ashx.vb">
+      <DependentUpon>HandlerCotizacion.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="MOD.VEN\ItemFactura.aspx.designer.vb">
+      <DependentUpon>ItemFactura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MOD.VEN\ItemFactura.aspx.vb">
+      <DependentUpon>ItemFactura.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="MOD.VEN\Reportes\RptCotizacion.aspx.designer.vb">
       <DependentUpon>RptCotizacion.aspx</DependentUpon>
     </Compile>
@@ -245,6 +261,8 @@
     <None Include="fonts\glyphicons-halflings-regular.svg" />
     <None Include="fonts\glyphicons-halflings-regular.ttf" />
     <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="img\Sorting icons.psd" />
+    <Content Include="MOD.VEN\Handlers\HandlerCotizacion.ashx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -256,9 +274,7 @@
     </None>
     <Content Include="Site.Master" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MOD.VEN\Handlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Linksoft.Comcorp.BusinessEntities\Linksoft.Comcorp.BusinessEntities.vbproj">
       <Project>{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}</Project>
@@ -281,7 +297,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1321</DevelopmentServerPort>
+          <DevelopmentServerPort>3786</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

@@ -287,6 +287,33 @@ linksoft.util = {
                 $('#' + selectorDiv).dialog('destroy');
             }
         });
+    },
+    openModalCustomSize: function (selectorDiv, selectorFrame, urlFrame, titulo, alto, ancho) {
+        $('#' + selectorFrame).attr("src", urlFrame);
+        $('#' + selectorDiv).dialog({
+            title: titulo,
+            modal: true,
+            height: alto,
+            width: ancho,
+            close: function () {
+                $('#' + selectorFrame).attr("src", "");
+                $('#' + selectorDiv).dialog('destroy');
+            }
+        });
+    },
+    alert: function (msg) {
+        $.blockUI({
+            theme: true,
+            title: 'Linksoft',
+            message: '<p>' + msg + '</p>',
+            timeout: 1000
+        });
+    },
+    getParameterByName: function (name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 };
 

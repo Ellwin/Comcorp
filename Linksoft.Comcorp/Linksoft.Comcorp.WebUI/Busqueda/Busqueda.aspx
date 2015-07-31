@@ -38,13 +38,13 @@
             <div class="panel-heading">
                 <div class="row">
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" id="txtCodigo" placeholder="Codigo" />
+                            <input type="text" class="form-control input-sm" id="txtCodigo" placeholder="Codigo" />
                         </div>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" id="txtDescripcion" placeholder="Descripcion"/>
+                            <input type="text" class="form-control input-sm" id="txtDescripcion" placeholder="Descripcion"/>
                         </div>
                         <div class="col-xs-2">
-                            <button class="btn btn-info" type="button"><span class="glyphicon glyphicon-arrow-right"></span> Buscar</button>
+                            <button class="btn btn-info btn-sm" type="button"><span class="glyphicon glyphicon-arrow-right"></span> Buscar</button>
                         </div>
                     </div>
             </div>

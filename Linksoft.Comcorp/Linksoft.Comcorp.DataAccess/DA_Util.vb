@@ -153,14 +153,14 @@ ErrorHandler:
 
 
 
-    Public Shared Function GetPeriodoActual(ByVal strCia As String, ByVal strFecha As String) As BE_Periodo
+    Public Shared Function GetPeriodoActual(ByVal codCia As String, ByVal dsFecha As String) As BE_Periodo
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)
                 cn.Open()
                 Using cmd As New SqlCommand("SP_PERIODOACTUAL", cn)
                     cmd.CommandType = CommandType.StoredProcedure
-                    cmd.Parameters.Add("@ccod_cia", SqlDbType.VarChar).Value = strCia
-                    cmd.Parameters.Add("@cfecha", SqlDbType.VarChar).Value = strFecha
+                    cmd.Parameters.Add("@ccod_cia", SqlDbType.VarChar).Value = codCia
+                    cmd.Parameters.Add("@cfecha", SqlDbType.VarChar).Value = dsFecha
 
                     cmd.Parameters.Add("@cresulperiodo", SqlDbType.VarChar, 6).Direction = ParameterDirection.Output
                     cmd.Parameters.Add("@cresulejercicio", SqlDbType.VarChar, 6).Direction = ParameterDirection.Output
@@ -172,6 +172,41 @@ ErrorHandler:
                     objPeriodo.codPeriodo = cmd.Parameters("@cresulperiodo").Value.ToString.Trim
 
                     Return objPeriodo
+                End Using
+            End Using
+        Catch ex As Exception
+            DA_BaseClass.LogSQLException(ex)
+            Throw ex
+        End Try
+    End Function
+
+    Public Shared Function GetTipoCambio(ByVal codCia As String, ByVal codMoneda As String, ByVal dsFecha As String) As BE_TipoCambio
+        Try
+            Using cn As New SqlConnection(ConnectionStringSQLServer)
+                cn.Open()
+                Using cmd As New SqlCommand("Usp_Concorp_Util_GetTipoCambio", cn)
+                    cmd.CommandType = CommandType.StoredProcedure
+                    cmd.Parameters.Add("@codCia", SqlDbType.VarChar).Value = codCia
+                    cmd.Parameters.Add("@codMoneda", SqlDbType.VarChar).Value = codMoneda
+                    cmd.Parameters.Add("@dsFecha", SqlDbType.VarChar).Value = dsFecha
+                    Using lector As SqlDataReader = cmd.ExecuteReader
+                        Dim lstTipoCambio As New List(Of BE_TipoCambio)
+                        Dim objTipoCambio As BE_TipoCambio
+                        While lector.Read()
+                            objTipoCambio = New BE_TipoCambio
+                            With objTipoCambio
+                                .codCia = Convert.ToString(lector.Item("codCia"))
+                                .codMoneda = Convert.ToString(lector.Item("codMoneda"))
+                                .feTipoCambio = Convert.ToDateTime(lector.Item("feTipoCambio"))
+                                .nuTipoCambioCompra = Convert.ToDouble(lector.Item("nuTipoCambioCompra"))
+                                .nuTipoCambioVenta = Convert.ToDouble(lector.Item("nuTipoCambioVenta"))
+                                .dsEstado = Convert.ToString(lector.Item("dsEstado"))
+                            End With
+                            lstTipoCambio.Add(objTipoCambio)
+                        End While
+                        lector.Close()
+                        Return lstTipoCambio.FirstOrDefault
+                    End Using
                 End Using
             End Using
         Catch ex As Exception

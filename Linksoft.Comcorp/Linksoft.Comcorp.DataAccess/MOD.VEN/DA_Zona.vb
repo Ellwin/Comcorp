@@ -8,13 +8,13 @@ Public Class DA_Zona
     Inherits DA_BaseClass
 
 
-    Public Shared Function ListarZonas(ByVal strCia As String) As List(Of BE_Zona)
+    Public Shared Function ListarZonas(ByVal codCia As String) As List(Of BE_Zona)
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)
                 cn.Open()
-                Using cmd As New SqlCommand("usp_fa_ctzonas_ListZonas", cn)
+                Using cmd As New SqlCommand("Usp_Concorp_fa_ctzonas_ListZonas", cn)
                     cmd.CommandType = CommandType.StoredProcedure
-                    cmd.Parameters.Add("@codCia", SqlDbType.VarChar).Value = strCia
+                    cmd.Parameters.Add("@codCia", SqlDbType.VarChar).Value = codCia
                     Using lector As SqlDataReader = cmd.ExecuteReader
                         Dim lstZona As New List(Of BE_Zona)
                         Dim zona As BE_Zona
@@ -31,6 +31,7 @@ Public Class DA_Zona
                 End Using
             End Using
         Catch ex As Exception
+            DA_BaseClass.LogSQLException(ex)
             Throw ex
         End Try
     End Function

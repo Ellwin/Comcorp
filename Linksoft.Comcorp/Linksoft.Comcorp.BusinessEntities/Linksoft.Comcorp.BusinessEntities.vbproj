@@ -65,12 +65,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Busqueda\BE_Item.vb" />
+    <Compile Include="MOD.ALM\BE_Almacen.vb" />
+    <Compile Include="MOD.CON\BE_Moneda.vb" />
+    <Compile Include="MOD.CON\BE_TipoCambio.vb" />
+    <Compile Include="MOD.VEN\BE_Cliente.vb" />
+    <Compile Include="MOD.VEN\BE_CondicionPago.vb" />
+    <Compile Include="MOD.VEN\BE_ItemFactura.vb" />
     <Compile Include="Busqueda\BE_Numerador.vb" />
     <Compile Include="MOD.ADM\BE_Cia.vb" />
     <Compile Include="MOD.ADM\BE_MenuWeb.vb" />
     <Compile Include="MOD.ADM\BE_SesionLogin.vb" />
     <Compile Include="MOD.ADM\BE_Usuario.vb" />
     <Compile Include="MOD.CON\BE_Periodo.vb" />
+    <Compile Include="MOD.VEN\BE_OperacionFacturacion.vb" />
+    <Compile Include="MOD.VEN\BE_Vendedor.vb" />
     <Compile Include="MOD.VEN\BE_Zona.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

@@ -60,7 +60,7 @@ Public Class Login
                     resultado = False
                 Else
                     strFecha = Format(CDate(txtFecha.Text), "yyyy-MM-dd")
-                    objPeriodo = Funciones.GetPeriodoActual(txtCodCompania.Text, strFecha)
+                    objPeriodo = BL_Util.GetPeriodoActual(txtCodCompania.Text, strFecha)
                 End If
             End If
 

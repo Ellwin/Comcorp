@@ -5,13 +5,13 @@ Imports Linksoft.Comcorp.BusinessEntities
 Public Class DA_Cia
     Inherits DA_BaseClass
 
-    Public Shared Function GetCia(ByVal strCia As String) As BE_Cia
+    Public Shared Function GetCia(ByVal codCia As String) As BE_Cia
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)
                 cn.Open()
-                Using cmd As New SqlCommand("usp_ad_ctcia_GetCia", cn)
+                Using cmd As New SqlCommand("Usp_Concorp_ad_ctcia_GetCia", cn)
                     cmd.CommandType = CommandType.StoredProcedure
-                    cmd.Parameters.Add("@codCia", SqlDbType.VarChar).Value = strCia
+                    cmd.Parameters.Add("@codCia", SqlDbType.VarChar).Value = codCia
                     Using lector As SqlDataReader = cmd.ExecuteReader
                         Dim lstCia As New List(Of BE_Cia)
                         Dim cia As BE_Cia
@@ -29,6 +29,7 @@ Public Class DA_Cia
                 End Using
             End Using
         Catch ex As Exception
+            DA_BaseClass.LogSQLException(ex)
             Throw ex
         End Try
     End Function

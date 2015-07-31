@@ -6,14 +6,14 @@ Imports Linksoft.Comcorp.BusinessEntities
 Public Class DA_SesionLogin
     Inherits DA_BaseClass
 
-    Public Shared Function GetLogin(ByVal strUsuario As String, ByVal strPassword As String) As BE_SesionLogin
+    Public Shared Function GetLogin(ByVal codUsuario As String, ByVal dsPassword As String) As BE_SesionLogin
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)
                 cn.Open()
-                Using cmd As New SqlCommand("usp_Adm_SeguridadUsuario_GetLogin", cn)
+                Using cmd As New SqlCommand("Usp_Concorp_Adm_SeguridadUsuario_GetLogin", cn)
                     cmd.CommandType = CommandType.StoredProcedure
-                    cmd.Parameters.Add("@codUsuario", SqlDbType.VarChar).Value = strUsuario
-                    cmd.Parameters.Add("@dsPassword", SqlDbType.VarChar).Value = strPassword
+                    cmd.Parameters.Add("@codUsuario", SqlDbType.VarChar).Value = codUsuario
+                    cmd.Parameters.Add("@dsPassword", SqlDbType.VarChar).Value = dsPassword
                     Using lector As SqlDataReader = cmd.ExecuteReader
                         Dim lstSesionLogin As New List(Of BE_SesionLogin)
                         Dim objSesionLogin As BE_SesionLogin

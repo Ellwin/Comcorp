@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Constantes.vb" />
     <Compile Include="Funciones.vb" />
+    <Compile Include="JsonMessage.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

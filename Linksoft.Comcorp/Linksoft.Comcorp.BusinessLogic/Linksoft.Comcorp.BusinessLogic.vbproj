@@ -64,11 +64,19 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL_Util.vb" />
     <Compile Include="Busqueda\BL_Item.vb" />
+    <Compile Include="MOD.ALM\BL_Almacen.vb" />
+    <Compile Include="MOD.CON\BL_Moneda.vb" />
+    <Compile Include="MOD.VEN\BL_Cliente.vb" />
+    <Compile Include="MOD.VEN\BL_CondicionPago.vb" />
+    <Compile Include="MOD.VEN\BL_ItemFactura.vb" />
     <Compile Include="Busqueda\BL_Numerador.vb" />
     <Compile Include="MOD.ADM\BL_Cia.vb" />
     <Compile Include="MOD.ADM\BL_MenuWeb.vb" />
     <Compile Include="MOD.ADM\BL_SesionLogin.vb" />
+    <Compile Include="MOD.VEN\BL_OperacionFacturacion.vb" />
+    <Compile Include="MOD.VEN\BL_Vendedor.vb" />
     <Compile Include="MOD.VEN\BL_Zona.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

@@ -27,5 +27,12 @@
     Public Const SUCCESS_DEFAULT_MESSAGE As String = "Se guardaron los cambios correctamente."
 
 #End Region
-   
+
+#Region "Formatos de Fecha"
+    Public Const FORMAT_YYYY_MM_DD As String = "yyyy-MM-dd"
+    Public Const FORMAT_DD_MM_YYYY As String = "dd-MM-yyyy"
+#End Region
+
+    Public Const MONEDA_SOLES As String = "01"
+    Public Const MONEDA_DOLARES As String = "02"
 End Class

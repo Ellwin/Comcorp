@@ -3,8 +3,8 @@ Imports Linksoft.Comcorp.DataAccess
 
 Public Class BL_SesionLogin
 
-    Public Shared Function GetLogin(ByVal strUsuario As String, ByVal strPassword As String) As BE_SesionLogin
-        Return DA_SesionLogin.GetLogin(strUsuario, strPassword)
+    Public Shared Function GetLogin(ByVal codUsuario As String, ByVal dsPassword As String) As BE_SesionLogin
+        Return DA_SesionLogin.GetLogin(codUsuario, dsPassword)
     End Function
 
 End Class

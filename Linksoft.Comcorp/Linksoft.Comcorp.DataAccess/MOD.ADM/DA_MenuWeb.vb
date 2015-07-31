@@ -10,7 +10,7 @@ Public Class DA_MenuWeb
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)
                 cn.Open()
-                Using cmd As New SqlCommand("usp_Adm_SeguridadAutorizacion_ListMenuWebByRol", cn)
+                Using cmd As New SqlCommand("Usp_Concorp_Adm_SeguridadAutorizacion_ListMenuWebByRol", cn)
                     cmd.CommandType = CommandType.StoredProcedure
                     cmd.Parameters.Add("@codRol", SqlDbType.Char).Value = codRol
                     Using lector As SqlDataReader = cmd.ExecuteReader
@@ -31,6 +31,7 @@ Public Class DA_MenuWeb
                 End Using
             End Using
         Catch ex As Exception
+            DA_BaseClass.LogSQLException(ex)
             Throw ex
         End Try
     End Function
