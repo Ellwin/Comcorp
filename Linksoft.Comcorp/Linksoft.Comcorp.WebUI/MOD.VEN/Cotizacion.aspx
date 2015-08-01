@@ -5,6 +5,7 @@
         div.dataTables_wrapper {
             width: 100%;
             margin: 0 auto;
+            font-size: 12px;
         }
     </style>
     <script type="text/javascript">
@@ -13,27 +14,78 @@
         var tablaCotizacion;
         $(function () {
             linksoft.util.configDatepickerEs();
-            getTipoCambio();
 
-            $('#txtFechaEmision').datepicker().datepicker("setDate", new Date());
-            $('#txtFechaVencimiento').datepicker().datepicker("setDate", new Date());
+            linksoft.util.setToolbar('regCotizacion', function () {
+                habilitarControles();
+            });
+
+            $('#txtFechaEmision').datepicker();
+            $('#txtFechaVencimiento').datepicker();
+
+            getTipoCambio();
 
             $('a[href="#tabMain"]').tab('show');
 
+            linksoft.util.importes('txtTipoCambio');
 
-            tablaCotizacion = $('#tablaCotizacionDetalle').dataTable({
+            tablaCotizacion = $('#tablaCotizacionDetalle').DataTable({
                 "scrollY": 200,
                 "scrollX": true,
                 "paging": false,
+                "ordering": false,
                 "jQueryUI": true
             });
 
+            $('#tablaCotizacionDetalle tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    tablaCotizacion.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+            $('#btnEliminarItem').click(function () {
+                $('#tablaCotizacionDetalle').DataTable().row('.selected').remove().draw(false);
+
+                calcularTotales();
+            });
 
             Busqueda();
 
 
+            $("#btnGuardar").on('click', function () {
+                Guardar();
+                return false;
+            });
 
         });
+
+        function Guardar() {
+            var cotizacion = {}; 
+        }
+
+        function habilitarControles() {
+            if (Accion == 'add') {
+                $("#txtDoc").attr('readonly', true);
+                $("#txtSerie").attr('readonly', true);
+                $("#txtNumero").attr('readonly', true);
+                $("#txtAlmacen").attr('readonly', true);
+                $("#txtCliente").attr('readonly', true);
+                $("#txtOperFact").attr('readonly', true);
+                $("#txtVendedor").attr('readonly', true);
+                $("#txtCondPago").attr('readonly', true);
+                $("#txtUnidadOperativa").attr('readonly', true);
+                $("#txtZona").attr('readonly', true);
+                $("#txtCobrador").attr('readonly', true);
+
+                var fecha = $('#lblFecha').html();
+                $("#txtFechaEmision").val(fecha);
+                $("#txtFechaVencimiento").val(fecha);
+            }
+            
+        }
 
         function cargarItemNumerador(doc, serie) {
             $("#txtDoc").val(doc);
@@ -316,21 +368,55 @@
         function addItemFactura(objItem) {
             var table = $('#tablaCotizacionDetalle').DataTable();
             table.row.add([
+                objItem.codAlmacen,
                 objItem.codArticulo,
                 objItem.dsArticulo,
-                objItem.dsTipoItem,
                 objItem.codUnidadMedidaAlmacen,
+                objItem.codVendedor,
                 objItem.nuSaldo,
+                objItem.nuPrecio,
+                objItem.nuCantidad,
+                objItem.nuBruto,
+                objItem.nuNeto,
+                objItem.nuImpuesto,
+                objItem.nuTotal,
+                objItem.dsTipoItem,
                 objItem.codLinea,
                 objItem.dsLinea,
                 objItem.codSubLinea,
-                objItem.dsSubLinea,
-                objItem.dsModelo,
-                objItem.dsMarca,
-                objItem.dsColor
+                objItem.dsSubLinea
             ]).draw();
 
             table.columns.adjust().draw();
+
+            calcularTotales();
+        }
+
+        function calcularTotales() {
+            var totalNeto = 0.00,
+                totalImpuesto = 0.00,
+                total = 0.00;
+
+            var table = $('#tablaCotizacionDetalle').DataTable();
+            var arrNeto = table.column(9).data();
+            var arrImpuesto = table.column(10).data();
+            var arrTotal = table.column(11).data();
+
+            for (var i = 0; i < arrNeto.length; i++) {
+                totalNeto += parseFloat(arrNeto[i]);
+            }
+
+            for (var i = 0; i < arrImpuesto.length; i++) {
+                totalImpuesto += parseFloat(arrImpuesto[i]);
+            }
+
+            for (var i = 0; i < arrTotal.length; i++) {
+                total += parseFloat(arrTotal[i]);
+            }
+
+            $('#txtNeto').val(totalNeto.toFixed(2));
+            $('#txtImpuesto').val(totalImpuesto.toFixed(2));
+            $('#txtTotal').val(total.toFixed(2));
         }
         
     </script>
@@ -349,7 +435,7 @@
                     
                         <div class="input-group"> 
                            <span class="input-group-btn">
-                              <button type="button" id="btnBuscarDoc" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                              <button type="button" id="btnBuscarDoc" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="text" class="form-control" id="txtDoc" readonly="readonly"/>
                         </div>
@@ -360,12 +446,12 @@
                     </div>
                     <div class="col-xs-2">
                         <label>Número</label>
-                        <input type="text" class="form-control input-sm" id="txtNumero" readonly="readonly" required/>
+                        <input type="text" class="form-control input-sm" id="txtNumero" readonly="readonly"/>
                     </div>
                 
                     <div class="col-xs-2">
                         <label>Fe. Emisión</label>
-                        <input type="text" class="form-control input-sm" id="txtFechaEmision" required/>
+                        <input type="text" class="form-control input-sm" id="txtFechaEmision" readonly="readonly"/>
                     </div>
                 </div>
                 <br />
@@ -374,7 +460,7 @@
                         <label>Almacen</label>
                         <div class="input-group"> 
                            <span class="input-group-btn">
-                              <button type="button" id="btnBuscarAlmacen" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                              <button type="button" id="btnBuscarAlmacen" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="hidden" class="form-control" id="txtCodAlmacen"/>
                            <input type="text" class="form-control" id="txtAlmacen" readonly="readonly" />
@@ -382,14 +468,14 @@
                     </div>
                     <div class="col-xs-2">
                         <label>Fe. Vencimiento</label>
-                        <input type="text" class="form-control input-sm" id="txtFechaVencimiento" required/>
+                        <input type="text" class="form-control input-sm" id="txtFechaVencimiento" readonly="readonly"/>
                     </div>
                 </div>
                 <br />
                 <div class="row">
                     <div class="col-xs-8">
                         <label>Glosa</label>
-                        <input type="text" class="form-control input-sm" id="txtGlosa" />
+                        <input type="text" class="form-control input-sm" id="txtGlosa" readonly="readonly" />
                     </div>
                     <div class="col-xs-2">
                         <label >Estado:</label>
@@ -404,7 +490,7 @@
                         <label>Cliente</label>
                         <div class="input-group"> 
                            <span class="input-group-btn">
-                              <button type="button" id="btnBuscarCliente" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                              <button type="button" id="btnBuscarCliente" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="hidden" class="form-control" id="txtCodCliente" />
                            <input type="hidden" class="form-control" id="txtCodListaPrecio" />
@@ -413,14 +499,14 @@
                     </div>
                     <div class="col-xs-2">
                         <label>Tipo Cambio</label>
-                        <input type="text" class="form-control input-sm" id="txtTipoCambio" />
+                        <input type="text" class="form-control input-sm text-right" id="txtTipoCambio" readonly="readonly"/>
                     </div>
                 </div>
                 <br />
                 <div class="row">
                     <div class="col-xs-8">
                         <label>Direccion</label>
-                        <input type="text" class="form-control input-sm" id="txtDireccion" />
+                        <input type="text" class="form-control input-sm" id="txtDireccion" readonly="readonly" />
                     </div>
                     
                 </div>
@@ -430,7 +516,7 @@
                         <label>Oper. Fact.</label>
                         <div class="input-group"> 
                            <span class="input-group-btn">
-                              <button type="button" id="btnBuscarOperFact" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                              <button type="button" id="btnBuscarOperFact" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="hidden" class="form-control" id="txtCodOperFact" />
                            <input type="text" class="form-control" id="txtOperFact" readonly="readonly" />
@@ -439,7 +525,7 @@
                     <div class="col-xs-2">
                         <label>Moneda.</label>
                         <input type="hidden" class="form-control input-sm" id="txtCodMoneda" />
-                        <input type="text" class="form-control input-sm" id="txtMoneda" readonly="readonly" required/>
+                        <input type="text" class="form-control input-sm" id="txtMoneda" readonly="readonly"/>
                     </div>
                 </div>
                 <br />
@@ -448,15 +534,11 @@
                         <label>Vendedor</label>
                         <div class="input-group"> 
                            <span class="input-group-btn">
-                              <button type="button" id="btnBuscarVendedor" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                              <button type="button" id="btnBuscarVendedor" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="hidden" class="form-control input-sm" id="txtCodVendedor" />
                            <input type="text" class="form-control" id="txtVendedor" readonly="readonly" />
                         </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <label>Reg. Tribut.</label>
-                        <input type="text" class="form-control input-sm" id="Text6" readonly="readonly" required/>
                     </div>
                 </div>
                 <br />
@@ -465,7 +547,7 @@
                         <label>Condición</label>
                         <div class="input-group"> 
                            <span class="input-group-btn">
-                              <button type="button" id="btnBuscarCondPago" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                              <button type="button" id="btnBuscarCondPago" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="hidden" class="form-control" id="txtCodCondPago" />
                            <input type="text" class="form-control" id="txtCondPago" readonly="readonly" />
@@ -473,7 +555,7 @@
                     </div>
                     <div class="col-xs-2">
                         <label>Tipo Cond.</label>
-                        <input type="text" class="form-control input-sm" id="txtTipoCondPago" readonly="readonly" required/>
+                        <input type="text" class="form-control input-sm" id="txtTipoCondPago" readonly="readonly"/>
                     </div>
                 </div>
                 <hr />
@@ -482,7 +564,7 @@
                         <label>Unidad Operativa</label>
                         <div class="input-group"> 
                            <span class="input-group-btn">
-                              <button type="button" id="btnBuscarUnidadOperativa" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                              <button type="button" id="btnBuscarUnidadOperativa" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="hidden" class="form-control" id="txtCodUnidadOperativa" />
                            <input type="text" class="form-control" id="txtUnidadOperativa" readonly="readonly" />
@@ -495,7 +577,7 @@
                         <label>Zona de Venta</label>
                         <div class="input-group"> 
                            <span class="input-group-btn">
-                              <button type="button" id="btnBuscarZona" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                              <button type="button" id="btnBuscarZona" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="hidden" class="form-control" id="txtCodZona" />
                            <input type="text" class="form-control" id="txtZona" readonly="readonly" />
@@ -508,7 +590,7 @@
                         <label>Cobrador</label>
                         <div class="input-group"> 
                            <span class="input-group-btn">
-                              <button type="button" id="btnBuscarCobrador" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
+                              <button type="button" id="btnBuscarCobrador" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="hidden" class="form-control" id="txtCodCobrador" />
                            <input type="text" class="form-control" id="txtCobrador" readonly="readonly" />
@@ -545,24 +627,46 @@
             </div>
             <div class="panel panel-body">
                 <div class="row">
-                    <button type="button" id="btnAgregarItem" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span>  Agregar</button>
+                    <div class="col-xs-6"> 
+                        <br />
+                        <button type="button" id="btnAgregarItem" class="btn btn-xs"><span class="glyphicon glyphicon-plus text-success"></span>  Agregar</button>
+                        <button type="button" id="btnEliminarItem" class="btn btn-xs"><span class="glyphicon glyphicon-remove text-danger"></span>  Eliminar</button>
+                    </div>
+                    <div class="col-xs-2">
+                        <label>Neto</label>
+                        <input type="text" class="form-control input-sm text-right" id="txtNeto" readonly="readonly"  />
+                    </div> 
+                    <div class="col-xs-2">
+                        <label>Impuesto</label>
+                        <input type="text" class="form-control input-sm text-right" id="txtImpuesto" readonly="readonly" />
+                    </div>
+                    <div class="col-xs-2">
+                        <label>Total</label>
+                        <input type="text" class="form-control input-sm text-right" id="txtTotal" readonly="readonly" />
+                    </div>
                 </div>
+                
             </div>
-            <table id="tablaCotizacionDetalle" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <table id="tablaCotizacionDetalle" class="display" cellspacing="0" width="100%">
                 <thead>
                     <tr>
+                        <th>Alm.</th>
                         <th>Artículo</th>
                         <th>Descripción</th>
-                        <th>Tipo Item</th>
-                        <th>Unidad Medida</th>
+                        <th>U. Med.</th>
+                        <th>Vendedor</th>
                         <th>Saldo</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Bruto</th>
+                        <th>Neto</th>
+                        <th>Impuesto</th>
+                        <th>Total</th>
+                        <th>Tipo Item</th>
                         <th>Cod. Línea</th>
                         <th>Des. Línea</th>
                         <th>Cod. SubLínea</th>
                         <th>Des. SubLínea</th>
-                        <th>Modelo</th>
-                        <th>Marca</th>
-                        <th>Color</th>
                     </tr>
                 </thead>
             </table>

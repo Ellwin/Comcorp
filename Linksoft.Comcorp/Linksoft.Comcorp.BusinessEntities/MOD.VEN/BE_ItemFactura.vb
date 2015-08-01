@@ -23,12 +23,29 @@
     Public Property codListaPrecio As String
 
     Public Property bIva As Boolean
+    Public Property nuTasaImpuesto As Double
+
     Public Property nuCantidad As Double
+
     Public Property nuPrecio As Double
     Public Property nuPrecioMN As Double
     Public Property nuPrecioME As Double
-    Public Property nuTasaImpuesto As Double
 
+    Public Property nuBruto As Double
+    Public Property nuBrutoMN As Double
+    Public Property nuBrutoME As Double
+
+    Public Property nuNeto As Double
+    Public Property nuNetoMN As Double
+    Public Property nuNetoME As Double
+
+    Public Property nuImpuesto As Double
+    Public Property nuImpuestoMN As Double
+    Public Property nuImpuestoME As Double
+
+    Public Property nuTotal As Double
+    Public Property nuTotalMN As Double
+    Public Property nuTotalME As Double
 
     Public Property dsEstado As String
 

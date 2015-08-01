@@ -48,8 +48,8 @@ linksoft.util = {
             }
         });
     },
-    setToolbar: function (panelFormSelector, jqGridSelector, callback) {
-        var $obj = $('#' + panelFormSelector + ' input,' + '#' + panelFormSelector + ' select');
+    setToolbar: function (panelFormSelector, callback) {
+        var $obj = $('#' + panelFormSelector + ' input,' + '#' + panelFormSelector + ' select,' + '#' + panelFormSelector + ' button');
 
         $("#btnNuevo").click(function () {
 
@@ -57,13 +57,13 @@ linksoft.util = {
                 var $control = $(this);
                 var $type = $control.attr('type');
 
-                if ($type == 'text' || $type == 'password') {
+                if ($type == 'text' || $type == 'password' || $type == 'hidden') {
 
                     $control.val('');
                     $control.attr('readonly', false);
 
                 }
-                if ($type == 'checkbox' || $type == 'radio') {
+                if ($type == 'checkbox' || $type == 'radio' || $type == 'button') {
 
                     $control.attr('checked', false);
                     $control.attr('disabled', false);
@@ -94,6 +94,8 @@ linksoft.util = {
             $('#tabMain').find(':input:first').focus();
 
             Accion = 'add';
+
+            callback();
         });
 
         $("#btnEditar").click(function () {
@@ -120,7 +122,7 @@ linksoft.util = {
                     $control.attr('readonly', false);
 
                 }
-                if ($type == 'checkbox' || $type == 'radio') {
+                if ($type == 'checkbox' || $type == 'radio' || $type == 'button') {
 
                     $control.attr('disabled', false);
                 }
@@ -163,13 +165,13 @@ linksoft.util = {
                 var $control = $(this);
                 var $type = $control.attr('type');
 
-                if ($type == 'text' || $type == 'password') {
+                if ($type == 'text' || $type == 'password' || $type == 'hidden') {
 
                     $control.val('');
                     $control.attr('readonly', true);
 
                 }
-                if ($type == 'checkbox' || $type == 'radio') {
+                if ($type == 'checkbox' || $type == 'radio' || $type == 'button') {
                     $control.attr('disabled', true);
                 }
 
@@ -192,58 +194,32 @@ linksoft.util = {
         });
 
         $('#btnPrimero').click(function () {
-            linksoft.util.firstRow(jqGridSelector);
+
         });
 
         $('#btnAnterior').click(function () {
-            linksoft.util.previousRow(jqGridSelector);
+
         });
 
         $('#btnSiguiente').click(function () {
-            linksoft.util.nextRow(jqGridSelector);
+
         });
 
         $('#btnUltimo').click(function () {
-            linksoft.util.lastRow(jqGridSelector);
+
         });
     },
     nextRow: function (selector) {
-        var ids = $("#" + selector).jqGrid("getDataIDs");
-        var selectedRow = $("#" + selector).jqGrid("getGridParam", "selrow");
-        var curr_index = 0;
 
-        for (var i = 0; i < ids.length; i++) {
-            if (ids[i] == selectedRow)
-                curr_index = i;
-        }
-
-        if ((curr_index + 1) < ids.length)
-            $("#" + selector).jqGrid("setSelection", ids[curr_index + 1]);
     },
     previousRow: function (selector) {
 
-        var ids = $("#" + selector).jqGrid("getDataIDs");
-        var selectedRow = $("#" + selector).jqGrid("getGridParam", "selrow");
-        var curr_index = 0;
-
-        for (var i = 0; i < ids.length; i++) {
-            if (ids[i] == selectedRow)
-                curr_index = i;
-        }
-
-        if ((curr_index - 1) >= 0)
-            $("#" + selector).jqGrid("setSelection", ids[curr_index - 1]);
     },
     firstRow: function (selector) {
-        var ids = $("#" + selector).jqGrid("getDataIDs");
 
-        $("#" + selector).jqGrid("setSelection", ids[0]);
     },
     lastRow: function (selector) {
-        var ids = $("#" + selector).jqGrid("getDataIDs");
-        var last = ids.length - 1;
 
-        $("#" + selector).jqGrid("setSelection", ids[last]);
     },
     showMessage: function (message, alertType) {
         $('#message').append('<div id="alertdiv" class="alert ' + alertType + '"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>')
@@ -314,6 +290,12 @@ linksoft.util = {
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    },
+    importes: function (selector) {
+        var $this = $('#' + selector);
+        $this.on('keypress', function (e) {
+            if (String.fromCharCode(e.keyCode).match(/[^0-9.]/g)) return false;
+        });
     }
 };
 

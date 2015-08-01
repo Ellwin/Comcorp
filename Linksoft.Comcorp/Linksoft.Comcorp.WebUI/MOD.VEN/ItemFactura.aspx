@@ -33,8 +33,44 @@
                 linksoft.util.openModalCustomSize('modalBusqueda', 'frameBusqueda', '<%=Linksoft.Comcorp.WebUI.WebUtil.AbsoluteWebRoot%>Busqueda/Busqueda.aspx?tipo=BUSQUEDA&valor=ARTICULO', 'Busqueda de Artículos', '400', '450');
             });
 
+            linksoft.util.importes('txtCantidad');
+            linksoft.util.importes('txtPrecio');
 
             $('#btnAceptar').click(function () {
+
+                var alert_type = 'alert-danger'
+
+                if ($('#txtCodArticulo').val() == '') {
+                    linksoft.util.alert('Ingrese artículo.');
+                    $('#txtArticulo').focus();
+                    return;
+                }
+
+                if ($('#txtCantidad').val() == '') {
+                    linksoft.util.alert('Ingrese cantidad.');
+                    $('#txtCantidad').focus();
+                    return;
+                }
+
+                if ($('#txtCantidad').val() == 0) {
+                    linksoft.util.alert('Ingrese cantidad válida.');
+                    $('#txtCantidad').focus();
+                    return;
+                }
+
+                if ($('#txtPrecio').val() == '') {
+                    linksoft.util.alert('Ingrese precio.');
+                    $('#txtPrecio').focus();
+                    return;
+                }
+
+                if ($('#txtPrecio').val() == 0) {
+                    linksoft.util.alert('Ingrese precio válido.');
+                    $('#txtPrecio').focus();
+                    return;
+                }
+
+
                 addRow(objItem);
             });
 
@@ -69,18 +105,25 @@
         }
 
         function addRow(objItem) {
+            objItem.codAlmacen = $('#txtCodAlmacen').val();
             objItem.codArticulo = $('#txtCodArticulo').val();
             objItem.dsArticulo = $('#txtArticulo').val();
-            objItem.dsTipoItem = 'B';
             objItem.codUnidadMedidaAlmacen = $('#txtUnidadMedida').val();
+            objItem.codVendedor = $('#txtCodVendedor').val();
             objItem.nuSaldo = $('#txtStock').val();
+            objItem.nuPrecio = $('#txtPrecio').val();
+            objItem.nuCantidad = $('#txtCantidad').val();
+            objItem.nuBruto = $('#txtBruto').val();
+            objItem.nuNeto = $('#txtNeto').val();
+            objItem.nuImpuesto = $('#txtImpuesto').val();
+            objItem.nuTotal = $('#txtTotal').val();
+
+            objItem.dsTipoItem = 'B';
             objItem.codLinea = $('#txtCodLinea').val();
             objItem.dsLinea = $('#txtLinea').val();
             objItem.codSubLinea = $('#txtCodSubLinea').val();
             objItem.dsSubLinea = $('#txtSubLinea').val();
-            objItem.dsModelo = $('#txtModelo').val();
-            objItem.dsMarca = $('#txtMarca').val();
-            objItem.dsColor = $('#txtColor').val();
+            
             parent.addItemFactura(objItem);
             parent.closeModal();
         }

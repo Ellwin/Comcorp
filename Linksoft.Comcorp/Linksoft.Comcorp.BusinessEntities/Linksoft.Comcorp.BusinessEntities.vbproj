@@ -70,6 +70,8 @@
     <Compile Include="MOD.CON\BE_TipoCambio.vb" />
     <Compile Include="MOD.VEN\BE_Cliente.vb" />
     <Compile Include="MOD.VEN\BE_CondicionPago.vb" />
+    <Compile Include="MOD.VEN\BE_CotizacionCabecera.vb" />
+    <Compile Include="MOD.VEN\BE_CotizacionDetalle.vb" />
     <Compile Include="MOD.VEN\BE_ItemFactura.vb" />
     <Compile Include="Busqueda\BE_Numerador.vb" />
     <Compile Include="MOD.ADM\BE_Cia.vb" />
