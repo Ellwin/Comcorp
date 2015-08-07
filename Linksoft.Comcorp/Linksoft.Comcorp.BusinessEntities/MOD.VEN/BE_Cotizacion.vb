@@ -1,4 +1,4 @@
-﻿Public Class BE_CotizacionCabecera
+﻿Public Class BE_Cotizacion
 
     Public Property codCia As String
     Public Property dsDoc As String
@@ -26,12 +26,16 @@
     Public Property nuTipoCambio As Double
     Public Property codMoneda As String
 
+    Public Property nuBruto As Double
     Public Property nuBrutoMN As Double
     Public Property nuBrutoME As Double
+    Public Property nuNeto As Double
     Public Property nuNetoMN As Double
     Public Property nuNetoME As Double
+    Public Property nuImpuesto As Double
     Public Property nuImpuestoMN As Double
     Public Property nuImpuestoME As Double
+    Public Property nuTotal As Double
     Public Property nuTotalMN As Double
     Public Property nuTotalME As Double
 
@@ -40,4 +44,9 @@
     Public Property dsIndImpreso As String
 
     Public Property dsEstado As String
+
+    Public Property Accion As String
+
+    Public Property lstCotizacionDetalle As List(Of BE_CotizacionDetalle)
+
 End Class

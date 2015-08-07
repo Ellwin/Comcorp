@@ -285,6 +285,33 @@ linksoft.util = {
             timeout: 1000
         });
     },
+    openModalConfirmacion: function (mensaje, callback) {
+        $('#message').html(mensaje);
+        $('#message').dialog({
+            title: 'Confirmación',
+            modal: true,
+            open: function (event, ui) {
+                $(".ui-dialog-titlebar-close").hide();
+            },
+            close: function () {
+                $('#message').html('');
+                $('#message').dialog('destroy');
+            },
+            buttons: {
+                "Aceptar": function () {
+                    if (typeof (callback) != typeof (undefined))
+                        callback();
+
+                    $('#message').html('');
+                    $('#message').dialog('destroy');
+                },
+                "Cancelar": function () {
+                    $('#message').html('');
+                    $('#message').dialog('destroy');
+                }
+            }
+        });
+    },
     getParameterByName: function (name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

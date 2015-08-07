@@ -10,7 +10,6 @@
     </style>
     <script type="text/javascript">
         var cotizacionURL = 'Handlers/HandlerCotizacion.ashx';
-        var currentCotizacion = {};
         var tablaCotizacion;
         $(function () {
             linksoft.util.configDatepickerEs();
@@ -33,7 +32,28 @@
                 "scrollX": true,
                 "paging": false,
                 "ordering": false,
-                "jQueryUI": true
+                "jQueryUI": true,
+                "columns": [
+                            { "data": "codAlmacen" },
+                            { "data": "codArticulo" },
+                            { "data": "dsArticulo" },
+                            { "data": "codUnidadMedidaAlmacen" },
+                            { "data": "codVendedor" },
+                            { "data": "nuSaldo", "className": "text-right" },
+                            { "data": "nuPrecio", "className": "text-right" },
+                            { "data": "nuCantidad", "className": "text-right" },
+                            { "data": "nuBruto", "className": "text-right" },
+                            { "data": "nuNeto", "className": "text-right" },
+                            { "data": "nuImpuesto", "className": "text-right" },
+                            { "data": "nuTotal", "className": "text-right" },
+                            { "data": "dsTipoItem", "className": "text-center" },
+                            { "data": "codLinea" },
+                            { "data": "dsLinea" },
+                            { "data": "codSubLinea" },
+                            { "data": "dsSubLinea" },
+                            { "data": "bIva", "visible": false },
+                            { "data": "nuTasaImpuesto", "visible": false }
+                          ]
             });
 
             $('#tablaCotizacionDetalle tbody').on('click', 'tr', function () {
@@ -56,14 +76,136 @@
 
 
             $("#btnGuardar").on('click', function () {
-                Guardar();
+
+                var alert_type = 'alert-danger'
+
+                if ($('#txtDoc').val() == '') {
+                    linksoft.util.alert('Ingrese documento.');
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtDoc').focus();
+                    return false;
+                }
+
+                if ($('#txtSerie').val() == '') {
+                    linksoft.util.alert('Ingrese serie.');
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtSerie').focus();
+                    return false;
+                }
+
+                if ($('#txtCodAlmacen').val() == '') {
+                    linksoft.util.alert('Ingrese almacén.');
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtAlmacen').focus();
+                    return false;
+                }
+
+                if ($('#txtCodCliente').val() == '') {
+                    linksoft.util.alert('Ingrese cliente.', alert_type);
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtCliente').focus();
+                    return false;
+                }
+
+                if ($('#txtCodOperFact').val() == '') {
+                    linksoft.util.alert('Ingrese operación de facturación.', alert_type);
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtOperFact').focus();
+                    return false;
+                }
+
+                if ($('#txtTipoCambio').val() == '') {
+                    linksoft.util.alert('Ingrese tipo de cambio.', alert_type);
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtTipoCambio').focus();
+                    return false;
+                }
+
+                if ($('#txtCodVendedor').val() == '') {
+                    linksoft.util.alert('Ingrese vendedor.', alert_type);
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtVendedor').focus();
+                    return false;
+                }
+
+                if ($('#txtCodCondPago').val() == '') {
+                    linksoft.util.alert('Ingrese condición de pago.', alert_type);
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtCondPago').focus();
+                    return false;
+                }
+
+                if ($('#txtCodZona').val() == '') {
+                    linksoft.util.alert('Ingrese zona.', alert_type);
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtZona').focus();
+                    return false;
+                }
+
+                if ($('#tablaCotizacionDetalle').DataTable().data().length == 0) {
+                    linksoft.util.alert('No existe detalle de cotización.', alert_type);
+                    $('a[href="#tabDetalle"]').tab('show');
+                    $('#btnAgregarItem').focus();
+                    return false;
+                }
+
+                linksoft.util.openModalConfirmacion('¿Está seguro(a) de guardar la cotización?', function () {
+                    Guardar();
+                });
+
                 return false;
             });
 
         });
 
         function Guardar() {
-            var cotizacion = {}; 
+            var objCotizacion = {};
+
+            objCotizacion.dsDoc = $('#txtDoc').val();
+            objCotizacion.dsDocSerie = $('#txtSerie').val();
+            objCotizacion.codCondPago = $('#txtCodCondPago').val();
+            objCotizacion.feEmision = $('#txtFechaEmision').val();
+            objCotizacion.feVencimiento = $('#txtFechaVencimiento').val();
+            objCotizacion.codOperFact = $('#txtCodOperFact').val();
+            objCotizacion.codOperLog = $('#txtCodOperLog').val();
+            objCotizacion.codZona = $('#txtCodZona').val();
+            objCotizacion.codAlmacen = $('#txtCodAlmacen').val();
+            objCotizacion.codSucursal = $('#txtCodUnidadOperativa').val();
+            objCotizacion.codVendedor = $('#txtCodVendedor').val();
+            objCotizacion.codCobrador = $('#txtCodCobrador').val();
+            objCotizacion.codCliente = $('#txtCodCliente').val();
+            objCotizacion.dsCliente = $('#txtCliente').val();
+            objCotizacion.dsDireccionCliente = $('#txtDireccion').val();
+            objCotizacion.dsGlosa = $('#txtGlosa').val();
+            objCotizacion.dsPrioridad = $('#ddlPrioridad').val();
+            objCotizacion.nuTipoCambio = $('#txtTipoCambio').val();
+            objCotizacion.codMoneda = $('#txtCodMoneda').val();
+            objCotizacion.nuBruto = $('#txtBruto').val();
+            objCotizacion.nuNeto = $('#txtNeto').val();
+            objCotizacion.nuImpuesto = $('#txtImpuesto').val();
+            objCotizacion.nuTotal = $('#txtTotal').val();
+            objCotizacion.dsEstado = $('#ddlEstado').val();
+            objCotizacion.Accion = Accion;
+
+            objCotizacion.lstCotizacionDetalle = [];
+
+            var table = $('#tablaCotizacionDetalle').DataTable();
+
+            table.rows().every(function () {
+                var d = this.data();
+                objCotizacion.lstCotizacionDetalle.push(d);
+            });
+
+
+            var cotizacionParam = {
+                Metodo: 'Guardar',
+                Cotizacion: JSON.stringify(objCotizacion)
+            };
+
+
+            linksoft.util.ajaxCallback(cotizacionURL, cotizacionParam, function (response) {
+                
+            });
         }
 
         function habilitarControles() {
@@ -74,8 +216,10 @@
                 $("#txtAlmacen").attr('readonly', true);
                 $("#txtCliente").attr('readonly', true);
                 $("#txtOperFact").attr('readonly', true);
+                $("#txtMoneda").attr('readonly', true);
                 $("#txtVendedor").attr('readonly', true);
                 $("#txtCondPago").attr('readonly', true);
+                $("#txtTipoCondPago").attr('readonly', true);
                 $("#txtUnidadOperativa").attr('readonly', true);
                 $("#txtZona").attr('readonly', true);
                 $("#txtCobrador").attr('readonly', true);
@@ -353,12 +497,14 @@
                 if (response.mensaje == 'SUCCESS') {
                     $("#txtCodOperFact").val(response.objeto.codOperacionFacturacion);
                     $("#txtOperFact").val(response.objeto.dsOperacionFacturacion);
+                    $("#txtCodOperLog").val(response.objeto.codOperacionLogistica);
                     $("#txtCodMoneda").val(response.objeto.codMoneda);
                     $("#txtMoneda").val(response.objeto.dsMoneda);
 
                 } else {
                     $("#txtCodOperFact").val('');
                     $("#txtOperFact").val('');
+                    $("#txtCodOperLog").val('');
                     $("#txtCodMoneda").val('');
                     $("#txtMoneda").val('');
                 }
@@ -367,25 +513,27 @@
 
         function addItemFactura(objItem) {
             var table = $('#tablaCotizacionDetalle').DataTable();
-            table.row.add([
-                objItem.codAlmacen,
-                objItem.codArticulo,
-                objItem.dsArticulo,
-                objItem.codUnidadMedidaAlmacen,
-                objItem.codVendedor,
-                objItem.nuSaldo,
-                objItem.nuPrecio,
-                objItem.nuCantidad,
-                objItem.nuBruto,
-                objItem.nuNeto,
-                objItem.nuImpuesto,
-                objItem.nuTotal,
-                objItem.dsTipoItem,
-                objItem.codLinea,
-                objItem.dsLinea,
-                objItem.codSubLinea,
-                objItem.dsSubLinea
-            ]).draw();
+            table.row.add({
+                'codAlmacen': objItem.codAlmacen,
+                'codArticulo': objItem.codArticulo,
+                'dsArticulo': objItem.dsArticulo,
+                'codUnidadMedidaAlmacen': objItem.codUnidadMedidaAlmacen,
+                'codVendedor': objItem.codVendedor,
+                'nuSaldo': objItem.nuSaldo,
+                'nuPrecio': objItem.nuPrecio,
+                'nuCantidad': objItem.nuCantidad,
+                'nuBruto': objItem.nuBruto,
+                'nuNeto': objItem.nuNeto,
+                'nuImpuesto': objItem.nuImpuesto,
+                'nuTotal': objItem.nuTotal,
+                'dsTipoItem': objItem.dsTipoItem,
+                'codLinea': objItem.codLinea,
+                'dsLinea': objItem.dsLinea,
+                'codSubLinea': objItem.codSubLinea,
+                'dsSubLinea': objItem.dsSubLinea,
+                'bIva': objItem.bIva,
+                'nuTasaImpuesto': objItem.nuTasaImpuesto
+            }).draw();
 
             table.columns.adjust().draw();
 
@@ -393,14 +541,21 @@
         }
 
         function calcularTotales() {
-            var totalNeto = 0.00,
+            var totalBruto = 0.00, 
+                totalNeto = 0.00,
                 totalImpuesto = 0.00,
                 total = 0.00;
 
             var table = $('#tablaCotizacionDetalle').DataTable();
+            var arrBruto = table.column(8).data();
             var arrNeto = table.column(9).data();
             var arrImpuesto = table.column(10).data();
             var arrTotal = table.column(11).data();
+
+            for (var i = 0; i < arrBruto.length; i++) {
+                totalBruto += parseFloat(arrBruto[i]);
+            }
+
 
             for (var i = 0; i < arrNeto.length; i++) {
                 totalNeto += parseFloat(arrNeto[i]);
@@ -414,6 +569,7 @@
                 total += parseFloat(arrTotal[i]);
             }
 
+            $('#txtBruto').val(totalBruto.toFixed(2));
             $('#txtNeto').val(totalNeto.toFixed(2));
             $('#txtImpuesto').val(totalImpuesto.toFixed(2));
             $('#txtTotal').val(total.toFixed(2));
@@ -508,7 +664,12 @@
                         <label>Direccion</label>
                         <input type="text" class="form-control input-sm" id="txtDireccion" readonly="readonly" />
                     </div>
-                    
+                    <div class="col-xs-2">
+                        <label >Prioridad:</label>
+                        <select class="form-control input-sm" id="ddlPrioridad" disabled="disabled">
+                            <option value="B" >Baja</option>
+                        </select>
+                    </div>
                 </div>
                 <br />
                 <div class="row">
@@ -519,6 +680,7 @@
                               <button type="button" id="btnBuscarOperFact" class="btn btn-info" disabled="disabled"><span class="glyphicon glyphicon-arrow-right"></span>  Buscar</button>
                            </span>
                            <input type="hidden" class="form-control" id="txtCodOperFact" />
+                           <input type="hidden" class="form-control" id="txtCodOperLog" />
                            <input type="text" class="form-control" id="txtOperFact" readonly="readonly" />
                         </div>
                     </div>
@@ -627,11 +789,15 @@
             </div>
             <div class="panel panel-body">
                 <div class="row">
-                    <div class="col-xs-6"> 
+                    <div class="col-xs-4"> 
                         <br />
                         <button type="button" id="btnAgregarItem" class="btn btn-xs"><span class="glyphicon glyphicon-plus text-success"></span>  Agregar</button>
                         <button type="button" id="btnEliminarItem" class="btn btn-xs"><span class="glyphicon glyphicon-remove text-danger"></span>  Eliminar</button>
                     </div>
+                    <div class="col-xs-2">
+                        <label>Bruto</label>
+                        <input type="text" class="form-control input-sm text-right" id="txtBruto" readonly="readonly"  />
+                    </div> 
                     <div class="col-xs-2">
                         <label>Neto</label>
                         <input type="text" class="form-control input-sm text-right" id="txtNeto" readonly="readonly"  />
@@ -667,6 +833,8 @@
                         <th>Des. Línea</th>
                         <th>Cod. SubLínea</th>
                         <th>Des. SubLínea</th>
+                        <th>Afecto Igv</th>
+                        <th>Tasa Impuesto</th>
                     </tr>
                 </thead>
             </table>

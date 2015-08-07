@@ -117,12 +117,13 @@
             objItem.nuNeto = $('#txtNeto').val();
             objItem.nuImpuesto = $('#txtImpuesto').val();
             objItem.nuTotal = $('#txtTotal').val();
-
-            objItem.dsTipoItem = 'B';
+            objItem.bIva = $('#txtIndIva').val();
+            objItem.dsTipoItem = $('#txtTipoItem').val();
             objItem.codLinea = $('#txtCodLinea').val();
             objItem.dsLinea = $('#txtLinea').val();
             objItem.codSubLinea = $('#txtCodSubLinea').val();
             objItem.dsSubLinea = $('#txtSubLinea').val();
+            objItem.nuTasaImpuesto = $('#txtPorcImpuesto').val();
             
             parent.addItemFactura(objItem);
             parent.closeModal();
@@ -157,7 +158,8 @@
                     $('#txtCodSubLinea').val(response.objeto.codSubLinea);
                     $('#txtSubLinea').val(response.objeto.dsSubLinea);
                     $('#txtUnidadMedida').val(response.objeto.codUnidadMedidaAlmacen);
-
+                    $('#txtTipoItem').val(response.objeto.dsTipoItem);
+                    $('#txtIndIva').val(response.objeto.bIva);
                     $('#txtColor').val(response.objeto.dsColor);
                     $('#txtMarca').val(response.objeto.dsMarca);
                     $('#txtModelo').val(response.objeto.dsModelo);
@@ -225,6 +227,8 @@
                                 <input type="hidden" class="form-control input-sm" id="txtCodSubLinea"/>
                                 <input type="hidden" class="form-control input-sm" id="txtSubLinea"/>
                                 <input type="hidden" class="form-control input-sm" id="txtUnidadMedida"/>
+                                <input type="hidden" class="form-control input-sm" id="txtTipoItem"/>
+                                <input type="hidden" class="form-control input-sm" id="txtIndIva"/>
                                 <input type="hidden" class="form-control input-sm" id="txtCodArticulo"/>
                                 <input type="text" class="form-control input-sm" id="txtArticulo" readonly="readonly" />
                             </div>

@@ -33,6 +33,14 @@
     Public Const FORMAT_DD_MM_YYYY As String = "dd-MM-yyyy"
 #End Region
 
+#Region "Moneda"
     Public Const MONEDA_SOLES As String = "01"
     Public Const MONEDA_DOLARES As String = "02"
+#End Region
+
+#Region "Tipos de Transaccion Facturacion"
+    Public Const TRANS_FACTURACION_DIRECTA = "001"
+
+#End Region
+    
 End Class

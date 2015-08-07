@@ -31,6 +31,8 @@ Public Class HandlerCotizacion
                 GetDatosArticulo(context)
             Case "GetListaPrecioArticulo"
                 GetListaPrecioArticulo(context)
+            Case "Guardar"
+                Guardar(context)
         End Select
 
     End Sub
@@ -210,4 +212,143 @@ Public Class HandlerCotizacion
         WebUtil.Serializar(objJsonMessage, context)
 
     End Sub
+
+    Private Sub Guardar(ByVal context As HttpContext)
+        Dim vFunciones As New Funciones
+
+        Dim jsonCotizacion = context.Request("Cotizacion")
+        Dim deserCotizacion As BE_Cotizacion = WebUtil.Deserializar(Of BE_Cotizacion)(jsonCotizacion, context)
+
+
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+        Dim objCotizacion As New BE_Cotizacion
+
+        With objCotizacion
+            .codCia = objSesionLogin.codCia
+            .codEjercicio = objSesionLogin.codEjercicio
+            .codPeriodo = objSesionLogin.codPeriodo
+            .dsDoc = deserCotizacion.dsDoc
+            .dsDocSerie = deserCotizacion.dsDocSerie
+            .codCondPago = deserCotizacion.codCondPago
+            .dsTipoTrans = Constantes.TRANS_FACTURACION_DIRECTA
+            .dsTipoDoc = "C"
+            .feEmision = CDate(deserCotizacion.feEmision)
+            .feVencimiento = CDate(deserCotizacion.feVencimiento)
+            .codOperFact = deserCotizacion.codOperFact
+            .codOperLog = deserCotizacion.codOperLog
+            .codZona = deserCotizacion.codZona
+            .codAlmacen = deserCotizacion.codAlmacen
+            .codSucursal = deserCotizacion.codSucursal
+            .codVendedor = deserCotizacion.codVendedor
+            .codCliente = deserCotizacion.codCliente
+            .dsCliente = deserCotizacion.dsCliente
+            .dsDireccionCliente = deserCotizacion.dsDireccionCliente
+            .dsGlosa = deserCotizacion.dsGlosa
+            .dsPrioridad = deserCotizacion.dsPrioridad
+            .nuTipoCambio = CDbl(deserCotizacion.nuTipoCambio)
+            .codMoneda = deserCotizacion.codMoneda
+
+
+            Dim objCotizacionDetalle As BE_CotizacionDetalle
+            Dim idItem As Integer = 0
+
+            .lstCotizacionDetalle = New List(Of BE_CotizacionDetalle)
+
+            For Each item In deserCotizacion.lstCotizacionDetalle
+                idItem += 1
+                objCotizacionDetalle = New BE_CotizacionDetalle
+
+                objCotizacionDetalle.codCia = .codCia
+                objCotizacionDetalle.dsDoc = .dsDoc
+                objCotizacionDetalle.dsDocSerie = .dsDocSerie
+                objCotizacionDetalle.codEjercicio = .codEjercicio
+                objCotizacionDetalle.codPeriodo = .codPeriodo
+                objCotizacionDetalle.dsTipoTrans = .dsTipoTrans
+                objCotizacionDetalle.dsTipoDoc = .dsTipoDoc
+                objCotizacionDetalle.dsIdItem = idItem
+                objCotizacionDetalle.codArticulo = item.codArticulo
+                objCotizacionDetalle.dsArticulo = item.dsArticulo
+                objCotizacionDetalle.dsTipoItem = item.dsTipoItem
+                objCotizacionDetalle.codLinea = item.codLinea
+                objCotizacionDetalle.codSubLinea = item.codSubLinea
+                objCotizacionDetalle.nuCantidad = CDbl(item.nuCantidad)
+                objCotizacionDetalle.codMoneda = .codMoneda
+                objCotizacionDetalle.codMonedaListaPrecio = Constantes.MONEDA_SOLES
+                objCotizacionDetalle.nuTipoCambio = CDbl(.nuTipoCambio)
+                objCotizacionDetalle.codCliente = .codCliente
+                objCotizacionDetalle.codVendedor = .codVendedor
+                objCotizacionDetalle.codAlmacen = .codAlmacen
+                objCotizacionDetalle.codOperLog = .codOperLog
+                objCotizacionDetalle.codOperFact = .codOperFact
+                objCotizacionDetalle.codUnidadMedidaAlmacen = item.codUnidadMedidaAlmacen
+                objCotizacionDetalle.codZona = .codZona
+                objCotizacionDetalle.codSucursal = .codSucursal
+                objCotizacionDetalle.feEmision = CDate(.feEmision)
+                objCotizacionDetalle.bIva = item.bIva
+                objCotizacionDetalle.bSerie = 0
+                objCotizacionDetalle.bLote = 0
+                objCotizacionDetalle.bAfectoPercepcion = 0
+
+                If .codMoneda = Constantes.MONEDA_SOLES Then
+
+                    objCotizacionDetalle.nuPrecioMN = item.nuPrecio
+                    objCotizacionDetalle.nuPrecioME = Val(item.nuPrecio) / Val(.nuTipoCambio)
+
+                    objCotizacionDetalle.nuBrutoMN = vFunciones.Redondear(Val(item.nuCantidad) * Val(item.nuPrecio), 2)
+                    objCotizacionDetalle.nuBrutoME = vFunciones.Redondear(Val(objCotizacionDetalle.nuBrutoMN) / Val(.nuTipoCambio), 2)
+
+                    objCotizacionDetalle.nuNetoMN = vFunciones.Redondear(Val(item.nuCantidad) * Val(item.nuPrecio), 2)
+                    objCotizacionDetalle.nuNetoME = vFunciones.Redondear(Val(objCotizacionDetalle.nuNetoMN) / Val(.nuTipoCambio), 2)
+
+                    objCotizacionDetalle.nuImpuestoMN = vFunciones.Redondear(Val(objCotizacionDetalle.nuNetoMN) * (Val(item.nuTasaImpuesto) / 100), 2)
+                    objCotizacionDetalle.nuImpuestoME = vFunciones.Redondear(Val(objCotizacionDetalle.nuImpuestoMN) / Val(.nuTipoCambio), 2)
+
+                    objCotizacionDetalle.nuTotalMN = vFunciones.Redondear(Val(objCotizacionDetalle.nuNetoMN) + Val(objCotizacionDetalle.nuImpuestoMN), 2)
+                    objCotizacionDetalle.nuTotalME = vFunciones.Redondear(Val(objCotizacionDetalle.nuTotalMN) / Val(.nuTipoCambio), 2)
+
+                ElseIf .codMoneda = Constantes.MONEDA_DOLARES Then
+
+                    objCotizacionDetalle.nuPrecioME = item.nuPrecio
+                    objCotizacionDetalle.nuPrecioMN = Val(item.nuPrecio) * Val(.nuTipoCambio)
+
+                    objCotizacionDetalle.nuBrutoME = vFunciones.Redondear(Val(item.nuCantidad) * Val(item.nuPrecio), 2)
+                    objCotizacionDetalle.nuBrutoMN = vFunciones.Redondear(Val(objCotizacionDetalle.nuBrutoME) * Val(.nuTipoCambio), 2)
+
+                    objCotizacionDetalle.nuNetoME = vFunciones.Redondear(Val(item.nuCantidad) * Val(item.nuPrecio), 2)
+                    objCotizacionDetalle.nuNetoMN = vFunciones.Redondear(Val(objCotizacionDetalle.nuNetoME) * Val(.nuTipoCambio), 2)
+
+                    objCotizacionDetalle.nuImpuestoME = vFunciones.Redondear(Val(objCotizacionDetalle.nuNetoME) * (Val(item.nuTasaImpuesto) / 100), 2)
+                    objCotizacionDetalle.nuImpuestoMN = vFunciones.Redondear(Val(objCotizacionDetalle.nuImpuestoME) * Val(.nuTipoCambio), 2)
+
+                    objCotizacionDetalle.nuTotalME = vFunciones.Redondear(Val(objCotizacionDetalle.nuNetoME) + Val(objCotizacionDetalle.nuImpuestoME), 2)
+                    objCotizacionDetalle.nuTotalMN = vFunciones.Redondear(Val(objCotizacionDetalle.nuTotalME) * Val(.nuTipoCambio), 2)
+
+                Else
+                    'Otra Moneda
+                End If
+
+
+                .lstCotizacionDetalle.Add(objCotizacionDetalle)
+            Next
+
+            .nuBrutoMN = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuBrutoMN), 2)
+            .nuBrutoME = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuBrutoME), 2)
+
+            .nuNetoMN = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuNetoMN), 2)
+            .nuNetoME = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuNetoME), 2)
+
+            .nuImpuestoMN = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuImpuestoMN), 2)
+            .nuImpuestoME = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuImpuestoME), 2)
+
+            .nuTotalMN = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuTotalMN), 2)
+            .nuTotalME = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuTotalME), 2)
+
+        End With
+
+
+        Dim objJsonMessage As New JsonMessage
+
+        WebUtil.Serializar(objJsonMessage, context)
+    End Sub
+
 End Class

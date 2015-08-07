@@ -36,6 +36,7 @@ Public Class DA_ItemFactura
                                 .dsColor = Convert.ToString(lector.Item("dsColor"))
                                 .bIva = Convert.ToBoolean(lector.Item("bIva"))
                                 .nuTasaImpuesto = Convert.ToDouble(lector.Item("nuTasaImpuesto"))
+                                .dsTipoItem = Convert.ToString(lector.Item("dsTipoItem"))
                             End With
                             lstItemFactura.Add(objItemFactura)
                         End While
