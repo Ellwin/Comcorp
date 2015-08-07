@@ -343,6 +343,7 @@ Public Class HandlerCotizacion
             .nuTotalMN = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuTotalMN), 2)
             .nuTotalME = vFunciones.Redondear(.lstCotizacionDetalle.Sum(Function(x) x.nuTotalME), 2)
 
+
         End With
 
 
