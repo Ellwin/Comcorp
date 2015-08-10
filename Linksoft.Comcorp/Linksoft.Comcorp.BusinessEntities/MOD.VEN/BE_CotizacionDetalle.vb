@@ -1,5 +1,5 @@
 ﻿Public Class BE_CotizacionDetalle
-
+    Public Property id As Int64
     Public Property codCia As String
     Public Property dsDoc As String
     Public Property dsDocSerie As String
@@ -13,10 +13,13 @@
     Public Property dsArticulo As String
     Public Property dsTipoItem As String
     Public Property codLinea As String
+    Public Property dsLinea As String
     Public Property codSubLinea As String
+    Public Property dsSubLinea As String
     Public Property nuSaldo As Double
     Public Property nuCantidad As Double
     Public Property codMoneda As String
+    Public Property dsMoneda As String
     Public Property codMonedaListaPrecio As String
     Public Property nuTipoCambio As Double
     Public Property nuPrecio As Double
@@ -40,13 +43,20 @@
 
     Public Property codCliente As String
     Public Property codVendedor As String
+    Public Property dsVendedor As String
     Public Property codAlmacen As String
+    Public Property dsAlmacen As String
     Public Property codOperLog As String
     Public Property codUnidadMedidaAlmacen As String
     Public Property codOperFact As String
+    Public Property dsOperFact As String
     Public Property codZona As String
+    Public Property dsZona As String
     Public Property codSucursal As String
+    Public Property dsSucursal As String
     Public Property codCondPago As String
+    Public Property dsCondPago As String
+    Public Property dsTipoCondPago As String
     Public Property codListaPrecio As String
     Public Property feEmision As Date
 
@@ -55,5 +65,10 @@
     Public Property bLote As Boolean
     Public Property bAfectoPercepcion As Boolean
 
+    Public Property dsUsuCreacion As String
+    Public Property feCreacion As Date
+    Public Property dsUsuModificacion As String
+    Public Property feModificacion As Date
+    Public Property codUsuario As String
     Public Property dsEstado As String
 End Class

@@ -124,6 +124,7 @@
             objItem.codSubLinea = $('#txtCodSubLinea').val();
             objItem.dsSubLinea = $('#txtSubLinea').val();
             objItem.nuTasaImpuesto = $('#txtPorcImpuesto').val();
+            objItem.codListaPrecio = $('#txtCodListaPrecio').val();
             
             parent.addItemFactura(objItem);
             parent.closeModal();

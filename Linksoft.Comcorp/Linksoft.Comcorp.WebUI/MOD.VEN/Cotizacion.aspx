@@ -11,6 +11,7 @@
     <script type="text/javascript">
         var cotizacionURL = 'Handlers/HandlerCotizacion.ashx';
         var tablaCotizacion;
+        var tablaListado;
         $(function () {
             linksoft.util.configDatepickerEs();
 
@@ -21,7 +22,10 @@
             $('#txtFechaEmision').datepicker();
             $('#txtFechaVencimiento').datepicker();
 
-            getTipoCambio();
+
+            $("#txtFechaEmision").on('change', function () {
+                getTipoCambio();
+            });
 
             $('a[href="#tabMain"]').tab('show');
 
@@ -52,7 +56,8 @@
                             { "data": "codSubLinea" },
                             { "data": "dsSubLinea" },
                             { "data": "bIva", "visible": false },
-                            { "data": "nuTasaImpuesto", "visible": false }
+                            { "data": "nuTasaImpuesto", "visible": false },
+                            { "data": "codListaPrecio", "visible": false }
                           ]
             });
 
@@ -66,10 +71,160 @@
                 }
             });
 
+
+
             $('#btnEliminarItem').click(function () {
                 $('#tablaCotizacionDetalle').DataTable().row('.selected').remove().draw(false);
 
                 calcularTotales();
+            });
+
+
+            tablaListado = $('#tablaListado').DataTable({
+                "scrollY": 200,
+                "scrollX": true,
+                "paging": false,
+                "ordering": false,
+                "jQueryUI": true,
+                "initComplete": function (settings, json) {
+                    $('#tablaListado tbody tr:first').click();
+                },
+                "ajax": {
+                    "url": cotizacionURL,
+                    "contentType": "application/json",
+                    "data": function (d) {
+                        return JSON.stringify(d.data);
+
+                    }
+                },
+                "columns": [
+                            { "data": "id" },
+                            { "data": "dsDoc" },
+                            { "data": "dsDocSerie" },
+                            { "data": "dsDocNro" },
+                            { "data": "feEmision", "className": "text-center", "render": function (data, type, full, meta) { return linksoft.util.parseJsonDate(data) } },
+                            { "data": "codOperFact" },
+                            { "data": "codCliente" },
+                            { "data": "dsCliente" },
+                            { "data": "nuTotalMN", "className": "text-right", "render": function (data, type, full, meta) { return data.toFixed(2) } },
+                            { "data": "nuTotalME", "className": "text-right", "render": function (data, type, full, meta) { return data.toFixed(2) } },
+                            { "data": "nuBrutoMN", "className": "text-right", "render": function (data, type, full, meta) { return data.toFixed(2) } },
+                            { "data": "nuBrutoME", "className": "text-right", "render": function (data, type, full, meta) { return data.toFixed(2) } },
+                            { "data": "nuNetoMN", "className": "text-right", "render": function (data, type, full, meta) { return data.toFixed(2) } },
+                            { "data": "nuNetoME", "className": "text-right", "render": function (data, type, full, meta) { return data.toFixed(2) } },
+                            { "data": "nuImpuestoMN", "className": "text-right", "render": function (data, type, full, meta) { return data.toFixed(2) } },
+                            { "data": "nuImpuestoME", "className": "text-right", "render": function (data, type, full, meta) { return data.toFixed(2) } },
+                            { "data": "dsEstado", "className": "text-center" },
+                            { "data": "codCia", "visible": false },
+                            { "data": "codEjercicio", "visible": false },
+                            { "data": "codPeriodo", "visible": false },
+                            { "data": "dsOperFact", "visible": false },
+                            { "data": "codAlmacen", "visible": false },
+                            { "data": "dsAlmacen", "visible": false },
+                            { "data": "dsTipoDoc", "visible": false },
+                            { "data": "dsTipoTrans", "visible": false },
+                            { "data": "feVencimiento", "visible": false },
+                            { "data": "codOperLog", "visible": false },
+                            { "data": "codZona", "visible": false },
+                            { "data": "dsZona", "visible": false },
+                            { "data": "codVendedor", "visible": false },
+                            { "data": "dsVendedor", "visible": false },
+                            { "data": "codSucursal", "visible": false },
+                            { "data": "dsSucursal", "visible": false },
+                            { "data": "codCobrador", "visible": false },
+                            { "data": "dsCobrador", "visible": false },
+                            { "data": "codCondPago", "visible": false },
+                            { "data": "dsCondPago", "visible": false },
+                            { "data": "dsDireccionCliente", "visible": false },
+                            { "data": "dsGlosa", "visible": false },
+                            { "data": "dsPrioridad", "visible": false },
+                            { "data": "nuTipoCambio", "visible": false },
+                            { "data": "codMoneda", "visible": false },
+                            { "data": "dsMoneda", "visible": false },
+                            { "data": "dsUsuCreacion", "visible": false },
+                            { "data": "feCreacion", "visible": false },
+                            { "data": "dsUsuModificacion", "visible": false },
+                            { "data": "feModificacion", "visible": false }
+                          ]
+            });
+
+            $('#tablaListado tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    tablaListado.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+
+                var d = tablaListado.row(this).data();
+                var feEmision = linksoft.util.parseJsonDate(d.feEmision);
+                var feVencimiento = linksoft.util.parseJsonDate(d.feVencimiento);
+
+                $('#txtDoc').val(d.dsDoc);
+                $('#txtSerie').val(d.dsDocSerie);
+                $('#txtNumero').val(d.dsDocNro);
+                $('#txtCodCondPago').val(d.codCondPago);
+                $('#txtCondPago').val(d.dsCondPago);
+                $('#txtTipoCondPago').val(d.dsTipoCondPago);
+                $('#txtFechaEmision').val(feEmision);
+                $('#txtFechaVencimiento').val(feVencimiento);
+                $('#txtCodOperFact').val(d.codOperFact);
+                $('#txtOperFact').val(d.dsOperFact);
+                $('#txtCodOperLog').val(d.codOperLog);
+                $('#txtCodZona').val(d.codZona);
+                $('#txtZona').val(d.dsZona);
+                $('#txtCodAlmacen').val(d.codAlmacen);
+                $('#txtAlmacen').val(d.dsAlmacen);
+                $('#txtCodUnidadOperativa').val(d.codSucursal);
+                $('#txtUnidadOperativa').val(d.dsSucursal);
+                $('#txtCodVendedor').val(d.codVendedor);
+                $('#txtVendedor').val(d.dsVendedor);
+                $('#txtCodCobrador').val(d.codCobrador);
+                $('#txtCobrador').val(d.dsCobrador);
+                $('#txtCodCliente').val(d.codCliente);
+                $('#txtCliente').val(d.dsCliente);
+                $('#txtDireccion').val(d.dsDireccionCliente);
+                $('#txtGlosa').val(d.dsGlosa);
+                $('#ddlPrioridad').val(d.dsPrioridad);
+                $('#txtTipoCambio').val(d.nuTipoCambio);
+                $('#txtCodMoneda').val(d.codMoneda);
+                $('#txtCodListaPrecio').val(d.codListaPrecio);
+                $('#txtMoneda').val(d.dsMoneda);
+                $('#txtBruto').val(d.nuBruto.toFixed(2));
+                $('#txtNeto').val(d.nuNeto.toFixed(2));
+                $('#txtImpuesto').val(d.nuImpuesto.toFixed(2));
+                $('#txtTotal').val(d.nuTotal.toFixed(2));
+                $('#ddlEstado').val(d.dsEstado);
+
+                tablaCotizacion.clear().draw();
+
+                var cotizacionDetalleParam = {
+                    Metodo: 'GetCotizacionDetalle',
+                    cia: d.codCia,
+                    ejercicio: d.codEjercicio,
+                    periodo: d.codPeriodo,
+                    doc: d.dsDoc,
+                    serie: d.dsDocSerie,
+                    nro: d.dsDocNro
+                };
+
+                linksoft.util.ajaxCallback(cotizacionURL, cotizacionDetalleParam, function (response) {
+                    var data = {};
+                    data = response.data;
+
+                    $.each(data, function (i, elem) {
+                        addItemFactura(elem);
+                    });
+
+                });
+
+
+
+            });
+
+            $("#btnAjustarColumnas").on('click', function () {
+                ajustarColumnas();
             });
 
             Busqueda();
@@ -77,7 +232,7 @@
 
             $("#btnGuardar").on('click', function () {
 
-                var alert_type = 'alert-danger'
+                var alert_type = 'alert-danger';
 
                 if ($('#txtDoc').val() == '') {
                     linksoft.util.alert('Ingrese documento.');
@@ -135,6 +290,13 @@
                     return false;
                 }
 
+                if ($('#txtCodUnidadOperativa').val() == '') {
+                    linksoft.util.alert('Ingrese unidad operativa.', alert_type);
+                    $('a[href="#tabMain"]').tab('show');
+                    $('#txtUnidadOperativa').focus();
+                    return false;
+                }
+
                 if ($('#txtCodZona').val() == '') {
                     linksoft.util.alert('Ingrese zona.', alert_type);
                     $('a[href="#tabMain"]').tab('show');
@@ -149,14 +311,19 @@
                     return false;
                 }
 
-                linksoft.util.openModalConfirmacion('¿Está seguro(a) de guardar la cotización?', function () {
-                    Guardar();
-                });
-
-                return false;
+            linksoft.util.openModalConfirmacion('¿Está seguro(a) de guardar la cotización?', function () {
+                Guardar();
             });
 
+            return false;
         });
+
+    });
+
+        function ajustarColumnas() {
+            var table = $('#tablaListado').DataTable();
+            table.columns.adjust().draw();
+        }
 
         function Guardar() {
             var objCotizacion = {};
@@ -204,9 +371,13 @@
 
 
             linksoft.util.ajaxCallback(cotizacionURL, cotizacionParam, function (response) {
-                
+                linksoft.util.reloadListado();
             });
+
+
         }
+
+        
 
         function habilitarControles() {
             if (Accion == 'add') {
@@ -223,10 +394,22 @@
                 $("#txtUnidadOperativa").attr('readonly', true);
                 $("#txtZona").attr('readonly', true);
                 $("#txtCobrador").attr('readonly', true);
+                $("#txtBruto").val('0.00');
+                $("#txtNeto").val('0.00');
+                $("#txtImpuesto").val('0.00');
+                $("#txtTotal").val('0.00');
+
+                $("#btnAgregarItem").attr('disabled', false);
+                $("#btnEliminarItem").attr('disabled', false);
 
                 var fecha = $('#lblFecha').html();
                 $("#txtFechaEmision").val(fecha);
                 $("#txtFechaVencimiento").val(fecha);
+
+                getTipoCambio();
+
+                $('#tablaCotizacionDetalle').DataTable().clear().draw();
+                $('#tablaListado').DataTable().clear().draw();
             }
             
         }
@@ -401,23 +584,18 @@
 
         function getTipoCambio() {
 
-            $("#txtFechaEmision").on('change', function () {
+            var tcParam = {
+                Metodo: 'GetTipoCambio',
+                Fecha: $("#txtFechaEmision").val()
+            };
 
-                var tcParam = {
-                    Metodo: 'GetTipoCambio',
-                    Fecha: $("#txtFechaEmision").val()
-                };
-
-                linksoft.util.ajaxCallback(cotizacionURL, tcParam, function (response) {
-                    if (response.mensaje == 'SUCCESS') {
-                        $("#txtTipoCambio").val(response.objeto.nuTipoCambioVenta);
-                    } else {
-                        $("#txtTipoCambio").val('');
-                    }
-                });
+            linksoft.util.ajaxCallback(cotizacionURL, tcParam, function (response) {
+                if (response.mensaje == 'SUCCESS') {
+                    $("#txtTipoCambio").val(response.objeto.nuTipoCambioVenta);
+                } else {
+                    $("#txtTipoCambio").val('');
+                }
             });
-
-
         }
 
         function getDatosCliente(codigo) {
@@ -431,6 +609,7 @@
                     $("#txtDireccion").val(response.objeto.dsDireccion);
                     $("#txtCodOperFact").val(response.objeto.codOperacionFacturacion);
                     $("#txtOperFact").val(response.objeto.dsOperacionFacturacion);
+                    $("#txtCodOperLog").val(response.objeto.codOperacionLogistica);
                     $("#txtCodMoneda").val(response.objeto.codMoneda);
                     $("#txtMoneda").val(response.objeto.dsMoneda);
                     $("#txtCodVendedor").val(response.objeto.codVendedor);
@@ -449,6 +628,7 @@
                     $("#txtDireccion").val('');
                     $("#txtCodOperFact").val('');
                     $("#txtOperFact").val('');
+                    $("#txtCodOperLog").val('');
                     $("#txtCodMoneda").val('');
                     $("#txtMoneda").val('');
                     $("#txtCodVendedor").val('');
@@ -519,20 +699,21 @@
                 'dsArticulo': objItem.dsArticulo,
                 'codUnidadMedidaAlmacen': objItem.codUnidadMedidaAlmacen,
                 'codVendedor': objItem.codVendedor,
-                'nuSaldo': objItem.nuSaldo,
-                'nuPrecio': objItem.nuPrecio,
-                'nuCantidad': objItem.nuCantidad,
-                'nuBruto': objItem.nuBruto,
-                'nuNeto': objItem.nuNeto,
-                'nuImpuesto': objItem.nuImpuesto,
-                'nuTotal': objItem.nuTotal,
+                'nuSaldo': parseFloat(objItem.nuSaldo).toFixed(2),
+                'nuPrecio': parseFloat(objItem.nuPrecio).toFixed(2),
+                'nuCantidad': parseFloat(objItem.nuCantidad).toFixed(2),
+                'nuBruto': parseFloat(objItem.nuBruto).toFixed(2),
+                'nuNeto': parseFloat(objItem.nuNeto).toFixed(2),
+                'nuImpuesto': parseFloat(objItem.nuImpuesto).toFixed(2),
+                'nuTotal': parseFloat(objItem.nuTotal).toFixed(2),
                 'dsTipoItem': objItem.dsTipoItem,
                 'codLinea': objItem.codLinea,
                 'dsLinea': objItem.dsLinea,
                 'codSubLinea': objItem.codSubLinea,
                 'dsSubLinea': objItem.dsSubLinea,
                 'bIva': objItem.bIva,
-                'nuTasaImpuesto': objItem.nuTasaImpuesto
+                'nuTasaImpuesto': objItem.nuTasaImpuesto,
+                'codListaPrecio': objItem.codListaPrecio
             }).draw();
 
             table.columns.adjust().draw();
@@ -791,8 +972,8 @@
                 <div class="row">
                     <div class="col-xs-4"> 
                         <br />
-                        <button type="button" id="btnAgregarItem" class="btn btn-xs"><span class="glyphicon glyphicon-plus text-success"></span>  Agregar</button>
-                        <button type="button" id="btnEliminarItem" class="btn btn-xs"><span class="glyphicon glyphicon-remove text-danger"></span>  Eliminar</button>
+                        <button type="button" id="btnAgregarItem" class="btn btn-xs" disabled="disabled"><span class="glyphicon glyphicon-plus text-success"></span>  Agregar</button>
+                        <button type="button" id="btnEliminarItem" class="btn btn-xs" disabled="disabled"><span class="glyphicon glyphicon-remove text-danger"></span>  Eliminar</button>
                     </div>
                     <div class="col-xs-2">
                         <label>Bruto</label>
@@ -835,6 +1016,70 @@
                         <th>Des. SubLínea</th>
                         <th>Afecto Igv</th>
                         <th>Tasa Impuesto</th>
+                        <th>Cod. Lista Precio</th>
+                    </tr>
+                </thead>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="tab-pane" id="tabListado">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">
+                    <h4 class="panel-title">Listado de Cotización</h4>
+            </div>
+            <button type="button" id="btnAjustarColumnas" class="btn btn-xs"><span class="glyphicon glyphicon-th text-info"></span>  Autojustar</button>
+            <table id="tablaListado" class="display" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Doc.</th>
+                        <th>Serie</th>
+                        <th>Numero</th>
+                        <th>Fecha Doc.</th>
+                        <th>Oper.Fact.</th>
+                        <th>Cliente</th>
+                        <th>Razon y/o Nombres</th>
+                        <th>Total MN</th>
+                        <th>Total ME</th>
+                        <th>Bruto MN</th>
+                        <th>Bruto ME</th>
+                        <th>Neto MN</th>
+                        <th>Neto ME</th>
+                        <th>Impuesto MN</th>
+                        <th>Impuesto ME</th>
+                        <th>Estado</th>
+                        <th>Cia</th>
+                        <th>Ejercicio</th>
+                        <th>Periodo</th>
+                        <th>Des. Oper. Fact.</th>
+                        <th>Alm.</th>
+                        <th>Des. Alm.</th>
+                        <th>Tipo Doc.</th>
+                        <th>Tipo Trans.</th>
+                        <th>Fecha Venc.</th>
+                        <th>Oper Log.</th>
+                        <th>Zona</th>
+                        <th>Des. Zona</th>
+                        <th>Vendedor</th>
+                        <th>Des. Vendedor</th>
+                        <th>Unidad Oper.</th>
+                        <th>Des. Unidad Oper.</th>
+                        <th>Cobrador</th>
+                        <th>Des. Cobrador</th>
+                        <th>Cond. Pago</th>
+                        <th>Des. Cond. Pago</th>
+                        <th>Dir. Cliente</th>
+                        <th>Glosa</th>
+                        <th>Prioridad</th>
+                        <th>Tipo Cambio</th>
+                        <th>Moneda</th>
+                        <th>Des. Moneda</th>
+                        <th>Usu. Crea.</th>
+                        <th>Fecha Crea.</th>
+                        <th>Usu. Modif.</th>
+                        <th>Fecha Modif.</th>
                     </tr>
                 </thead>
             </table>

@@ -25,6 +25,7 @@ Public Class DA_Cliente
                                 .dsDireccion = Convert.ToString(lector.Item("dsDireccion"))
                                 .codOperacionFacturacion = Convert.ToString(lector.Item("codOperacionFacturacion"))
                                 .dsOperacionFacturacion = Convert.ToString(lector.Item("dsOperacionFacturacion"))
+                                .codOperacionLogistica = Convert.ToString(lector.Item("dsOperacionLogistica"))
                                 .codMoneda = Convert.ToString(lector.Item("codMoneda"))
                                 .dsMoneda = Convert.ToString(lector.Item("dsMoneda"))
                                 .codCondicionPago = Convert.ToString(lector.Item("codCondicionPago"))

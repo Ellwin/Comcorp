@@ -145,7 +145,7 @@ linksoft.util = {
             Accion = 'del';
         });
 
-        $("#btnCancelar").click(function () {
+        $("#btnCancelar, #btnDeshacer").click(function () {
 
             $("#btnRefrescar").attr('disabled', false);
             $("#btnNuevo").attr('disabled', false);
@@ -185,41 +185,61 @@ linksoft.util = {
 
             Accion = '';
 
-            callback();
+            linksoft.util.reloadListado();
 
         });
 
         $("#btnRefrescar").click(function () {
-            callback();
+            linksoft.util.reloadListado();
         });
 
         $('#btnPrimero').click(function () {
-
+            linksoft.util.firstRow();
         });
 
         $('#btnAnterior').click(function () {
-
+            linksoft.util.previousRow();
         });
 
         $('#btnSiguiente').click(function () {
-
+            linksoft.util.nextRow();
         });
 
         $('#btnUltimo').click(function () {
-
+            linksoft.util.lastRow();
         });
     },
-    nextRow: function (selector) {
-
+    nextRow: function () {
+        var table = $("#tablaListado").DataTable();
+        var rowSelected = table.row().$('tr.selected');
+        var rowIndex = rowSelected.index();
+        rowSelected.removeClass('selected');
+        table.row(rowIndex).$(rowSelected).next('tr').click();
     },
-    previousRow: function (selector) {
-
+    previousRow: function () {
+        var table = $("#tablaListado").DataTable();
+        var rowSelected = table.row().$('tr.selected');
+        var rowIndex = rowSelected.index();
+        rowSelected.removeClass('selected');
+        table.row(rowIndex).$(rowSelected).prev('tr').click();
     },
-    firstRow: function (selector) {
-
+    firstRow: function () {
+        var table = $("#tablaListado").DataTable();
+        var rowSelected = table.row().$('tr.selected');
+        rowSelected.removeClass('selected');
+        table.row(0).$('tr:first').click();
     },
-    lastRow: function (selector) {
-
+    lastRow: function () {
+        var table = $("#tablaListado").DataTable();
+        var rowSelected = table.row().$('tr.selected');
+        rowSelected.removeClass('selected');
+        table.row(0).$('tr:last').click();
+    },
+    reloadListado: function () {
+        var table = $('#tablaListado').DataTable();
+        table.ajax.reload(function () {
+            $('#tablaListado tbody tr:first').click();
+        });
     },
     showMessage: function (message, alertType) {
         $('#message').append('<div id="alertdiv" class="alert ' + alertType + '"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>')
@@ -323,6 +343,15 @@ linksoft.util = {
         $this.on('keypress', function (e) {
             if (String.fromCharCode(e.keyCode).match(/[^0-9.]/g)) return false;
         });
+    },
+    parseJsonDate: function (jsonDate) {
+        var dateString = jsonDate.substr(6);
+        var currentTime = new Date(parseInt(dateString));
+        var month = currentTime.getMonth() + 1;
+        var day = currentTime.getDate();
+        var year = currentTime.getFullYear();
+        var date = day + "/" + month + "/" + year;
+        return date;
     }
 };
 

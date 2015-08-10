@@ -1,5 +1,5 @@
 ﻿Public Class BE_Cotizacion
-
+    Public Property id As Int64
     Public Property codCia As String
     Public Property dsDoc As String
     Public Property dsDocSerie As String
@@ -7,17 +7,25 @@
     Public Property codEjercicio As String
     Public Property codPeriodo As String
     Public Property codCondPago As String
+    Public Property dsCondPago As String
+    Public Property dsTipoCondPago As String
     Public Property dsTipoTrans As String
     Public Property dsTipoDoc As String
     Public Property feEmision As Date
     Public Property feVencimiento As Date
     Public Property codOperFact As String
+    Public Property dsOperFact As String
     Public Property codOperLog As String
     Public Property codZona As String
+    Public Property dsZona As String
     Public Property codAlmacen As String
+    Public Property dsAlmacen As String
     Public Property codSucursal As String
+    Public Property dsSucursal As String
     Public Property codVendedor As String
+    Public Property dsVendedor As String
     Public Property codCobrador As String
+    Public Property dsCobrador As String
     Public Property codCliente As String
     Public Property dsCliente As String
     Public Property dsDireccionCliente As String
@@ -25,7 +33,7 @@
     Public Property dsPrioridad As String
     Public Property nuTipoCambio As Double
     Public Property codMoneda As String
-
+    Public Property dsMoneda As String
     Public Property nuBruto As Double
     Public Property nuBrutoMN As Double
     Public Property nuBrutoME As Double
@@ -38,15 +46,16 @@
     Public Property nuTotal As Double
     Public Property nuTotalMN As Double
     Public Property nuTotalME As Double
-
     Public Property bIndicadorPrn As Boolean
     Public Property dsIndContable As String
     Public Property dsIndImpreso As String
-
+    Public Property dsUsuCreacion As String
+    Public Property feCreacion As Date
+    Public Property dsUsuModificacion As String
+    Public Property feModificacion As Date
+    Public Property codUsuario As String 'Usuario Sesion
     Public Property dsEstado As String
-
     Public Property Accion As String
-
     Public Property lstCotizacionDetalle As List(Of BE_CotizacionDetalle)
 
 End Class

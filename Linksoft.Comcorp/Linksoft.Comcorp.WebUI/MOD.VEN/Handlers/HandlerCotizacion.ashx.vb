@@ -31,8 +31,12 @@ Public Class HandlerCotizacion
                 GetDatosArticulo(context)
             Case "GetListaPrecioArticulo"
                 GetListaPrecioArticulo(context)
+            Case "GetCotizacionDetalle"
+                GetCotizacionDetalle(context)
             Case "Guardar"
                 Guardar(context)
+            Case Else
+                ListarCotizacion(context)
         End Select
 
     End Sub
@@ -42,6 +46,40 @@ Public Class HandlerCotizacion
             Return False
         End Get
     End Property
+
+    Private Sub ListarCotizacion(ByVal context As HttpContext)
+
+        Dim lstCotizacion As New List(Of BE_Cotizacion)
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        lstCotizacion = BL_Cotizacion.ListarCotizacion(objSesionLogin.codCia, objSesionLogin.codEjercicio, objSesionLogin.codPeriodo)
+
+        objJsonMessage.data = lstCotizacion
+
+        WebUtil.Serializar(objJsonMessage, context)
+
+    End Sub
+
+    Private Sub GetCotizacionDetalle(ByVal context As HttpContext)
+        Dim codCia As String = context.Request("cia").ToString.Trim
+        Dim codEjercicio As String = context.Request("ejercicio").ToString.Trim
+        Dim codPeriodo As String = context.Request("periodo").ToString.Trim
+        Dim dsDoc As String = context.Request("doc").ToString.Trim
+        Dim dsDocSerie As String = context.Request("serie").ToString.Trim
+        Dim dsDocNro As String = context.Request("nro").ToString.Trim
+
+        Dim lstCotizacionDetalle As New List(Of BE_ItemFactura)
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        lstCotizacionDetalle = BL_Cotizacion.GetCotizacionDetalle(codCia, codEjercicio, codPeriodo, dsDoc, dsDocSerie, dsDocNro)
+
+        objJsonMessage.data = lstCotizacionDetalle
+
+        WebUtil.Serializar(objJsonMessage, context)
+
+    End Sub
 
     Private Sub CargarItemFactura(ByVal context As HttpContext)
         Dim codMoneda As String = context.Request("moneda").ToString.Trim
@@ -76,7 +114,7 @@ Public Class HandlerCotizacion
 
         Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
 
-        objTipoCambio = BL_Util.GetTipoCambio(objSesionLogin.codCia, "02", fecha)
+        objTipoCambio = BL_Util.GetTipoCambio(objSesionLogin.codCia, Constantes.MONEDA_DOLARES, fecha)
 
         If Not objTipoCambio Is Nothing Then
             objJsonMessage.objeto = objTipoCambio
@@ -240,6 +278,7 @@ Public Class HandlerCotizacion
             .codAlmacen = deserCotizacion.codAlmacen
             .codSucursal = deserCotizacion.codSucursal
             .codVendedor = deserCotizacion.codVendedor
+            .codCobrador = deserCotizacion.codCobrador
             .codCliente = deserCotizacion.codCliente
             .dsCliente = deserCotizacion.dsCliente
             .dsDireccionCliente = deserCotizacion.dsDireccionCliente
@@ -247,7 +286,11 @@ Public Class HandlerCotizacion
             .dsPrioridad = deserCotizacion.dsPrioridad
             .nuTipoCambio = CDbl(deserCotizacion.nuTipoCambio)
             .codMoneda = deserCotizacion.codMoneda
-
+            .codUsuario = objSesionLogin.codUsuario
+            .bIndicadorPrn = False
+            .dsIndContable = "N"
+            .dsIndImpreso = "N"
+            .dsEstado = deserCotizacion.dsEstado
 
             Dim objCotizacionDetalle As BE_CotizacionDetalle
             Dim idItem As Integer = 0
@@ -287,7 +330,11 @@ Public Class HandlerCotizacion
                 objCotizacionDetalle.bIva = item.bIva
                 objCotizacionDetalle.bSerie = 0
                 objCotizacionDetalle.bLote = 0
-                objCotizacionDetalle.bAfectoPercepcion = 0
+                objCotizacionDetalle.bAfectoPercepcion = 1
+                objCotizacionDetalle.codCondPago = .codCondPago
+                objCotizacionDetalle.codListaPrecio = item.codListaPrecio
+                objCotizacionDetalle.codUsuario = objSesionLogin.codUsuario
+                objCotizacionDetalle.dsEstado = .dsEstado
 
                 If .codMoneda = Constantes.MONEDA_SOLES Then
 
@@ -346,8 +393,13 @@ Public Class HandlerCotizacion
 
         End With
 
-
         Dim objJsonMessage As New JsonMessage
+
+        If BL_Cotizacion.InsertCotizacion(objCotizacion) Then
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+        Else
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_ERROR
+        End If
 
         WebUtil.Serializar(objJsonMessage, context)
     End Sub

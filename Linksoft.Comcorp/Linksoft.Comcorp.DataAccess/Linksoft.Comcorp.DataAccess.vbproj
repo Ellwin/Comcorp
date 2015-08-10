@@ -73,6 +73,7 @@
     <Compile Include="MOD.CON\DA_Moneda.vb" />
     <Compile Include="MOD.VEN\DA_Cliente.vb" />
     <Compile Include="MOD.VEN\DA_CondicionPago.vb" />
+    <Compile Include="MOD.VEN\DA_Cotizacion.vb" />
     <Compile Include="MOD.VEN\DA_ItemFactura.vb" />
     <Compile Include="Busqueda\DA_Numerador.vb" />
     <Compile Include="DA_BaseClass.vb" />
@@ -122,6 +123,10 @@
     <ProjectReference Include="..\Linksoft.Comcorp.BusinessEntities\Linksoft.Comcorp.BusinessEntities.vbproj">
       <Project>{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}</Project>
       <Name>Linksoft.Comcorp.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Linksoft.Framework.Common\Linksoft.Framework.Common.vbproj">
+      <Project>{8DC55696-2D53-4DAB-80DF-C3A4397D8C3F}</Project>
+      <Name>Linksoft.Framework.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

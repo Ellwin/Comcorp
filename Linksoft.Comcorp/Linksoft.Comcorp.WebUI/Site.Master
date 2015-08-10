@@ -118,23 +118,10 @@
                         <ul id="myTab" class="nav nav-tabs">
                            <li><a href="#tabMain" data-toggle="tab">Datos de Documento</a></li>
                            <li><a href="#tabDetalle" data-toggle="tab">Detalle del Documento</a></li>
-                           <li class="active"><a href="#tabList" data-toggle="tab">Listado</a></li>
+                           <li class="active"><a href="#tabListado" data-toggle="tab">Listado</a></li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
                             <asp:ContentPlaceHolder ID="mainContent" runat="server"></asp:ContentPlaceHolder>
-
-                             <div class="tab-pane active" id="tabList">
-                            
-                                <div class="panel panel-primary">
-                                    <div class="panel panel-heading">
-                                             <h4 class="panel-title">Listado</h4>
-                                        </div>
-                                    <div class="panel-body">
-                                        <table id="tblListado"></table>
-                                        <div id="pager"></div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                    </div>
                  </div>
