@@ -157,6 +157,10 @@
                     $(this).addClass('selected');
                 }
 
+                if (tablaListado.data().length == 0) {
+                    return;
+                }
+
                 var d = tablaListado.row(this).data();
                 var feEmision = linksoft.util.parseJsonDate(d.feEmision);
                 var feVencimiento = linksoft.util.parseJsonDate(d.feVencimiento);
@@ -256,56 +260,56 @@
                 }
 
                 if ($('#txtCodCliente').val() == '') {
-                    linksoft.util.alert('Ingrese cliente.', alert_type);
+                    linksoft.util.alert('Ingrese cliente.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtCliente').focus();
                     return false;
                 }
 
                 if ($('#txtCodOperFact').val() == '') {
-                    linksoft.util.alert('Ingrese operación de facturación.', alert_type);
+                    linksoft.util.alert('Ingrese operación de facturación.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtOperFact').focus();
                     return false;
                 }
 
                 if ($('#txtTipoCambio').val() == '') {
-                    linksoft.util.alert('Ingrese tipo de cambio.', alert_type);
+                    linksoft.util.alert('Ingrese tipo de cambio.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtTipoCambio').focus();
                     return false;
                 }
 
                 if ($('#txtCodVendedor').val() == '') {
-                    linksoft.util.alert('Ingrese vendedor.', alert_type);
+                    linksoft.util.alert('Ingrese vendedor.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtVendedor').focus();
                     return false;
                 }
 
                 if ($('#txtCodCondPago').val() == '') {
-                    linksoft.util.alert('Ingrese condición de pago.', alert_type);
+                    linksoft.util.alert('Ingrese condición de pago.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtCondPago').focus();
                     return false;
                 }
 
                 if ($('#txtCodUnidadOperativa').val() == '') {
-                    linksoft.util.alert('Ingrese unidad operativa.', alert_type);
+                    linksoft.util.alert('Ingrese unidad operativa.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtUnidadOperativa').focus();
                     return false;
                 }
 
                 if ($('#txtCodZona').val() == '') {
-                    linksoft.util.alert('Ingrese zona.', alert_type);
+                    linksoft.util.alert('Ingrese zona.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtZona').focus();
                     return false;
                 }
 
                 if ($('#tablaCotizacionDetalle').DataTable().data().length == 0) {
-                    linksoft.util.alert('No existe detalle de cotización.', alert_type);
+                    linksoft.util.alert('No existe detalle de cotización.');
                     $('a[href="#tabDetalle"]').tab('show');
                     $('#btnAgregarItem').focus();
                     return false;
@@ -328,30 +332,30 @@
         function Guardar() {
             var objCotizacion = {};
 
-            objCotizacion.dsDoc = $('#txtDoc').val();
-            objCotizacion.dsDocSerie = $('#txtSerie').val();
-            objCotizacion.codCondPago = $('#txtCodCondPago').val();
-            objCotizacion.feEmision = $('#txtFechaEmision').val();
-            objCotizacion.feVencimiento = $('#txtFechaVencimiento').val();
-            objCotizacion.codOperFact = $('#txtCodOperFact').val();
-            objCotizacion.codOperLog = $('#txtCodOperLog').val();
-            objCotizacion.codZona = $('#txtCodZona').val();
-            objCotizacion.codAlmacen = $('#txtCodAlmacen').val();
-            objCotizacion.codSucursal = $('#txtCodUnidadOperativa').val();
-            objCotizacion.codVendedor = $('#txtCodVendedor').val();
-            objCotizacion.codCobrador = $('#txtCodCobrador').val();
-            objCotizacion.codCliente = $('#txtCodCliente').val();
-            objCotizacion.dsCliente = $('#txtCliente').val();
-            objCotizacion.dsDireccionCliente = $('#txtDireccion').val();
-            objCotizacion.dsGlosa = $('#txtGlosa').val();
-            objCotizacion.dsPrioridad = $('#ddlPrioridad').val();
-            objCotizacion.nuTipoCambio = $('#txtTipoCambio').val();
-            objCotizacion.codMoneda = $('#txtCodMoneda').val();
-            objCotizacion.nuBruto = $('#txtBruto').val();
-            objCotizacion.nuNeto = $('#txtNeto').val();
-            objCotizacion.nuImpuesto = $('#txtImpuesto').val();
-            objCotizacion.nuTotal = $('#txtTotal').val();
-            objCotizacion.dsEstado = $('#ddlEstado').val();
+            objCotizacion.dsDoc = $('#txtDoc').val().trim();
+            objCotizacion.dsDocSerie = $('#txtSerie').val().trim();
+            objCotizacion.codCondPago = $('#txtCodCondPago').val().trim();
+            objCotizacion.feEmision = $('#txtFechaEmision').val().trim();
+            objCotizacion.feVencimiento = $('#txtFechaVencimiento').val().trim();
+            objCotizacion.codOperFact = $('#txtCodOperFact').val().trim();
+            objCotizacion.codOperLog = $('#txtCodOperLog').val().trim();
+            objCotizacion.codZona = $('#txtCodZona').val().trim();
+            objCotizacion.codAlmacen = $('#txtCodAlmacen').val().trim();
+            objCotizacion.codSucursal = $('#txtCodUnidadOperativa').val().trim();
+            objCotizacion.codVendedor = $('#txtCodVendedor').val().trim();
+            objCotizacion.codCobrador = $('#txtCodCobrador').val().trim();
+            objCotizacion.codCliente = $('#txtCodCliente').val().trim();
+            objCotizacion.dsCliente = $('#txtCliente').val().trim();
+            objCotizacion.dsDireccionCliente = $('#txtDireccion').val().trim();
+            objCotizacion.dsGlosa = $('#txtGlosa').val().trim();
+            objCotizacion.dsPrioridad = $('#ddlPrioridad').val().trim();
+            objCotizacion.nuTipoCambio = $('#txtTipoCambio').val().trim();
+            objCotizacion.codMoneda = $('#txtCodMoneda').val().trim();
+            objCotizacion.nuBruto = $('#txtBruto').val().trim();
+            objCotizacion.nuNeto = $('#txtNeto').val().trim();
+            objCotizacion.nuImpuesto = $('#txtImpuesto').val().trim();
+            objCotizacion.nuTotal = $('#txtTotal').val().trim();
+            objCotizacion.dsEstado = $('#ddlEstado').val().trim();
             objCotizacion.Accion = Accion;
 
             objCotizacion.lstCotizacionDetalle = [];
@@ -371,7 +375,15 @@
 
 
             linksoft.util.ajaxCallback(cotizacionURL, cotizacionParam, function (response) {
-                linksoft.util.reloadListado();
+                if (response.mensaje == 'SUCCESS') {
+                    linksoft.util.showMessage('Se registró la cotización correctamente.', 'alert-success');
+                    linksoft.util.defaultLoad('regCotizacion');
+                    $("#btnAgregarItem").attr('disabled', true);
+                    $("#btnEliminarItem").attr('disabled', true);
+                } else {
+                    linksoft.util.showMessage('Error al guardar.', 'alert-danger');
+                }
+                
             });
 
 
@@ -526,42 +538,42 @@
                 }
 
                 if ($('#txtCodCliente').val() == '') {
-                    linksoft.util.alert('Ingrese cliente.', alert_type);
+                    linksoft.util.alert('Ingrese cliente.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtCliente').focus();
                     return;
                 }
 
                 if ($('#txtCodOperFact').val() == '') {
-                    linksoft.util.alert('Ingrese operación de facturación.', alert_type);
+                    linksoft.util.alert('Ingrese operación de facturación.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtOperFact').focus();
                     return;
                 }
 
                 if ($('#txtTipoCambio').val() == '') {
-                    linksoft.util.alert('Ingrese tipo de cambio.', alert_type);
+                    linksoft.util.alert('Ingrese tipo de cambio.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtTipoCambio').focus();
                     return;
                 }
 
                 if ($('#txtCodVendedor').val() == '') {
-                    linksoft.util.alert('Ingrese vendedor.', alert_type);
+                    linksoft.util.alert('Ingrese vendedor.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtVendedor').focus();
                     return;
                 }
 
                 if ($('#txtCodCondPago').val() == '') {
-                    linksoft.util.alert('Ingrese condición de pago.', alert_type);
+                    linksoft.util.alert('Ingrese condición de pago.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtCondPago').focus();
                     return;
                 }
 
                 if ($('#txtCodZona').val() == '') {
-                    linksoft.util.alert('Ingrese zona.', alert_type);
+                    linksoft.util.alert('Ingrese zona.');
                     $('a[href="#tabMain"]').tab('show');
                     $('#txtZona').focus();
                     return;

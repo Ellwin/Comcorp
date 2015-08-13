@@ -82,7 +82,6 @@ linksoft.util = {
             $("#btnGuardar").attr('disabled', false);
             $("#btnDeshacer").attr('disabled', false);
             $("#btnEliminar").attr('disabled', true);
-            $("#btnCancelar").attr('disabled', false);
 
             $("#btnPrimero").attr('disabled', true);
             $("#btnAnterior").attr('disabled', true);
@@ -106,7 +105,6 @@ linksoft.util = {
             $("#btnGuardar").attr('disabled', false);
             $("#btnDeshacer").attr('disabled', false);
             $("#btnEliminar").attr('disabled', true);
-            $("#btnCancelar").attr('disabled', false);
 
             $("#btnPrimero").attr('disabled', true);
             $("#btnAnterior").attr('disabled', true);
@@ -145,7 +143,7 @@ linksoft.util = {
             Accion = 'del';
         });
 
-        $("#btnCancelar, #btnDeshacer").click(function () {
+        $("#btnDeshacer").click(function () {
 
             $("#btnRefrescar").attr('disabled', false);
             $("#btnNuevo").attr('disabled', false);
@@ -153,7 +151,6 @@ linksoft.util = {
             $("#btnGuardar").attr('disabled', true);
             $("#btnDeshacer").attr('disabled', true);
             $("#btnEliminar").attr('disabled', false);
-            $("#btnCancelar").attr('disabled', true);
 
             $("#btnPrimero").attr('disabled', false);
             $("#btnAnterior").attr('disabled', false);
@@ -182,11 +179,9 @@ linksoft.util = {
 
             });
 
-
             Accion = '';
 
             linksoft.util.reloadListado();
-
         });
 
         $("#btnRefrescar").click(function () {
@@ -208,6 +203,47 @@ linksoft.util = {
         $('#btnUltimo').click(function () {
             linksoft.util.lastRow();
         });
+    },
+    defaultLoad: function (panelFormSelector) {
+        var $obj = $('#' + panelFormSelector + ' input,' + '#' + panelFormSelector + ' select,' + '#' + panelFormSelector + ' button');
+
+        $("#btnRefrescar").attr('disabled', false);
+        $("#btnNuevo").attr('disabled', false);
+        $("#btnEditar").attr('disabled', false);
+        $("#btnGuardar").attr('disabled', true);
+        $("#btnDeshacer").attr('disabled', true);
+        $("#btnEliminar").attr('disabled', false);
+
+        $("#btnPrimero").attr('disabled', false);
+        $("#btnAnterior").attr('disabled', false);
+        $("#btnSiguiente").attr('disabled', false);
+        $("#btnUltimo").attr('disabled', false);
+
+        $obj.each(function () {
+
+            var $control = $(this);
+            var $type = $control.attr('type');
+
+            if ($type == 'text' || $type == 'password' || $type == 'hidden') {
+
+                $control.val('');
+                $control.attr('readonly', true);
+
+            }
+            if ($type == 'checkbox' || $type == 'radio' || $type == 'button') {
+                $control.attr('disabled', true);
+            }
+
+            if ($control.is('select')) {
+
+                $control.attr('disabled', true);
+            }
+
+        });
+
+        Accion = '';
+
+        linksoft.util.reloadListado();
     },
     nextRow: function () {
         var table = $("#tablaListado").DataTable();

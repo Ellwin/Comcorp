@@ -10,6 +10,7 @@ Public Class DA_Cotizacion
         Dim resultado As Boolean = False
         Dim dsDocNro As String = String.Empty
         Dim vFunciones As New Funciones
+        Dim countParameter As Integer = 0
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)
                 cn.Open()
@@ -35,45 +36,82 @@ Public Class DA_Cotizacion
                         Using cmd As New SqlCommand("Usp_Concorp_fa_cbpedcot_InsertCotizacion", cn)
                             cmd.CommandType = CommandType.StoredProcedure
                             cmd.Transaction = trx
-                            cmd.Parameters.Add("@codCia", SqlDbType.VarChar).Value = objCotizacion.codCia
-                            cmd.Parameters.Add("@dsDoc", SqlDbType.VarChar).Value = objCotizacion.dsDoc
-                            cmd.Parameters.Add("@dsDocSerie", SqlDbType.VarChar).Value = objCotizacion.dsDocSerie
-                            cmd.Parameters.Add("@dsDocNro", SqlDbType.VarChar).Value = dsDocNro
-                            cmd.Parameters.Add("@codEjercicio", SqlDbType.VarChar).Value = objCotizacion.codEjercicio
-                            cmd.Parameters.Add("@codPeriodo", SqlDbType.VarChar).Value = objCotizacion.codPeriodo
-                            cmd.Parameters.Add("@codCondPago", SqlDbType.VarChar).Value = objCotizacion.codCondPago
-                            cmd.Parameters.Add("@dsTipoTrans", SqlDbType.VarChar).Value = objCotizacion.dsTipoTrans
-                            cmd.Parameters.Add("@dsTipoDoc", SqlDbType.VarChar).Value = objCotizacion.dsTipoDoc
+                            cmd.Parameters.Add("@codCia", SqlDbType.Char, 3).Value = objCotizacion.codCia
+                            cmd.Parameters.Add("@dsDoc", SqlDbType.Char, 2).Value = objCotizacion.dsDoc
+                            cmd.Parameters.Add("@dsDocSerie", SqlDbType.Char, 3).Value = objCotizacion.dsDocSerie
+                            cmd.Parameters.Add("@dsDocNro", SqlDbType.Char, 7).Value = dsDocNro
+                            cmd.Parameters.Add("@codEjercicio", SqlDbType.Char, 6).Value = objCotizacion.codEjercicio
+                            cmd.Parameters.Add("@codPeriodo", SqlDbType.Char, 6).Value = objCotizacion.codPeriodo
+                            cmd.Parameters.Add("@codCondPago", SqlDbType.Char, 3).Value = objCotizacion.codCondPago
+                            cmd.Parameters.Add("@dsTipoTrans", SqlDbType.Char, 3).Value = objCotizacion.dsTipoTrans
+                            cmd.Parameters.Add("@dsTipoDoc", SqlDbType.Char, 1).Value = objCotizacion.dsTipoDoc
                             cmd.Parameters.Add("@feEmision", SqlDbType.SmallDateTime).Value = Format(objCotizacion.feEmision, Constantes.FORMAT_YYYY_MM_DD)
                             cmd.Parameters.Add("@feVencimiento", SqlDbType.SmallDateTime).Value = Format(objCotizacion.feVencimiento, Constantes.FORMAT_YYYY_MM_DD)
-                            cmd.Parameters.Add("@codOperFact", SqlDbType.VarChar).Value = objCotizacion.codOperFact
-                            cmd.Parameters.Add("@codOperLog", SqlDbType.VarChar).Value = IIf(String.IsNullOrEmpty(objCotizacion.codOperLog), DBNull.Value, objCotizacion.codOperLog)
-                            cmd.Parameters.Add("@codZona", SqlDbType.VarChar).Value = objCotizacion.codZona
-                            cmd.Parameters.Add("@codAlmacen", SqlDbType.VarChar).Value = objCotizacion.codAlmacen
-                            cmd.Parameters.Add("@codSucursal", SqlDbType.VarChar).Value = objCotizacion.codSucursal
-                            cmd.Parameters.Add("@codVendedor", SqlDbType.VarChar).Value = objCotizacion.codVendedor
-                            cmd.Parameters.Add("@codCobrador", SqlDbType.VarChar).Value = IIf(String.IsNullOrEmpty(objCotizacion.codCobrador), DBNull.Value, objCotizacion.codCobrador)
-                            cmd.Parameters.Add("@codCliente", SqlDbType.VarChar).Value = objCotizacion.codCliente
-                            cmd.Parameters.Add("@dsCliente", SqlDbType.VarChar).Value = objCotizacion.dsCliente
-                            cmd.Parameters.Add("@dsDireccionCliente", SqlDbType.VarChar).Value = objCotizacion.dsDireccionCliente
-                            cmd.Parameters.Add("@dsGlosa", SqlDbType.VarChar).Value = objCotizacion.dsGlosa
-                            cmd.Parameters.Add("@dsPrioridad", SqlDbType.VarChar).Value = objCotizacion.dsPrioridad
-                            cmd.Parameters.Add("@nuTipoCambio", SqlDbType.Decimal).Value = objCotizacion.nuTipoCambio
-                            cmd.Parameters.Add("@codMoneda", SqlDbType.VarChar).Value = objCotizacion.codMoneda
-                            cmd.Parameters.Add("@nuBrutoMN", SqlDbType.Decimal).Value = objCotizacion.nuBrutoMN
-                            cmd.Parameters.Add("@nuBrutoME", SqlDbType.Decimal).Value = objCotizacion.nuBrutoME
-                            cmd.Parameters.Add("@nuNetoMN", SqlDbType.Decimal).Value = objCotizacion.nuNetoMN
-                            cmd.Parameters.Add("@nuNetoME", SqlDbType.Decimal).Value = objCotizacion.nuNetoME
-                            cmd.Parameters.Add("@nuImpuestoMN", SqlDbType.Decimal).Value = objCotizacion.nuImpuestoMN
-                            cmd.Parameters.Add("@nuImpuestoME", SqlDbType.Decimal).Value = objCotizacion.nuImpuestoME
-                            cmd.Parameters.Add("@nuTotalMN", SqlDbType.Decimal).Value = objCotizacion.nuTotalMN
-                            cmd.Parameters.Add("@nuTotalME", SqlDbType.Decimal).Value = objCotizacion.nuTotalME
-                            cmd.Parameters.Add("@bIndicadorPrn", SqlDbType.Bit).Value = objCotizacion.bIndicadorPrn
-                            cmd.Parameters.Add("@dsIndContable", SqlDbType.VarChar).Value = objCotizacion.dsIndContable
-                            cmd.Parameters.Add("@dsIndImpreso", SqlDbType.VarChar).Value = objCotizacion.dsIndImpreso
-                            cmd.Parameters.Add("@codUsuario", SqlDbType.VarChar).Value = objCotizacion.codUsuario
-                            cmd.Parameters.Add("@dsEstado", SqlDbType.VarChar).Value = objCotizacion.dsEstado
+                            cmd.Parameters.Add("@codOperFact", SqlDbType.Char, 3).Value = objCotizacion.codOperFact
+                            cmd.Parameters.Add("@codOperLog", SqlDbType.Char, 3).Value = IIf(String.IsNullOrEmpty(objCotizacion.codOperLog), DBNull.Value, objCotizacion.codOperLog)
+                            cmd.Parameters.Add("@codZona", SqlDbType.Char, 3).Value = objCotizacion.codZona
+                            cmd.Parameters.Add("@codAlmacen", SqlDbType.Char, 3).Value = objCotizacion.codAlmacen
+                            cmd.Parameters.Add("@codSucursal", SqlDbType.Char, 3).Value = objCotizacion.codSucursal
+                            cmd.Parameters.Add("@codVendedor", SqlDbType.Char, 3).Value = objCotizacion.codVendedor
+                            cmd.Parameters.Add("@codCobrador", SqlDbType.Char, 3).Value = IIf(String.IsNullOrEmpty(objCotizacion.codCobrador), DBNull.Value, objCotizacion.codCobrador)
+                            cmd.Parameters.Add("@codCliente", SqlDbType.Char, 11).Value = objCotizacion.codCliente
+                            cmd.Parameters.Add("@dsCliente", SqlDbType.Char, 80).Value = objCotizacion.dsCliente
+                            cmd.Parameters.Add("@dsDireccionCliente", SqlDbType.Char, 100).Value = objCotizacion.dsDireccionCliente
+                            cmd.Parameters.Add("@dsGlosa", SqlDbType.VarChar, 50).Value = objCotizacion.dsGlosa
+                            cmd.Parameters.Add("@dsPrioridad", SqlDbType.Char, 1).Value = objCotizacion.dsPrioridad
 
+                            cmd.Parameters.Add("@nuTipoCambio", SqlDbType.Decimal)
+                            cmd.Parameters("@nuTipoCambio").Precision = 10
+                            cmd.Parameters("@nuTipoCambio").Scale = 4
+                            cmd.Parameters("@nuTipoCambio").Value = objCotizacion.nuTipoCambio
+
+                            cmd.Parameters.Add("@codMoneda", SqlDbType.Char, 2).Value = objCotizacion.codMoneda
+
+                            cmd.Parameters.Add("@nuBrutoMN", SqlDbType.Decimal) '.Value = objCotizacion.nuBrutoMN
+                            cmd.Parameters("@nuBrutoMN").Precision = 14
+                            cmd.Parameters("@nuBrutoMN").Scale = 2
+                            cmd.Parameters("@nuBrutoMN").Value = objCotizacion.nuBrutoMN
+
+                            cmd.Parameters.Add("@nuBrutoME", SqlDbType.Decimal) '.Value = objCotizacion.nuBrutoME
+                            cmd.Parameters("@nuBrutoME").Precision = 14
+                            cmd.Parameters("@nuBrutoME").Scale = 2
+                            cmd.Parameters("@nuBrutoME").Value = objCotizacion.nuBrutoME
+
+                            cmd.Parameters.Add("@nuNetoMN", SqlDbType.Decimal) '.Value = objCotizacion.nuNetoMN
+                            cmd.Parameters("@nuNetoMN").Precision = 14
+                            cmd.Parameters("@nuNetoMN").Scale = 2
+                            cmd.Parameters("@nuNetoMN").Value = objCotizacion.nuNetoMN
+
+                            cmd.Parameters.Add("@nuNetoME", SqlDbType.Decimal) '.Value = objCotizacion.nuNetoME
+                            cmd.Parameters("@nuNetoME").Precision = 14
+                            cmd.Parameters("@nuNetoME").Scale = 2
+                            cmd.Parameters("@nuNetoME").Value = objCotizacion.nuNetoME
+
+                            cmd.Parameters.Add("@nuImpuestoMN", SqlDbType.Decimal) '.Value = objCotizacion.nuImpuestoMN
+                            cmd.Parameters("@nuImpuestoMN").Precision = 14
+                            cmd.Parameters("@nuImpuestoMN").Scale = 2
+                            cmd.Parameters("@nuImpuestoMN").Value = objCotizacion.nuImpuestoMN
+
+                            cmd.Parameters.Add("@nuImpuestoME", SqlDbType.Decimal) '.Value = objCotizacion.nuImpuestoME
+                            cmd.Parameters("@nuImpuestoME").Precision = 14
+                            cmd.Parameters("@nuImpuestoME").Scale = 2
+                            cmd.Parameters("@nuImpuestoME").Value = objCotizacion.nuImpuestoME
+
+                            cmd.Parameters.Add("@nuTotalMN", SqlDbType.Decimal) '.Value = objCotizacion.nuTotalMN
+                            cmd.Parameters("@nuTotalMN").Precision = 14
+                            cmd.Parameters("@nuTotalMN").Scale = 2
+                            cmd.Parameters("@nuTotalMN").Value = objCotizacion.nuTotalMN
+
+                            cmd.Parameters.Add("@nuTotalME", SqlDbType.Decimal) '.Value = objCotizacion.nuTotalME
+                            cmd.Parameters("@nuTotalME").Precision = 14
+                            cmd.Parameters("@nuTotalME").Scale = 2
+                            cmd.Parameters("@nuTotalME").Value = objCotizacion.nuTotalME
+
+                            cmd.Parameters.Add("@bIndicadorPrn", SqlDbType.Bit).Value = objCotizacion.bIndicadorPrn
+                            cmd.Parameters.Add("@dsIndContable", SqlDbType.Char, 1).Value = objCotizacion.dsIndContable
+                            cmd.Parameters.Add("@dsIndImpreso", SqlDbType.Char, 1).Value = objCotizacion.dsIndImpreso
+                            cmd.Parameters.Add("@codUsuario", SqlDbType.Char, 5).Value = objCotizacion.codUsuario
+                            cmd.Parameters.Add("@dsEstado", SqlDbType.Char, 1).Value = objCotizacion.dsEstado
 
                             cmd.ExecuteNonQuery()
 
@@ -84,24 +122,24 @@ Public Class DA_Cotizacion
                                 cmd.CommandType = CommandType.StoredProcedure
                                 cmd.Transaction = trx
 
-                                cmd.Parameters.Add("@codCia", SqlDbType.VarChar).Value = item.codCia
-                                cmd.Parameters.Add("@dsDoc", SqlDbType.VarChar).Value = item.dsDoc
-                                cmd.Parameters.Add("@dsDocSerie", SqlDbType.VarChar).Value = item.dsDocSerie
-                                cmd.Parameters.Add("@dsDocNro", SqlDbType.VarChar).Value = dsDocNro
-                                cmd.Parameters.Add("@codEjercicio", SqlDbType.VarChar).Value = item.codEjercicio
-                                cmd.Parameters.Add("@codPeriodo", SqlDbType.VarChar).Value = item.codPeriodo
-                                cmd.Parameters.Add("@dsTipoTrans", SqlDbType.VarChar).Value = item.dsTipoTrans
-                                cmd.Parameters.Add("@dsTipoDoc", SqlDbType.VarChar).Value = item.dsTipoDoc
-                                cmd.Parameters.Add("@dsIdItem", SqlDbType.VarChar).Value = item.dsIdItem
-                                cmd.Parameters.Add("@codArticulo", SqlDbType.VarChar).Value = item.codArticulo
-                                cmd.Parameters.Add("@dsArticulo", SqlDbType.VarChar).Value = item.dsArticulo
-                                cmd.Parameters.Add("@dsTipoItem", SqlDbType.VarChar).Value = item.dsTipoItem
-                                cmd.Parameters.Add("@codLinea", SqlDbType.VarChar).Value = item.codLinea
-                                cmd.Parameters.Add("@codSubLinea", SqlDbType.VarChar).Value = item.codSubLinea
+                                cmd.Parameters.Add("@codCia", SqlDbType.Char, 3).Value = item.codCia
+                                cmd.Parameters.Add("@dsDoc", SqlDbType.Char, 2).Value = item.dsDoc
+                                cmd.Parameters.Add("@dsDocSerie", SqlDbType.Char, 3).Value = item.dsDocSerie
+                                cmd.Parameters.Add("@dsDocNro", SqlDbType.Char, 7).Value = dsDocNro
+                                cmd.Parameters.Add("@codEjercicio", SqlDbType.Char, 6).Value = item.codEjercicio
+                                cmd.Parameters.Add("@codPeriodo", SqlDbType.Char, 6).Value = item.codPeriodo
+                                cmd.Parameters.Add("@dsTipoTrans", SqlDbType.Char, 3).Value = item.dsTipoTrans
+                                cmd.Parameters.Add("@dsTipoDoc", SqlDbType.Char, 1).Value = item.dsTipoDoc
+                                cmd.Parameters.Add("@dsIdItem", SqlDbType.Char, 5).Value = item.dsIdItem
+                                cmd.Parameters.Add("@codArticulo", SqlDbType.Char, 25).Value = item.codArticulo
+                                cmd.Parameters.Add("@dsArticulo", SqlDbType.Char, 100).Value = item.dsArticulo
+                                cmd.Parameters.Add("@dsTipoItem", SqlDbType.Char, 1).Value = item.dsTipoItem
+                                cmd.Parameters.Add("@codLinea", SqlDbType.Char, 5).Value = item.codLinea
+                                cmd.Parameters.Add("@codSubLinea", SqlDbType.Char, 5).Value = item.codSubLinea
                                 cmd.Parameters.Add("@nuSaldo", SqlDbType.Decimal).Value = item.nuSaldo
                                 cmd.Parameters.Add("@nuCantidad", SqlDbType.Decimal).Value = item.nuCantidad
-                                cmd.Parameters.Add("@codMoneda", SqlDbType.VarChar).Value = item.codMoneda
-                                cmd.Parameters.Add("@codMonedaListaPrecio", SqlDbType.VarChar).Value = item.codMonedaListaPrecio
+                                cmd.Parameters.Add("@codMoneda", SqlDbType.Char, 2).Value = item.codMoneda
+                                cmd.Parameters.Add("@codMonedaListaPrecio", SqlDbType.Char, 2).Value = item.codMonedaListaPrecio
                                 cmd.Parameters.Add("@nuTipoCambio", SqlDbType.Decimal).Value = item.nuTipoCambio
                                 cmd.Parameters.Add("@nuPrecioMN", SqlDbType.Decimal).Value = item.nuPrecioMN
                                 cmd.Parameters.Add("@nuPrecioME", SqlDbType.Decimal).Value = item.nuPrecioME
@@ -113,23 +151,23 @@ Public Class DA_Cotizacion
                                 cmd.Parameters.Add("@nuImpuestoME", SqlDbType.Decimal).Value = item.nuImpuestoME
                                 cmd.Parameters.Add("@nuTotalMN", SqlDbType.Decimal).Value = item.nuTotalMN
                                 cmd.Parameters.Add("@nuTotalME", SqlDbType.Decimal).Value = item.nuTotalME
-                                cmd.Parameters.Add("@codCliente", SqlDbType.VarChar).Value = item.codCliente
-                                cmd.Parameters.Add("@codVendedor", SqlDbType.VarChar).Value = item.codVendedor
-                                cmd.Parameters.Add("@codAlmacen", SqlDbType.VarChar).Value = item.codAlmacen
-                                cmd.Parameters.Add("@codOperLog", SqlDbType.VarChar).Value = item.codOperLog
-                                cmd.Parameters.Add("@codUnidadMedida", SqlDbType.VarChar).Value = item.codUnidadMedidaAlmacen
-                                cmd.Parameters.Add("@codZona", SqlDbType.VarChar).Value = item.codZona
-                                cmd.Parameters.Add("@codSucursal", SqlDbType.VarChar).Value = item.codSucursal
-                                cmd.Parameters.Add("@codOperFact", SqlDbType.VarChar).Value = item.codOperFact
+                                cmd.Parameters.Add("@codCliente", SqlDbType.Char, 11).Value = item.codCliente
+                                cmd.Parameters.Add("@codVendedor", SqlDbType.Char, 3).Value = item.codVendedor
+                                cmd.Parameters.Add("@codAlmacen", SqlDbType.Char, 3).Value = item.codAlmacen
+                                cmd.Parameters.Add("@codOperLog", SqlDbType.Char, 3).Value = item.codOperLog
+                                cmd.Parameters.Add("@codUnidadMedida", SqlDbType.Char, 6).Value = item.codUnidadMedidaAlmacen
+                                cmd.Parameters.Add("@codZona", SqlDbType.Char, 3).Value = item.codZona
+                                cmd.Parameters.Add("@codSucursal", SqlDbType.Char, 3).Value = item.codSucursal
+                                cmd.Parameters.Add("@codOperFact", SqlDbType.Char, 3).Value = item.codOperFact
                                 cmd.Parameters.Add("@feEmision", SqlDbType.SmallDateTime).Value = Format(item.feEmision, Constantes.FORMAT_YYYY_MM_DD)
                                 cmd.Parameters.Add("@bIva", SqlDbType.Bit).Value = item.bIva
                                 cmd.Parameters.Add("@bSerie", SqlDbType.Bit).Value = item.bSerie
                                 cmd.Parameters.Add("@bLote", SqlDbType.Bit).Value = item.bLote
-                                cmd.Parameters.Add("@codCondPago", SqlDbType.VarChar).Value = item.codCondPago
-                                cmd.Parameters.Add("@codListaPrecio", SqlDbType.VarChar).Value = item.codListaPrecio
+                                cmd.Parameters.Add("@codCondPago", SqlDbType.Char, 3).Value = item.codCondPago
+                                cmd.Parameters.Add("@codListaPrecio", SqlDbType.Char, 4).Value = item.codListaPrecio
                                 cmd.Parameters.Add("@bAfectoPercepcion", SqlDbType.Bit).Value = item.bAfectoPercepcion
-                                cmd.Parameters.Add("@codUsuario", SqlDbType.VarChar).Value = item.codUsuario
-                                cmd.Parameters.Add("@dsEstado", SqlDbType.VarChar).Value = item.dsEstado
+                                cmd.Parameters.Add("@codUsuario", SqlDbType.Char, 5).Value = item.codUsuario
+                                cmd.Parameters.Add("@dsEstado", SqlDbType.Char, 1).Value = item.dsEstado
 
                                 cmd.ExecuteNonQuery()
                             End Using

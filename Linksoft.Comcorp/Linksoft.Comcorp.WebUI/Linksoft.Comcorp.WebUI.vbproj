@@ -130,6 +130,7 @@
     <Content Include="css\jquery.dataTables.min.css" />
     <Content Include="css\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\loading.GIF" />
     <Content Include="img\logo.png" />
@@ -180,6 +181,9 @@
     <Compile Include="Default.aspx.vb">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Global.asax.vb">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.designer.vb">
       <DependentUpon>Login.aspx</DependentUpon>

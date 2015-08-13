@@ -100,7 +100,6 @@
                                 <button type="submit" id="btnGuardar" class="btn btn-default" title="Guardar" disabled="disabled"><span class="glyphicon glyphicon-floppy-disk text-primary"></span></button>
                                 <button type="button" id="btnDeshacer" class="btn btn-default" title="Deshacer" disabled="disabled"><span class="glyphicon glyphicon-repeat text-danger"></span></button>
                                 <button type="button" id="btnEliminar" class="btn btn-default" title="Eliminar"><span class="glyphicon glyphicon-remove text-danger"></span></button>
-                                <button type="button" id="btnCancelar" class="btn btn-default" title="Cancelar" disabled="disabled"><span class="glyphicon glyphicon-ban-circle text-danger"></span></button>
                             </div>
                     
                             <div class="btn-group">
