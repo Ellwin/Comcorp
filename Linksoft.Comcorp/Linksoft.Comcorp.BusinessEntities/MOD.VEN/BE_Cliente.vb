@@ -1,9 +1,28 @@
 ﻿Public Class BE_Cliente
+    Public Property id As Int64
     Public Property codCia As String
     Public Property codCliente As String
     Public Property dsCliente As String
     Public Property dsTipoCliente As String
+    Public Property dsTipoClasificacion As String
+    Public Property dsTipoDocumento As String
+    Public Property dsNroDocumento As String
+    Public Property dsRuc As String
+    Public Property dsApellidoPaterno As String
+    Public Property dsApellidoMaterno As String
+    Public Property dsNombres As String
+    Public Property feNacimiento As String
     Public Property dsDireccion As String
+    Public Property dsDistrito As String
+    Public Property dsProvincia As String
+    Public Property dsDepartamento As String
+    Public Property dsPais As String
+    Public Property dsFax As String
+    Public Property dsTelefono1 As String
+    Public Property dsTelefono2 As String
+    Public Property dsCodigoPostal As String
+    Public Property dsEmail1 As String
+    Public Property dsEmail2 As String
     Public Property codOperacionFacturacion As String
     Public Property dsOperacionFacturacion As String
     Public Property codOperacionLogistica As String
@@ -27,5 +46,11 @@
     Public Property dsListaPrecio As String
     Public Property codListaDescuento As String
     Public Property dsListaDescuento As String
+    Public Property dsUsuCreacion As String
+    Public Property feCreacion As Date
+    Public Property dsUsuModificacion As String
+    Public Property feModificacion As Date
+    Public Property codUsuario As String 'Usuario Sesion
     Public Property dsEstado As String
+    Public Property Accion As String
 End Class

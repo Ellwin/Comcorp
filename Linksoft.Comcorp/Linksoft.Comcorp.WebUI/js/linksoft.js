@@ -137,6 +137,8 @@ linksoft.util = {
             $('#tabMain').find(':input:first').focus();
 
             Accion = 'edit';
+
+            callback();
         });
 
         $("#btnEliminar").click(function () {

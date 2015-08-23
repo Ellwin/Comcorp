@@ -207,6 +207,42 @@ Public Class DA_Cotizacion
         Return resultado
     End Function
 
+    Public Shared Function DeleteCotizacion(ByVal objCotizacion As BE_Cotizacion) As Boolean
+        Dim resultado As Boolean = False
+        Try
+            Using cn As New SqlConnection(ConnectionStringSQLServer)
+                cn.Open()
+                Using trx = cn.BeginTransaction
+                    Try
+
+                        Using cmd As New SqlCommand("Usp_Concorp_fa_cbpedcot_DeleteCotizacion", cn)
+                            cmd.CommandType = CommandType.StoredProcedure
+                            cmd.Transaction = trx
+                            cmd.Parameters.Add("@codCia", SqlDbType.Char, 3).Value = objCotizacion.codCia
+                            cmd.Parameters.Add("@dsDoc", SqlDbType.Char, 2).Value = objCotizacion.dsDoc
+                            cmd.Parameters.Add("@dsDocSerie", SqlDbType.Char, 3).Value = objCotizacion.dsDocSerie
+                            cmd.Parameters.Add("@dsDocNro", SqlDbType.Char, 7).Value = objCotizacion.dsDocNro
+                            cmd.ExecuteNonQuery()
+
+                        End Using
+
+                        trx.Commit()
+                        resultado = True
+                    Catch ex As Exception
+                        trx.Rollback()
+                        resultado = False
+                        DA_BaseClass.LogSQLException(ex)
+                    End Try
+                End Using
+            End Using
+        Catch ex As Exception
+            resultado = False
+            DA_BaseClass.LogSQLException(ex)
+            Throw ex
+        End Try
+        Return resultado
+    End Function
+
     Public Shared Function ListarCotizacion(ByVal codCia As String, ByVal codEjercicio As String, ByVal codPeriodo As String) As List(Of BE_Cotizacion)
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)

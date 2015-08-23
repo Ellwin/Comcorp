@@ -223,13 +223,15 @@
 
                 });
 
-
-
             });
 
-            $("#btnAjustarColumnas").on('click', function () {
-                ajustarColumnas();
-            });
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                var tablaListado = $('#tablaListado').DataTable(),
+                    tablaCotizacionDetalle = $('#tablaCotizacionDetalle').DataTable();
+
+                tablaListado.columns.adjust().draw();
+                tablaCotizacionDetalle.columns.adjust().draw();
+            })
 
             Busqueda();
 
@@ -322,6 +324,12 @@
             return false;
         });
 
+        $("#btnEliminar").on('click', function () {
+            linksoft.util.openModalConfirmacion('¿Está seguro(a) de eliminar la cotización?', function () {
+                Guardar();
+            });
+        });
+
     });
 
         function ajustarColumnas() {
@@ -334,6 +342,7 @@
 
             objCotizacion.dsDoc = $('#txtDoc').val().trim();
             objCotizacion.dsDocSerie = $('#txtSerie').val().trim();
+            objCotizacion.dsDocNro = $('#txtNumero').val().trim();
             objCotizacion.codCondPago = $('#txtCodCondPago').val().trim();
             objCotizacion.feEmision = $('#txtFechaEmision').val().trim();
             objCotizacion.feVencimiento = $('#txtFechaVencimiento').val().trim();
@@ -376,14 +385,21 @@
 
             linksoft.util.ajaxCallback(cotizacionURL, cotizacionParam, function (response) {
                 if (response.mensaje == 'SUCCESS') {
-                    linksoft.util.showMessage('Se registró la cotización correctamente.', 'alert-success');
+                    var msg = '';
+                    if (Accion == 'add') {
+                        msg = 'Se registró la cotización correctamente.';
+                    } else if (Accion == 'edit') {
+                        msg = 'Se actualizó la cotización correctamente.';
+                    } else if (Accion == 'del') {
+                        msg = 'Se eliminó la cotización correctamente.';
+                    }
+                    linksoft.util.showMessage(msg, 'alert-success');
                     linksoft.util.defaultLoad('regCotizacion');
                     $("#btnAgregarItem").attr('disabled', true);
                     $("#btnEliminarItem").attr('disabled', true);
                 } else {
                     linksoft.util.showMessage('Error al guardar.', 'alert-danger');
                 }
-                
             });
 
 
@@ -1041,7 +1057,6 @@
             <div class="panel panel-heading">
                     <h4 class="panel-title">Listado de Cotización</h4>
             </div>
-            <button type="button" id="btnAjustarColumnas" class="btn btn-xs"><span class="glyphicon glyphicon-th text-info"></span>  Autojustar</button>
             <table id="tablaListado" class="display" cellspacing="0" width="100%">
                 <thead>
                     <tr>

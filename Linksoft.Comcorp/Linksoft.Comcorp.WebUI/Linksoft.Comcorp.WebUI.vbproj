@@ -148,7 +148,7 @@
     <Content Include="js\jsUpdateProgress.js" />
     <Content Include="js\linksoft.js" />
     <Content Include="Login.aspx" />
-    <Content Include="MOD.ADM\Usuario.aspx" />
+    <Content Include="MOD.VEN\Cliente.aspx" />
     <Content Include="MOD.VEN\Cotizacion.aspx" />
     <Content Include="MOD.VEN\ItemFactura.aspx" />
     <Content Include="MOD.VEN\Reportes\RptCotizacion.aspx" />
@@ -192,11 +192,11 @@
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="MOD.ADM\Usuario.aspx.designer.vb">
-      <DependentUpon>Usuario.aspx</DependentUpon>
+    <Compile Include="MOD.VEN\Cliente.aspx.designer.vb">
+      <DependentUpon>Cliente.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MOD.ADM\Usuario.aspx.vb">
-      <DependentUpon>Usuario.aspx</DependentUpon>
+    <Compile Include="MOD.VEN\Cliente.aspx.vb">
+      <DependentUpon>Cliente.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="MOD.VEN\Cotizacion.aspx.designer.vb">
@@ -205,6 +205,9 @@
     <Compile Include="MOD.VEN\Cotizacion.aspx.vb">
       <DependentUpon>Cotizacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="MOD.VEN\Handlers\HandlerCliente.ashx.vb">
+      <DependentUpon>HandlerCliente.ashx</DependentUpon>
     </Compile>
     <Compile Include="MOD.VEN\Handlers\HandlerCotizacion.ashx.vb">
       <DependentUpon>HandlerCotizacion.ashx</DependentUpon>
@@ -267,6 +270,7 @@
     <None Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="img\Sorting icons.psd" />
     <Content Include="MOD.VEN\Handlers\HandlerCotizacion.ashx" />
+    <Content Include="MOD.VEN\Handlers\HandlerCliente.ashx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -278,7 +282,9 @@
     </None>
     <Content Include="Site.Master" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MOD.ADM\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Linksoft.Comcorp.BusinessEntities\Linksoft.Comcorp.BusinessEntities.vbproj">
       <Project>{5F6EF8FF-1B7D-473C-B9CC-D76DED0A57D6}</Project>

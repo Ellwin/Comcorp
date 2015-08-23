@@ -42,5 +42,11 @@
     Public Const TRANS_FACTURACION_DIRECTA = "001"
 
 #End Region
+
+#Region "Acciones de Transaccion"
+    Public Const ACCION_NUEVO = "add"
+    Public Const ACCION_EDITAR = "edit"
+    Public Const ACCION_ELIMINAR = "del"
+#End Region
     
 End Class
