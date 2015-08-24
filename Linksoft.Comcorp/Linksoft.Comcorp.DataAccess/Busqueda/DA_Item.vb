@@ -6,7 +6,8 @@ Imports Linksoft.Comcorp.BusinessEntities
 Public Class DA_Item
     Inherits DA_BaseClass
 
-    Public Shared Function ListarItemQuery(ByVal codTipoQuery As String, ByVal codTabla As String, ByVal codCia As String) As List(Of BE_Item)
+    Public Shared Function ListarItemQuery(ByVal codTipoQuery As String, ByVal codTabla As String, ByVal codCia As String,
+                                           ByVal codigo As String, ByVal descripcion As String) As List(Of BE_Item)
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)
                 cn.Open()
@@ -15,6 +16,8 @@ Public Class DA_Item
                     cmd.Parameters.Add("@codTipoQuery", SqlDbType.VarChar).Value = codTipoQuery
                     cmd.Parameters.Add("@codTabla", SqlDbType.VarChar).Value = codTabla
                     cmd.Parameters.Add("@codCia", SqlDbType.VarChar).Value = codCia
+                    cmd.Parameters.Add("@codigo", SqlDbType.VarChar).Value = IIf(String.IsNullOrEmpty(codigo), DBNull.Value, codigo)
+                    cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = IIf(String.IsNullOrEmpty(descripcion), DBNull.Value, descripcion)
                     Using lector As SqlDataReader = cmd.ExecuteReader
                         Dim lstItem As New List(Of BE_Item)
                         Dim objItem As BE_Item

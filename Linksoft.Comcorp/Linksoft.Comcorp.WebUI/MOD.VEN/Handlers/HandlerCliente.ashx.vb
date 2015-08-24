@@ -11,6 +11,10 @@ Public Class HandlerCliente
 
     Sub ProcessRequest(ByVal context As HttpContext) Implements IHttpHandler.ProcessRequest
 
+        If context.Session(Constantes.USUARIO_SESION) Is Nothing Then
+            context.Response.Redirect(WebUtil.AbsoluteWebRoot.ToString & "Login.aspx")
+        End If
+
         Dim Metodo As String = context.Request("Metodo")
 
         Select Case Metodo

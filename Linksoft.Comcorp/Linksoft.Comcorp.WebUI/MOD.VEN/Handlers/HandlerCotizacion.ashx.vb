@@ -258,8 +258,6 @@ Public Class HandlerCotizacion
         Try
             Dim jsonCotizacion = context.Request("Cotizacion")
             Dim deserCotizacion As BE_Cotizacion = WebUtil.Deserializar(Of BE_Cotizacion)(jsonCotizacion, context)
-
-
             Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
             Dim objCotizacion As New BE_Cotizacion
 
@@ -308,6 +306,7 @@ Public Class HandlerCotizacion
                     objCotizacionDetalle.codCia = .codCia
                     objCotizacionDetalle.dsDoc = .dsDoc
                     objCotizacionDetalle.dsDocSerie = .dsDocSerie
+                    objCotizacionDetalle.dsDocNro = .dsDocNro
                     objCotizacionDetalle.codEjercicio = .codEjercicio
                     objCotizacionDetalle.codPeriodo = .codPeriodo
                     objCotizacionDetalle.dsTipoTrans = .dsTipoTrans
@@ -401,6 +400,12 @@ Public Class HandlerCotizacion
             Select Case objCotizacion.Accion
                 Case Constantes.ACCION_NUEVO
                     If BL_Cotizacion.InsertCotizacion(objCotizacion) Then
+                        objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+                    Else
+                        objJsonMessage.mensaje = Constantes.RESULT_TYPE_ERROR
+                    End If
+                Case Constantes.ACCION_EDITAR
+                    If BL_Cotizacion.UpdateCotizacion(objCotizacion) Then
                         objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
                     Else
                         objJsonMessage.mensaje = Constantes.RESULT_TYPE_ERROR

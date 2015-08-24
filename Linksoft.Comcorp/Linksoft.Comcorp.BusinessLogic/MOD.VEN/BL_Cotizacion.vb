@@ -6,6 +6,10 @@ Public Class BL_Cotizacion
         Return DA_Cotizacion.InsertCotizacion(objCotizacion)
     End Function
 
+    Public Shared Function UpdateCotizacion(ByVal objCotizacion As BE_Cotizacion) As Boolean
+        Return DA_Cotizacion.UpdateCotizacion(objCotizacion)
+    End Function
+
     Public Shared Function DeleteCotizacion(ByVal objCotizacion As BE_Cotizacion) As Boolean
         Return DA_Cotizacion.DeleteCotizacion(objCotizacion)
     End Function

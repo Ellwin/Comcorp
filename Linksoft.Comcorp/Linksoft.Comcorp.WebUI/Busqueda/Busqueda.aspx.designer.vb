@@ -32,6 +32,33 @@ Partial Public Class Busqueda
     Protected WithEvents ScriptManager1 As Global.System.Web.UI.ScriptManager
 
     '''<summary>
+    '''Control txtCodigo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtCodigo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control txtDescripcion.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtDescripcion As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Control btnBuscar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnBuscar As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''Control upBusqueda.
     '''</summary>
     '''<remarks>

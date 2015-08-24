@@ -286,6 +286,16 @@ linksoft.util = {
             $("#alertdiv").remove();
         }, 5000);
     },
+    verificarSesion: function () {
+        var sesionParam = {
+            Metodo: 'VerificarSesion'
+        };
+
+        linksoft.util.ajaxCallback(baseURL + 'HandlerGenerico.ashx', sesionParam, function (response) {
+            if (response == false)
+                window.location = baseUrl + 'Login.aspx';
+        });
+    },
     configDatepickerEs: function () {
         $.datepicker.regional['es'] = {
             closeText: 'Cerrar',
@@ -383,13 +393,12 @@ linksoft.util = {
         });
     },
     parseJsonDate: function (jsonDate) {
-        var dateString = jsonDate.substr(6);
-        var currentTime = new Date(parseInt(dateString));
-        var month = currentTime.getMonth() + 1;
-        var day = currentTime.getDate();
-        var year = currentTime.getFullYear();
-        var date = day + "/" + month + "/" + year;
-        return date;
+        var fullDate = new Date(parseInt(jsonDate.substr(6)));
+        var twoDigitMonth = (fullDate.getMonth() + 1) + ""; if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+        var twoDigitDate = fullDate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+        var currentDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+
+        return currentDate;
     }
 };
 

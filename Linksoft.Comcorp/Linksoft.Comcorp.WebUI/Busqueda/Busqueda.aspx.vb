@@ -14,7 +14,7 @@ Public Class Busqueda
                 Dim strValor As String = Convert.ToString(Request.QueryString("valor")).Trim
                 Dim objSesionLogin As BE_SesionLogin = CType(Session(Constantes.USUARIO_SESION), BE_SesionLogin)
 
-                Buscar(strTipo, strValor, objSesionLogin.codCia)
+                Buscar(strTipo, strValor, objSesionLogin.codCia, txtCodigo.Text.Trim, txtDescripcion.Text.Trim)
             End If
         Else
             Response.Redirect(WebUtil.AbsoluteWebRoot.ToString & "Login.aspx")
@@ -22,9 +22,10 @@ Public Class Busqueda
 
     End Sub
 
-    Private Sub Buscar(ByVal strTipo As String, ByVal strValor As String, ByVal strCia As String)
+    Private Sub Buscar(ByVal strTipo As String, ByVal strValor As String, ByVal strCia As String,
+                       ByVal strCodigo As String, ByVal strDescripcion As String)
         Dim lstItem As New List(Of BE_Item)
-        lstItem = BL_Item.ListarItemQuery(strTipo, strValor, strCia)
+        lstItem = BL_Item.ListarItemQuery(strTipo, strValor, strCia, strCodigo, strDescripcion)
 
         gvBusqueda.DataSource = lstItem
         gvBusqueda.DataBind()
@@ -38,7 +39,7 @@ Public Class Busqueda
 
         gvBusqueda.PageIndex = e.NewPageIndex
 
-        Buscar(strTipo, strValor, objSesionLogin.codCia)
+        Buscar(strTipo, strValor, objSesionLogin.codCia, txtCodigo.Text.Trim, txtDescripcion.Text.Trim)
     End Sub
 
     Private Sub gvBusqueda_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles gvBusqueda.RowDataBound
@@ -50,5 +51,12 @@ Public Class Busqueda
                 DataBinder.Eval(e.Row.DataItem, "descripcion") + "');"
 
         End If
+    End Sub
+
+    Protected Sub btnBuscar_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnBuscar.Click
+        Dim strTipo As String = Convert.ToString(Request.QueryString("tipo")).Trim
+        Dim strValor As String = Convert.ToString(Request.QueryString("valor")).Trim
+        Dim objSesionLogin As BE_SesionLogin = CType(Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+        Buscar(strTipo, strValor, objSesionLogin.codCia, txtCodigo.Text.Trim, txtDescripcion.Text.Trim)
     End Sub
 End Class

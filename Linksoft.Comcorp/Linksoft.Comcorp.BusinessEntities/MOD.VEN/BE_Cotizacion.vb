@@ -11,8 +11,8 @@
     Public Property dsTipoCondPago As String
     Public Property dsTipoTrans As String
     Public Property dsTipoDoc As String
-    Public Property feEmision As Date
-    Public Property feVencimiento As Date
+    Public Property feEmision As String
+    Public Property feVencimiento As String
     Public Property codOperFact As String
     Public Property dsOperFact As String
     Public Property codOperLog As String

@@ -32,6 +32,7 @@
     <script type="text/javascript">
         $(function () {
             $('.menu').lksMenu();
+            window.setInterval(linksoft.util.verificarSesion, 60000);
         })
     </script>
     <asp:ContentPlaceHolder ID="head" runat="server">

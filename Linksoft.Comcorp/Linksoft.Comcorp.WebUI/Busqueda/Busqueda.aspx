@@ -38,13 +38,13 @@
             <div class="panel-heading">
                 <div class="row">
                         <div class="col-xs-3">
-                            <input type="text" class="form-control input-sm" id="txtCodigo" placeholder="Codigo" />
+                            <asp:TextBox runat="server" ID="txtCodigo" CssClass="form-control input-sm" placeholder="Codigo"></asp:TextBox>
                         </div>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control input-sm" id="txtDescripcion" placeholder="Descripcion"/>
+                            <asp:TextBox runat="server" ID="txtDescripcion" CssClass="form-control input-sm" placeholder="Descripción"></asp:TextBox>
                         </div>
                         <div class="col-xs-2">
-                            <button class="btn btn-info btn-sm" type="button"><span class="glyphicon glyphicon-arrow-right"></span> Buscar</button>
+                            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-info btn-sm"/>
                         </div>
                     </div>
             </div>
@@ -68,6 +68,7 @@
                             </asp:GridView>
                      </ContentTemplate>
                     <Triggers>
+                        <asp:AsyncPostBackTrigger controlID="btnBuscar" EventName="Click"/>
                         <asp:AsyncPostBackTrigger ControlID="gvBusqueda" EventName="PageIndexChanging"/>
                     </Triggers>                        
                 </asp:UpdatePanel>

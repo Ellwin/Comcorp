@@ -102,7 +102,7 @@
                             { "data": "dsDoc" },
                             { "data": "dsDocSerie" },
                             { "data": "dsDocNro" },
-                            { "data": "feEmision", "className": "text-center", "render": function (data, type, full, meta) { return linksoft.util.parseJsonDate(data) } },
+                            { "data": "feEmision", "className": "text-center" },
                             { "data": "codOperFact" },
                             { "data": "codCliente" },
                             { "data": "dsCliente" },
@@ -162,8 +162,6 @@
                 }
 
                 var d = tablaListado.row(this).data();
-                var feEmision = linksoft.util.parseJsonDate(d.feEmision);
-                var feVencimiento = linksoft.util.parseJsonDate(d.feVencimiento);
 
                 $('#txtDoc').val(d.dsDoc);
                 $('#txtSerie').val(d.dsDocSerie);
@@ -171,8 +169,8 @@
                 $('#txtCodCondPago').val(d.codCondPago);
                 $('#txtCondPago').val(d.dsCondPago);
                 $('#txtTipoCondPago').val(d.dsTipoCondPago);
-                $('#txtFechaEmision').val(feEmision);
-                $('#txtFechaVencimiento').val(feVencimiento);
+                $('#txtFechaEmision').val(d.feEmision);
+                $('#txtFechaVencimiento').val(d.feVencimiento);
                 $('#txtCodOperFact').val(d.codOperFact);
                 $('#txtOperFact').val(d.dsOperFact);
                 $('#txtCodOperLog').val(d.codOperLog);
@@ -317,25 +315,25 @@
                     return false;
                 }
 
-            linksoft.util.openModalConfirmacion('¿Está seguro(a) de guardar la cotización?', function () {
-                Guardar();
+                linksoft.util.openModalConfirmacion('¿Está seguro(a) de guardar la cotización?', function () {
+                    Guardar();
+                });
+
+                return false;
             });
 
-            return false;
-        });
-
-        $("#btnEliminar").on('click', function () {
-            linksoft.util.openModalConfirmacion('¿Está seguro(a) de eliminar la cotización?', function () {
-                Guardar();
+            $("#btnEliminar").on('click', function () {
+                if ($('#tablaListado').DataTable().data().length == 0) {
+                    linksoft.util.defaultLoad('regCotizacion');
+                    linksoft.util.alert('No existen registros a eliminar');
+                    return;
+                }
+                linksoft.util.openModalConfirmacion('¿Está seguro(a) de eliminar la cotización?', function () {
+                    Guardar();
+                });
             });
+
         });
-
-    });
-
-        function ajustarColumnas() {
-            var table = $('#tablaListado').DataTable();
-            table.columns.adjust().draw();
-        }
 
         function Guardar() {
             var objCotizacion = {};
@@ -394,6 +392,9 @@
                         msg = 'Se eliminó la cotización correctamente.';
                     }
                     linksoft.util.showMessage(msg, 'alert-success');
+
+                    $('#tablaCotizacionDetalle').DataTable().clear().draw();
+
                     linksoft.util.defaultLoad('regCotizacion');
                     $("#btnAgregarItem").attr('disabled', true);
                     $("#btnEliminarItem").attr('disabled', true);
@@ -437,6 +438,34 @@
                 getTipoCambio();
 
                 $('#tablaCotizacionDetalle').DataTable().clear().draw();
+                $('#tablaListado').DataTable().clear().draw();
+            }
+
+            if (Accion == 'edit') {
+                if ($('#tablaListado').DataTable().data().length == 0) {
+                    linksoft.util.defaultLoad('regCotizacion');
+                    linksoft.util.alert('No existen registros a editar');
+                    return;
+                }
+                $("#txtDoc").attr('readonly', true);
+                $("#txtSerie").attr('readonly', true);
+                $("#txtNumero").attr('readonly', true);
+                $("#txtAlmacen").attr('readonly', true);
+                $("#txtCliente").attr('readonly', true);
+                $("#txtOperFact").attr('readonly', true);
+                $("#txtMoneda").attr('readonly', true);
+                $("#txtVendedor").attr('readonly', true);
+                $("#txtCondPago").attr('readonly', true);
+                $("#txtTipoCondPago").attr('readonly', true);
+                $("#txtUnidadOperativa").attr('readonly', true);
+                $("#txtZona").attr('readonly', true);
+                $("#txtCobrador").attr('readonly', true);
+
+                $("#ddlEstado").attr('disabled', true);
+                $("#ddlPrioridad").attr('disabled', true);
+                $("#btnAgregarItem").attr('disabled', false);
+                $("#btnEliminarItem").attr('disabled', false);
+
                 $('#tablaListado').DataTable().clear().draw();
             }
             
