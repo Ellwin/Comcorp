@@ -17,6 +17,22 @@ Public Class HandlerCotizacion
         Select Case Metodo
             Case "CargarItemFactura"
                 CargarItemFactura(context)
+            Case "GetDocSeriePredeterminado"
+                GetDocSeriePredeterminado(context)
+            Case "GetAlmacenPredeterminado"
+                GetAlmacenPredeterminado(context)
+            Case "GetVendedorPredeterminado"
+                GetVendedorPredeterminado(context)
+            Case "GetOperFactPredeterminado"
+                GetOperFactPredeterminado(context)
+            Case "GetSucursalPredeterminado"
+                GetSucursalPredeterminado(context)
+            Case "GetZonaPredeterminado"
+                GetZonaPredeterminado(context)
+            Case "GetCobradorPredeterminado"
+                GetCobradorPredeterminado(context)
+            Case "GetCondPagoPredeterminado"
+                GetCondPagoPredeterminado(context)
             Case "GetTipoCambio"
                 GetTipoCambio(context)
             Case "GetDatosCliente"
@@ -123,6 +139,194 @@ Public Class HandlerCotizacion
 
         WebUtil.Serializar(objJsonMessage, context)
         
+    End Sub
+
+
+    Private Sub GetDocSeriePredeterminado(ByVal context As HttpContext)
+
+        Dim objNumerador As New BE_Numerador
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        Dim tipoDocPredeterminado As String = String.Empty
+        Dim seriePredeterminado As String = String.Empty
+
+        tipoDocPredeterminado = BL_Util.Valores_Predeterminados(objSesionLogin.codCia, objSesionLogin.codUsuario, Constantes.DATFACTU, "TDPC", "", True)
+        seriePredeterminado = BL_Util.Valores_Predeterminados(objSesionLogin.codCia, objSesionLogin.codUsuario, Constantes.DATFACTU, "NSPC", "", True)
+
+        If Not String.IsNullOrEmpty(tipoDocPredeterminado) And Not String.IsNullOrEmpty(seriePredeterminado) Then
+            objNumerador.dsTipoDoc = tipoDocPredeterminado
+            objNumerador.dsSerie = seriePredeterminado
+        End If
+
+        If Not objNumerador Is Nothing Then
+            objJsonMessage.objeto = objNumerador
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+        End If
+
+        WebUtil.Serializar(objJsonMessage, context)
+
+    End Sub
+
+    Private Sub GetAlmacenPredeterminado(ByVal context As HttpContext)
+
+        Dim objItem As New BE_Item
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        Dim codAlmacenPredeterminado As String = String.Empty
+
+        codAlmacenPredeterminado = BL_Util.Valores_Predeterminados(objSesionLogin.codCia, objSesionLogin.codUsuario, Constantes.DATFACTU, "ALPC", "", True)
+
+        If Not String.IsNullOrEmpty(codAlmacenPredeterminado) Then
+            objItem = BL_Item.ListarItemQuery("BUSQUEDA", "ALMACEN", objSesionLogin.codCia, codAlmacenPredeterminado, String.Empty).FirstOrDefault
+        End If
+
+        If Not objItem Is Nothing Then
+            objJsonMessage.objeto = objItem
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+        End If
+
+        WebUtil.Serializar(objJsonMessage, context)
+
+    End Sub
+
+    Private Sub GetVendedorPredeterminado(ByVal context As HttpContext)
+
+        Dim objItem As New BE_Item
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        Dim codVendedorPredeterminado As String = String.Empty
+
+        codVendedorPredeterminado = BL_Util.Valores_Predeterminados(objSesionLogin.codCia, objSesionLogin.codUsuario, Constantes.DATFACTU, "CVPC", "", True)
+
+        If Not String.IsNullOrEmpty(codVendedorPredeterminado) Then
+            objItem = BL_Item.ListarItemQuery("BUSQUEDA", "VENDEDOR", objSesionLogin.codCia, codVendedorPredeterminado, String.Empty).FirstOrDefault
+        End If
+
+        If Not objItem Is Nothing Then
+            objJsonMessage.objeto = objItem
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+        End If
+
+        WebUtil.Serializar(objJsonMessage, context)
+
+    End Sub
+
+    Private Sub GetOperFactPredeterminado(ByVal context As HttpContext)
+
+        Dim objItem As New BE_Item
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        Dim codOperFactPredeterminado As String = String.Empty
+
+        codOperFactPredeterminado = BL_Util.Valores_Predeterminados(objSesionLogin.codCia, objSesionLogin.codUsuario, Constantes.DATFACTU, "COPC", "", True)
+
+        If Not String.IsNullOrEmpty(codOperFactPredeterminado) Then
+            objItem = BL_Item.ListarItemQuery("BUSQUEDA", "OPERFACT", objSesionLogin.codCia, codOperFactPredeterminado, String.Empty).FirstOrDefault
+        End If
+
+        If Not objItem Is Nothing Then
+            objJsonMessage.objeto = objItem
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+        End If
+
+        WebUtil.Serializar(objJsonMessage, context)
+
+    End Sub
+
+    Private Sub GetSucursalPredeterminado(ByVal context As HttpContext)
+
+        Dim objItem As New BE_Item
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        Dim codSucursal As String = String.Empty
+
+        codSucursal = BL_Util.Valores_Predeterminados(objSesionLogin.codCia, objSesionLogin.codUsuario, Constantes.DATFACTU, "CUPC", "", True)
+
+        If Not String.IsNullOrEmpty(codSucursal) Then
+            objItem = BL_Item.ListarItemQuery("BUSQUEDA", "SUCURSAL", objSesionLogin.codCia, codSucursal, String.Empty).FirstOrDefault
+        End If
+
+        If Not objItem Is Nothing Then
+            objJsonMessage.objeto = objItem
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+        End If
+
+        WebUtil.Serializar(objJsonMessage, context)
+
+    End Sub
+
+    Private Sub GetZonaPredeterminado(ByVal context As HttpContext)
+
+        Dim objItem As New BE_Item
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        Dim codZona As String = String.Empty
+
+        codZona = BL_Util.Valores_Predeterminados(objSesionLogin.codCia, objSesionLogin.codUsuario, Constantes.DATFACTU, "CZPC", "", True)
+
+        If Not String.IsNullOrEmpty(codZona) Then
+            objItem = BL_Item.ListarItemQuery("BUSQUEDA", "ZONA", objSesionLogin.codCia, codZona, String.Empty).FirstOrDefault
+        End If
+
+        If Not objItem Is Nothing Then
+            objJsonMessage.objeto = objItem
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+        End If
+
+        WebUtil.Serializar(objJsonMessage, context)
+
+    End Sub
+
+    Private Sub GetCobradorPredeterminado(ByVal context As HttpContext)
+
+        Dim objItem As New BE_Item
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        Dim codCobrador As String = String.Empty
+
+        codCobrador = BL_Util.Valores_Predeterminados(objSesionLogin.codCia, objSesionLogin.codUsuario, Constantes.DATFACTU, "CCPC", "", True)
+
+        If Not String.IsNullOrEmpty(codCobrador) Then
+            objItem = BL_Item.ListarItemQuery("BUSQUEDA", "COBRADOR", objSesionLogin.codCia, codCobrador, String.Empty).FirstOrDefault
+        End If
+
+        If Not objItem Is Nothing Then
+            objJsonMessage.objeto = objItem
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+        End If
+
+        WebUtil.Serializar(objJsonMessage, context)
+
+    End Sub
+
+    Private Sub GetCondPagoPredeterminado(ByVal context As HttpContext)
+
+        Dim objItem As New BE_Item
+        Dim objJsonMessage As New JsonMessage
+        Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+
+        Dim codCondPago As String = String.Empty
+
+        codCondPago = BL_Util.Valores_Predeterminados(objSesionLogin.codCia, objSesionLogin.codUsuario, Constantes.DATFACTU, "CPPC", "", True)
+
+        If Not String.IsNullOrEmpty(codCondPago) Then
+            objItem = BL_Item.ListarItemQuery("BUSQUEDA", "CONDPAGO", objSesionLogin.codCia, codCondPago, String.Empty).FirstOrDefault
+        End If
+
+        If Not objItem Is Nothing Then
+            objJsonMessage.objeto = objItem
+            objJsonMessage.mensaje = Constantes.RESULT_TYPE_SUCCESS
+        End If
+
+        WebUtil.Serializar(objJsonMessage, context)
+
     End Sub
 
 

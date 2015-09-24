@@ -25,7 +25,7 @@ Public Class DA_Util
 
         'establish the transaction if DSN specified
         If Connect <> vbNullString Then
-            CloseConnection()
+            'CloseConnection()
             m_oConnection = New SqlConnection(Connect)
             m_oConnection.Open()
             'pone formato de fecha y hora
@@ -213,6 +213,87 @@ ErrorHandler:
             DA_BaseClass.LogSQLException(ex)
             Throw ex
         End Try
+    End Function
+
+    Public Shared Function Valores_Predeterminados(ByVal codCia As String, ByVal codUsuario As String, ByVal vModulo As String, ByVal vCodAtributo As String, ByVal vWhereCampoBd As String, Optional ByVal bTraerElValorDefault As Boolean = False) As String
+        Valores_Predeterminados = " 1=1 "
+
+        Dim vSql As String = ""
+
+        If bTraerElValorDefault = False Then
+            vSql = "SELECT '''' + replace(rtrim(cval_1_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_2_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_3_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_4_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_5_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_6_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_7_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_8_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_9_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_10_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_11_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_12_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_13_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_14_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_15_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_16_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_17_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_18_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_19_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_20_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_21_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_22_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_23_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_24_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_25_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_26_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_27_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_28_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_29_a),'.','') + ''',' + "
+            vSql &= "	'''' + replace(rtrim(cval_30_a),'.','') + ''''  as Valores, "
+
+            'vSql &= "	'''' + replace(rtrim(cval_10_a),'.','') + ''''  as Valores, "
+            vSql &= "	replace(rtrim(cval_1_a),'.','') Valor1 "
+            vSql &= "FROM ad_atrib_p "
+            vSql &= "where ccod_atri = '" & vCodAtributo & "' "
+            vSql &= "	and ccod_mod = '" & vModulo & "' "
+            vSql &= "	and ccod_cia = '" & Trim(codCia) & "' "
+            vSql &= "	and ccod_usu = '" & Trim(codUsuario) & "' "
+
+            Dim Ds As New DataSet
+            Dim DA_Util As New DA_Util
+            If Not DA_Util.GetDataSet(vSql, Ds) Then Exit Function
+
+            If Ds.Tables(0).Rows.Count > 0 Then
+                If Ds.Tables(0).Rows(0).Item("Valor1").ToString.Trim <> "" Then
+                    Return vWhereCampoBd & " in (" & Ds.Tables(0).Rows(0).Item("Valores").ToString.Trim & ")"
+                End If
+            End If
+        Else
+            Valores_Predeterminados = ""
+
+            vSql = "SELECT cval "
+            vSql &= "FROM Valores_Predefinidos "
+            vSql &= "where ccod_atri = '" & vCodAtributo & "' "
+            vSql &= "	and ccod_mod = '" & vModulo & "' "
+            vSql &= "	and ccod_cia = '" & Trim(codCia) & "' "
+            vSql &= "	and ccod_usu = '" & Trim(codUsuario) & "' "
+            vSql &= "	and bval = 1 "
+
+            Dim Ds As New DataSet
+            Dim DA_Util As New DA_Util
+
+            If Not DA_Util.GetDataSet(vSql, Ds) Then Exit Function
+
+            If Ds.Tables(0).Rows.Count > 0 Then
+                If Ds.Tables(0).Rows(0).Item("cval").ToString.Trim <> "" Then
+                    'Return vWhereCampoBd & " in ('" & Ds.Tables(0).Rows(0).Item("cval").ToString.Trim & "') "
+                    Return Ds.Tables(0).Rows(0).Item("cval").ToString.Trim
+                End If
+                'Else
+                '    MessageBox.Show("No se establecio Valor Predeterminado para el Atributo " & vCodAtributo, Dal.Cons.D_titulo, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End If
+        End If
     End Function
 
 End Class

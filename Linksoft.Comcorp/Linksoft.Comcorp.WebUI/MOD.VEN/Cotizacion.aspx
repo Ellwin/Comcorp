@@ -431,6 +431,15 @@
                 $("#btnAgregarItem").attr('disabled', false);
                 $("#btnEliminarItem").attr('disabled', false);
 
+                getDocSeriePredeterminado();
+                getAlmacenPredeterminado();
+                getVendedorPredeterminado();
+                getOperFactPredeterminado();
+                getSucursalPredeterminado();
+                getZonaPredeterminado();
+                getCobradorPredeterminado();
+                getCondPagoPredeterminado();
+
                 var fecha = $('#lblFecha').html();
                 $("#txtFechaEmision").val(fecha);
                 $("#txtFechaVencimiento").val(fecha);
@@ -499,7 +508,7 @@
                     $("#txtCodOperFact").val(codigo);
                     $("#txtOperFact").val(descripcion);
 
-                    getOperacionFacturacion(codigo)
+                    getOperacionFacturacion(codigo);
 
                     break;
                 case "CONDPAGO":
@@ -655,6 +664,146 @@
             });
         }
 
+        function getDocSeriePredeterminado() {
+
+            var numeradorParam = {
+                Metodo: 'GetDocSeriePredeterminado'
+            };
+
+            linksoft.util.ajaxCallback(cotizacionURL, numeradorParam, function (response) {
+                if (response.mensaje == 'SUCCESS') {
+                    $("#txtDoc").val(response.objeto.dsTipoDoc);
+                    $("#txtSerie").val(response.objeto.dsSerie);
+                } else {
+                    $("#txtDoc").val('');
+                    $("#txtSerie").val('');
+                }
+            });
+        }
+
+        function getAlmacenPredeterminado() {
+
+            var almacenParam = {
+                Metodo: 'GetAlmacenPredeterminado'
+            };
+
+            linksoft.util.ajaxCallback(cotizacionURL, almacenParam, function (response) {
+                if (response.mensaje == 'SUCCESS') {
+                    $("#txtCodAlmacen").val(response.objeto.codigo);
+                    $("#txtAlmacen").val(response.objeto.descripcion);
+                } else {
+                    $("#txtCodAlmacen").val('');
+                    $("#txtAlmacen").val('');
+                }
+            });
+        }
+
+        function getVendedorPredeterminado() {
+
+            var vendedorParam = {
+                Metodo: 'GetVendedorPredeterminado'
+            };
+
+            linksoft.util.ajaxCallback(cotizacionURL, vendedorParam, function (response) {
+                if (response.mensaje == 'SUCCESS') {
+                    $("#txtCodVendedor").val(response.objeto.codigo);
+                    $("#txtVendedor").val(response.objeto.descripcion);
+                } else {
+                    $("#txtCodVendedor").val('');
+                    $("#txtVendedor").val('');
+                }
+            });
+        }
+
+        function getOperFactPredeterminado() {
+
+            var operfactParam = {
+                Metodo: 'GetOperFactPredeterminado'
+            };
+
+            linksoft.util.ajaxCallback(cotizacionURL, operfactParam, function (response) {
+                if (response.mensaje == 'SUCCESS') {
+                    $("#txtCodOperFact").val(response.objeto.codigo);
+                    $("#txtOperFact").val(response.objeto.descripcion);
+
+                    getOperacionFacturacion(response.objeto.codigo);
+                } else {
+                    $("#txtCodOperFact").val('');
+                    $("#txtOperFact").val('');
+                }
+            });
+        }
+
+        function getSucursalPredeterminado() {
+
+            var sucursalParam = {
+                Metodo: 'GetSucursalPredeterminado'
+            };
+
+            linksoft.util.ajaxCallback(cotizacionURL, sucursalParam, function (response) {
+                if (response.mensaje == 'SUCCESS') {
+                    $("#txtCodUnidadOperativa").val(response.objeto.codigo);
+                    $("#txtUnidadOperativa").val(response.objeto.descripcion);
+                } else {
+                    $("#txtCodUnidadOperativa").val('');
+                    $("#txtUnidadOperativa").val('');
+                }
+            });
+        }
+
+        function getZonaPredeterminado() {
+
+            var zonaParam = {
+                Metodo: 'GetZonaPredeterminado'
+            };
+
+            linksoft.util.ajaxCallback(cotizacionURL, zonaParam, function (response) {
+                if (response.mensaje == 'SUCCESS') {
+                    $("#txtCodZona").val(response.objeto.codigo);
+                    $("#txtZona").val(response.objeto.descripcion);
+                } else {
+                    $("#txtCodZona").val('');
+                    $("#txtZona").val('');
+                }
+            });
+        }
+
+        function getCobradorPredeterminado() {
+
+            var cobradorParam = {
+                Metodo: 'GetCobradorPredeterminado'
+            };
+
+            linksoft.util.ajaxCallback(cotizacionURL, cobradorParam, function (response) {
+                if (response.mensaje == 'SUCCESS') {
+                    $("#txtCodCobrador").val(response.objeto.codigo);
+                    $("#txtCobrador").val(response.objeto.descripcion);
+                } else {
+                    $("#txtCodCobrador").val('');
+                    $("#txtCobrador").val('');
+                }
+            });
+        }
+
+        function getCondPagoPredeterminado() {
+
+            var condpagorParam = {
+                Metodo: 'GetCondPagoPredeterminado'
+            };
+
+            linksoft.util.ajaxCallback(cotizacionURL, condpagorParam, function (response) {
+                if (response.mensaje == 'SUCCESS') {
+                    $("#txtCodCondPago").val(response.objeto.codigo);
+                    $("#txtCondPago").val(response.objeto.descripcion);
+
+                    getCondicionPago(response.objeto.codigo);
+                } else {
+                    $("#txtCodCondPago").val('');
+                    $("#txtCondPago").val('');
+                }
+            });
+        }
+
         function getDatosCliente(codigo) {
             var clienteParam = {
                 Metodo: 'GetDatosCliente',
@@ -680,6 +829,20 @@
                     var diasVencimiento = response.objeto.nuDiasVencimiento;
                     $fechaVencimiento.setDate($fechaVencimiento.getDate() + diasVencimiento);
                     $('#txtFechaVencimiento').datepicker().datepicker('setDate', $fechaVencimiento);
+
+
+                    if (response.objeto.codVendedor == '') {
+                        getVendedorPredeterminado();
+                    }
+
+                    if (response.objeto.codOperacionFacturacion == '') {
+                        getOperFactPredeterminado();
+                    }
+
+                    if (response.objeto.codCondicionPago == '') {
+                        getCondPagoPredeterminado();
+                    }
+                    
 
                 } else {
                     $("#txtDireccion").val('');

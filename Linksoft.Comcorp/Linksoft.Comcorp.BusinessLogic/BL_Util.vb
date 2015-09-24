@@ -11,4 +11,8 @@ Public Class BL_Util
         Return DA_Util.GetTipoCambio(codCia, codMoneda, dsFecha)
     End Function
 
+    Public Shared Function Valores_Predeterminados(ByVal codCia As String, ByVal codUsuario As String, ByVal vModulo As String, ByVal vCodAtributo As String, ByVal vWhereCampoBd As String, Optional ByVal bTraerElValorDefault As Boolean = False) As String
+        Return DA_Util.Valores_Predeterminados(codCia, codUsuario, vModulo, vCodAtributo, vWhereCampoBd, bTraerElValorDefault)
+    End Function
+
 End Class

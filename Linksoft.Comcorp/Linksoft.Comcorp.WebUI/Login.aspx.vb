@@ -14,6 +14,8 @@ Public Class Login
 
     Private Shared m_oConnection As SqlConnection
 
+    Dim vFunciones As New Funciones
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             txtUsuario.Focus()
@@ -32,7 +34,7 @@ Public Class Login
 
         Dim strFecha As String = String.Empty
 
-        objSesionLogin = BL_SesionLogin.GetLogin(txtUsuario.Text.Trim, txtPassword.Text.Trim)
+        objSesionLogin = BL_SesionLogin.GetLogin(txtUsuario.Text.Trim, vFunciones.Encriptar(txtPassword.Text.Trim))
 
         script = "$('#myModal').modal({show:true, backdrop: 'static', keyboard: false});"
         ScriptManager.RegisterStartupScript(Page, Page.GetType(), "", script, True)
@@ -117,7 +119,7 @@ Public Class Login
 
             Dim objUsuario As New BE_SesionLogin
 
-            objUsuario = BL_SesionLogin.GetLogin(txtUsuario.Text.Trim, txtPassword.Text.Trim)
+            objUsuario = BL_SesionLogin.GetLogin(txtUsuario.Text.Trim, vFunciones.Encriptar(txtPassword.Text.Trim))
 
             If Not objUsuario Is Nothing Then
                 resultado = True

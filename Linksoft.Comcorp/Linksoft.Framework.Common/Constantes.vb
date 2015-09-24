@@ -38,6 +38,29 @@
     Public Const MONEDA_DOLARES As String = "02"
 #End Region
 
+#Region "Modulos"
+
+    Public Const DATCONTA As String = "001"
+    Public Const DATINVEN As String = "002"
+    Public Const DATFACTU As String = "003"
+    Public Const DATCOMPR As String = "004"
+    Public Const DATTESOR As String = "005"
+    Public Const DATCTCOB As String = "006"
+    Public Const DATCTPAG As String = "007"
+    Public Const DATIMPOR As String = "008"
+    Public Const DATPRESU As String = "009"
+    Public Const DATAFIJO As String = "010"
+    Public Const DATPLANI As String = "011"
+    Public Const DATSERV As String = "012"
+    Public Const DATCMR As String = "013"
+    Public Const DATEJECU As String = "014"
+    Public Const DATDISTR As String = "016"
+    Public Const POS As String = "019"
+    Public Const DATADMIN As String = "020"
+    Public Const DATPROD As String = "021"
+
+#End Region
+
 #Region "Tipos de Transaccion Facturacion"
     Public Const TRANS_FACTURACION_DIRECTA = "001"
 
