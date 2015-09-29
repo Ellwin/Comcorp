@@ -15,4 +15,9 @@ Public Class BL_Util
         Return DA_Util.Valores_Predeterminados(codCia, codUsuario, vModulo, vCodAtributo, vWhereCampoBd, bTraerElValorDefault)
     End Function
 
+    Public Shared Function Ver_Atributo(ByVal codUsuario As String, ByVal vModulo As String, ByVal vCodAtributo As String) As String
+        Return DA_Util.Ver_Atributo(codUsuario, vModulo, vCodAtributo)
+    End Function
+
+
 End Class

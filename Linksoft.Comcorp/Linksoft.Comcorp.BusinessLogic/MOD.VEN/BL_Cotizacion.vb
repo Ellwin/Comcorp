@@ -14,8 +14,8 @@ Public Class BL_Cotizacion
         Return DA_Cotizacion.DeleteCotizacion(objCotizacion)
     End Function
 
-    Public Shared Function ListarCotizacion(ByVal codCia As String, ByVal codEjercicio As String, ByVal codPeriodo As String) As List(Of BE_Cotizacion)
-        Return DA_Cotizacion.ListarCotizacion(codCia, codEjercicio, codPeriodo)
+    Public Shared Function ListarCotizacion(ByVal codCia As String, ByVal codEjercicio As String, ByVal codPeriodo As String, ByVal codUsuario As String) As List(Of BE_Cotizacion)
+        Return DA_Cotizacion.ListarCotizacion(codCia, codEjercicio, codPeriodo, codUsuario)
     End Function
 
     Public Shared Function GetCotizacionDetalle(ByVal codCia As String, ByVal codEjercicio As String, ByVal codPeriodo As String,

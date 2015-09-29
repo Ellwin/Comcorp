@@ -68,8 +68,14 @@ Public Class HandlerCotizacion
         Dim lstCotizacion As New List(Of BE_Cotizacion)
         Dim objJsonMessage As New JsonMessage
         Dim objSesionLogin As BE_SesionLogin = CType(context.Session(Constantes.USUARIO_SESION), BE_SesionLogin)
+        Dim codUsuario As String = String.Empty
 
-        lstCotizacion = BL_Cotizacion.ListarCotizacion(objSesionLogin.codCia, objSesionLogin.codEjercicio, objSesionLogin.codPeriodo)
+        If BL_Util.Ver_Atributo(objSesionLogin.codUsuario, Constantes.DATFACTU, "PVTC") = "S" Then
+            codUsuario = objSesionLogin.codUsuario
+        End If
+
+        lstCotizacion = BL_Cotizacion.ListarCotizacion(objSesionLogin.codCia, objSesionLogin.codEjercicio, objSesionLogin.codPeriodo, codUsuario)
+
 
         objJsonMessage.data = lstCotizacion
 

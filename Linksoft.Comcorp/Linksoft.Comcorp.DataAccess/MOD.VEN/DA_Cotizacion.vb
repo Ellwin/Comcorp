@@ -413,7 +413,7 @@ Public Class DA_Cotizacion
         Return resultado
     End Function
 
-    Public Shared Function ListarCotizacion(ByVal codCia As String, ByVal codEjercicio As String, ByVal codPeriodo As String) As List(Of BE_Cotizacion)
+    Public Shared Function ListarCotizacion(ByVal codCia As String, ByVal codEjercicio As String, ByVal codPeriodo As String, ByVal codUsuario As String) As List(Of BE_Cotizacion)
         Try
             Using cn As New SqlConnection(ConnectionStringSQLServer)
                 cn.Open()
@@ -422,6 +422,7 @@ Public Class DA_Cotizacion
                     cmd.Parameters.Add("@codCia", SqlDbType.VarChar).Value = codCia
                     cmd.Parameters.Add("@codEjercicio", SqlDbType.VarChar).Value = codEjercicio
                     cmd.Parameters.Add("@codPeriodo", SqlDbType.VarChar).Value = codPeriodo
+                    cmd.Parameters.Add("@codUsuario", SqlDbType.VarChar).Value = codUsuario
                     Using lector As SqlDataReader = cmd.ExecuteReader
                         Dim lstCotizacion As New List(Of BE_Cotizacion)
                         Dim objCotizacion As BE_Cotizacion

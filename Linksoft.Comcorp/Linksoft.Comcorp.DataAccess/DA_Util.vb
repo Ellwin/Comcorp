@@ -296,4 +296,23 @@ ErrorHandler:
         End If
     End Function
 
+    Public Shared Function Ver_Atributo(ByVal codUsuario As String, ByVal vModulo As String, ByVal vCodAtributo As String) As String
+        Ver_Atributo = ""
+
+        Dim vsql As String = "select cval_1_a from AD_ATRIB "
+        vsql = vsql & "where ccod_mod = '" & vModulo & "' "
+        vsql = vsql & "and ccod_usu = '" & Trim(codUsuario) & "' "
+        vsql = vsql & "and ccod_atri = '" & vCodAtributo & "' "
+        Dim ds As New DataSet
+        Dim DA_Util As New DA_Util
+        If Not DA_Util.GetDataSet(vsql, ds, "Table") Then
+            Exit Function
+        End If
+        If ds.Tables("Table").Rows.Count > 0 Then
+            Ver_Atributo = ds.Tables("Table").Rows(0)("cval_1_a").ToString.Trim
+        End If
+
+        Return Ver_Atributo
+    End Function
+
 End Class
